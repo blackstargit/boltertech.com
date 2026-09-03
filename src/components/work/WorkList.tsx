@@ -115,7 +115,7 @@ function FilterButton({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`border px-3 py-1.5 font-data text-label uppercase tracking-[0.07em] transition-colors ${
+      className={`border px-3 py-1.5 font-data text-label tracking-[0.07em] uppercase transition-colors ${
         active
           ? "border-ink bg-ink text-ink-invert"
           : "border-rule text-ink-muted hover:border-accent hover:text-accent"

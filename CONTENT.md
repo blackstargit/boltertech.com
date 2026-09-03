@@ -9,17 +9,17 @@ Edit a file, commit, push. Vercel rebuilds and the site updates.
 
 ## Where things live
 
-| You want to change | Edit this |
-| --- | --- |
-| Phone, email, address, tagline, company description | `data/company.json` |
-| Founder names, roles, bios, photos, LinkedIn links | `data/founders.json` |
-| The three service descriptions and their tech lists | `data/services.json` |
-| FAQ questions and answers | `data/faqs.json` |
-| The four "How we work" steps | `data/process.json` |
-| Case studies | `content/projects/*.mdx` — see `content/projects/_AUTHORING.md` |
-| Privacy policy, terms | `content/legal/en/*.mdx` |
-| Button labels, headings, form labels — any UI wording | `messages/en.json` |
-| Colours, fonts, spacing | `src/app/globals.css` |
+| You want to change                                    | Edit this                                                       |
+| ----------------------------------------------------- | --------------------------------------------------------------- |
+| Phone, email, address, tagline, company description   | `data/company.json`                                             |
+| Founder names, roles, bios, photos, LinkedIn links    | `data/founders.json`                                            |
+| The three service descriptions and their tech lists   | `data/services.json`                                            |
+| FAQ questions and answers                             | `data/faqs.json`                                                |
+| The four "How we work" steps                          | `data/process.json`                                             |
+| Case studies                                          | `content/projects/*.mdx` — see `content/projects/_AUTHORING.md` |
+| Privacy policy, terms                                 | `content/legal/en/*.mdx`                                        |
+| Button labels, headings, form labels — any UI wording | `messages/en.json`                                              |
+| Colours, fonts, spacing                               | `src/app/globals.css`                                           |
 
 Images go in `public/`. A project's screenshots belong in
 `public/work/<project-slug>/`, headshots in `public/team/`.

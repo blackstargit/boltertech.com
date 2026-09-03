@@ -34,7 +34,9 @@ export default async function OpengraphImage({
         value: project.client || project.clientSector,
       },
       { label: "Year", value: String(project.year) },
-      ...(project.duration ? [{ label: "Duration", value: project.duration }] : []),
+      ...(project.duration
+        ? [{ label: "Duration", value: project.duration }]
+        : []),
     ],
   });
 }

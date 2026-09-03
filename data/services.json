@@ -10,7 +10,14 @@
       "LLM-backed decision support with human review built in",
       "Integration into the tools your team already uses"
     ],
-    "stack": ["Python", "TypeScript", "Claude", "LangGraph", "Postgres", "Temporal"]
+    "stack": [
+      "Python",
+      "TypeScript",
+      "Claude",
+      "LangGraph",
+      "Postgres",
+      "Temporal"
+    ]
   },
   {
     "id": "software",

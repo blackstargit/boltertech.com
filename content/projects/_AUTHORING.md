@@ -13,14 +13,14 @@ you can leave notes in here safely.
 its whole section disappears — no empty heading, no orphaned label, no
 "coming soon". You never need to touch a component to hide something.
 
-| Field | Leave it empty and… |
-| --- | --- |
-| `client` | The title block shows `clientSector` marked "name withheld" instead |
-| `metrics` | The outcome band is not rendered at all |
-| `links` | No demo/repo buttons appear |
-| `testimonial` | The testimonial section is not rendered |
-| `cover` | No cover image |
-| `duration` | That field is dropped from the title block |
+| Field         | Leave it empty and…                                                 |
+| ------------- | ------------------------------------------------------------------- |
+| `client`      | The title block shows `clientSector` marked "name withheld" instead |
+| `metrics`     | The outcome band is not rendered at all                             |
+| `links`       | No demo/repo buttons appear                                         |
+| `testimonial` | The testimonial section is not rendered                             |
+| `cover`       | No cover image                                                      |
+| `duration`    | That field is dropped from the title block                          |
 
 The three files currently here are deliberately different shapes so you
 can see each case: `dispatch-routing` is anonymous with metrics,
@@ -30,30 +30,30 @@ can see each case: `dispatch-routing` is anonymous with metrics,
 ## Frontmatter reference
 
 ```yaml
-title: "Dispatch routing engine"     # required
-client: ""                            # "" = anonymous, see above
-clientSector: "Logistics"             # required, used when client is empty
-category: "ai-automation"             # ai-automation | software | data
-summary: "One sentence for the index card."   # required
+title: "Dispatch routing engine" # required
+client: "" # "" = anonymous, see above
+clientSector: "Logistics" # required, used when client is empty
+category: "ai-automation" # ai-automation | software | data
+summary: "One sentence for the index card." # required
 stack: ["Python", "FastAPI"]
 duration: "6 weeks"
-year: 2026                            # required, a number not a string
-status: "Live"                        # Live | Delivered | Ongoing | Archived
-featured: true                        # shows on the homepage
-order: 1                              # lower sorts first
+year: 2026 # required, a number not a string
+status: "Live" # Live | Delivered | Ongoing | Archived
+featured: true # shows on the homepage
+order: 1 # lower sorts first
 metrics:
   - value: "-73%"
     label: "time spent on manual dispatch"
 links:
   - label: "Live demo"
     url: "https://dispatch.boltertech.com"
-    type: "demo"                      # demo | repo | article | other
+    type: "demo" # demo | repo | article | other
 cover: ""
 testimonial:
   quote: "Kept short. Two sentences beats a paragraph."
   author: "Name"
   role: "Head of Operations"
-draft: false                          # true = visible in dev, hidden in production
+draft: false # true = visible in dev, hidden in production
 ```
 
 ## Two things that will bite you

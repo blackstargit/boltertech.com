@@ -12,7 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return allRoutes().flatMap((route) =>
     localeCodes.map((locale) => ({
-      url: new URL(localePath(locale as Locale, route.path), SITE_URL).toString(),
+      url: new URL(
+        localePath(locale as Locale, route.path),
+        SITE_URL,
+      ).toString(),
       lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,

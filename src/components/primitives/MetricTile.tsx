@@ -17,7 +17,7 @@ export type Metric = {
 export function MetricTile({ value, label }: Metric) {
   return (
     <div className="grid gap-1.5 bg-sheet px-5 py-4">
-      <b className="font-display text-figure font-bold leading-none tracking-[-0.04em] text-metric tabular-nums">
+      <b className="font-display text-figure leading-none font-bold tracking-[-0.04em] text-metric tabular-nums">
         {value}
       </b>
       <DimensionRule tone="accent" />

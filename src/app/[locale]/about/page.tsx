@@ -76,7 +76,10 @@ export default async function AboutPage({
         />
         <div className="grid gap-px border border-rule bg-rule md:grid-cols-2 lg:grid-cols-3">
           {team.map((person) => (
-            <article key={person.id} className="grid content-start gap-4 bg-sheet p-6">
+            <article
+              key={person.id}
+              className="grid content-start gap-4 bg-sheet p-6"
+            >
               <FounderPortrait name={person.name} photo={person.photo} />
               <div className="grid gap-1.5">
                 <h3 className="text-body font-medium">{person.name}</h3>
@@ -89,7 +92,7 @@ export default async function AboutPage({
                   href={person.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="justify-self-start font-data text-label uppercase tracking-[0.07em] text-accent hover:text-ink"
+                  className="justify-self-start font-data text-label tracking-[0.07em] text-accent uppercase hover:text-ink"
                 >
                   LinkedIn
                 </a>

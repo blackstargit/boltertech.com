@@ -26,7 +26,7 @@ export function SiteFooter({
       <div className="mx-auto grid max-w-sheet gap-8 px-gutter py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="grid gap-2">
           <Label>{site.legalName}</Label>
-          <address className="text-small not-italic leading-relaxed text-ink-muted">
+          <address className="text-small leading-relaxed text-ink-muted not-italic">
             {address.line1}
             <br />
             {address.line2}
@@ -35,7 +35,7 @@ export function SiteFooter({
           </address>
         </div>
 
-        <div className="grid gap-2 content-start">
+        <div className="grid content-start gap-2">
           <Label>Contact</Label>
           <a
             href={`mailto:${site.email}`}
@@ -55,7 +55,7 @@ export function SiteFooter({
           </span>
         </div>
 
-        <div className="grid gap-2 content-start">
+        <div className="grid content-start gap-2">
           <Label>Legal</Label>
           <Link
             href={localePath(locale, "/privacy")}
@@ -71,7 +71,7 @@ export function SiteFooter({
           </Link>
         </div>
 
-        <div className="grid gap-2 content-start">
+        <div className="grid content-start gap-2">
           <Label>{messages.footer.registered}</Label>
           <span className="text-small text-ink-muted">
             {messages.footer.registered} &middot; {site.companyType}

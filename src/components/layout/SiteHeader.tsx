@@ -35,7 +35,7 @@ export function SiteHeader({
               <li key={item.href}>
                 <Link
                   href={localePath(locale, item.href)}
-                  className="font-data text-label uppercase tracking-[0.07em] text-ink-muted transition-colors hover:text-accent"
+                  className="font-data text-label tracking-[0.07em] text-ink-muted uppercase transition-colors hover:text-accent"
                 >
                   {item.label}
                 </Link>

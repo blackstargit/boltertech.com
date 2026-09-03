@@ -21,7 +21,7 @@ export function Label({
 }) {
   return (
     <Tag
-      className={`font-data text-label uppercase tracking-[0.07em] text-ink-muted ${className}`}
+      className={`font-data text-label tracking-[0.07em] text-ink-muted uppercase ${className}`}
     >
       {children}
     </Tag>
@@ -42,10 +42,7 @@ export function DimensionRule({
 }) {
   const color = tone === "accent" ? "bg-accent" : "bg-rule";
   return (
-    <span
-      aria-hidden="true"
-      className={`flex h-3 items-center ${className}`}
-    >
+    <span aria-hidden="true" className={`flex h-3 items-center ${className}`}>
       <i className={`block h-[9px] w-px ${color}`} />
       <s className={`block h-px flex-1 no-underline ${color}`} />
       <i className={`block h-[9px] w-px ${color}`} />
@@ -67,7 +64,9 @@ export function NodeTrace({
   reverse?: boolean;
   className?: string;
 }) {
-  const dot = <i className="block size-[5px] shrink-0 rounded-full bg-accent" />;
+  const dot = (
+    <i className="block size-[5px] shrink-0 rounded-full bg-accent" />
+  );
   const trace = (
     <s
       className="block h-px bg-accent no-underline"
@@ -111,7 +110,7 @@ export function Bracketed({
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 end-0 size-3.5 border-b border-e border-accent"
+        className="pointer-events-none absolute end-0 bottom-0 size-3.5 border-e border-b border-accent"
       />
       {children}
     </div>

@@ -93,7 +93,9 @@ export default async function HomePage({
               href={localePath(l, `/services#${s.id}`)}
               className="group grid gap-3 bg-sheet p-6 transition-colors hover:bg-accent-soft"
             >
-              <Label>{s.lead ? m.services.leadLabel : m.services.supportingLabel}</Label>
+              <Label>
+                {s.lead ? m.services.leadLabel : m.services.supportingLabel}
+              </Label>
               <h3 className="text-h3 group-hover:text-accent">{s.name}</h3>
               <DimensionRule tone="accent" />
               <p className="text-small text-ink-muted">{s.summary}</p>
@@ -166,9 +168,8 @@ export default async function HomePage({
           <div className="grid gap-1">
             <h2 className="text-h2">{m.contact.heading}</h2>
             <p className="text-small text-ink-muted">
-              {site.email} &middot;{" "}
-              <span dir="ltr">{site.phone}</span> &middot; replies{" "}
-              {site.responseTime}
+              {site.email} &middot; <span dir="ltr">{site.phone}</span> &middot;
+              replies {site.responseTime}
             </p>
           </div>
           <span className="flex-1" />

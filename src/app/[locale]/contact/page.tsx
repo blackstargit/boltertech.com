@@ -82,7 +82,7 @@ export default async function ContactPage({
           <div className="grid gap-2">
             <Label>Office</Label>
             <DimensionRule />
-            <address className="text-small not-italic leading-relaxed text-ink-muted">
+            <address className="text-small leading-relaxed text-ink-muted not-italic">
               {address.line1}
               <br />
               {address.line2}

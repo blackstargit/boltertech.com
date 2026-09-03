@@ -101,7 +101,7 @@ export default async function CaseStudyPage({
       >
         <Link
           href={localePath(l, "/work")}
-          className="justify-self-start font-data text-label uppercase tracking-[0.07em] text-ink-muted hover:text-accent"
+          className="justify-self-start font-data text-label tracking-[0.07em] text-ink-muted uppercase hover:text-accent"
         >
           <span className="mirror-x inline-block">&larr;</span>{" "}
           {m.common.backToWork}
@@ -183,7 +183,7 @@ export default async function CaseStudyPage({
           >
             <span className="grid gap-1">
               <Label>{m.common.nextProject}</Label>
-              <span className="text-h3 font-display font-bold tracking-[-0.02em] transition-colors group-hover:text-accent">
+              <span className="font-display text-h3 font-bold tracking-[-0.02em] transition-colors group-hover:text-accent">
                 {next.title}
               </span>
             </span>

@@ -26,9 +26,24 @@ import { site } from "@/lib/site";
  * the layout's shell, which is why the page is kept deliberately small.
  */
 
-const chivo = Chivo({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-chivo", display: "swap" });
-const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-plex-sans", display: "swap" });
-const martianMono = Martian_Mono({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-martian-mono", display: "swap" });
+const chivo = Chivo({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-chivo",
+  display: "swap",
+});
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-sans",
+  display: "swap",
+});
+const martianMono = Martian_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-martian-mono",
+  display: "swap",
+});
 
 export default function GlobalNotFound() {
   return (
@@ -40,7 +55,7 @@ export default function GlobalNotFound() {
     >
       <body>
         <main className="mx-auto grid max-w-sheet gap-5 px-gutter py-24">
-          <span className="font-data text-label uppercase tracking-[0.07em] text-ink-muted">
+          <span className="font-data text-label tracking-[0.07em] text-ink-muted uppercase">
             Error 404
           </span>
           <h1 className="max-w-[16ch] text-h1">This page is not in the set.</h1>
@@ -51,19 +66,19 @@ export default function GlobalNotFound() {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
               href={localePath(defaultLocale, "/work")}
-              className="border border-ink bg-ink px-4 py-2.5 font-data text-micro uppercase tracking-[0.08em] text-ink-invert transition-colors hover:border-accent hover:bg-accent"
+              className="border border-ink bg-ink px-4 py-2.5 font-data text-micro tracking-[0.08em] text-ink-invert uppercase transition-colors hover:border-accent hover:bg-accent"
             >
               See our work
             </Link>
             <Link
               href={localePath(defaultLocale)}
-              className="font-data text-micro uppercase tracking-[0.08em] text-accent hover:text-ink"
+              className="font-data text-micro tracking-[0.08em] text-accent uppercase hover:text-ink"
             >
               Home
             </Link>
             <a
               href={`mailto:${site.email}`}
-              className="font-data text-micro uppercase tracking-[0.08em] text-ink-muted hover:text-accent"
+              className="font-data text-micro tracking-[0.08em] text-ink-muted uppercase hover:text-accent"
             >
               {site.email}
             </a>

@@ -166,7 +166,10 @@ export function ContactForm({
 
       {/* Honeypot. Hidden from people and from screen readers; bots that
           fill every input give themselves away. */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+      >
         <label htmlFor="website">Leave this empty</label>
         <input
           id="website"
@@ -182,7 +185,7 @@ export function ContactForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center gap-2.5 border border-ink bg-ink px-4 py-2.5 font-data text-micro uppercase tracking-[0.08em] text-ink-invert transition-colors hover:border-accent hover:bg-accent disabled:opacity-60"
+          className="inline-flex items-center gap-2.5 border border-ink bg-ink px-4 py-2.5 font-data text-micro tracking-[0.08em] text-ink-invert uppercase transition-colors hover:border-accent hover:bg-accent disabled:opacity-60"
         >
           {isLoading ? `${m.contact.sending}…` : m.contact.submit}
         </button>
@@ -224,9 +227,7 @@ function Field({
         {required ? <span className="text-accent"> *</span> : null}
       </label>
       {children}
-      {error ? (
-        <span className="text-small text-critical">{error}</span>
-      ) : null}
+      {error ? <span className="text-small text-critical">{error}</span> : null}
     </div>
   );
 }

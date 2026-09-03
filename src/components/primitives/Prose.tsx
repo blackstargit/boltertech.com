@@ -62,7 +62,7 @@ const components = {
   ),
   th: (props: { children?: ReactNode }) => (
     <th
-      className="border-b border-ink px-3 py-2 text-start font-data text-label uppercase tracking-[0.07em] font-normal text-ink-muted"
+      className="border-b border-ink px-3 py-2 text-start font-data text-label font-normal tracking-[0.07em] text-ink-muted uppercase"
       {...props}
     />
   ),

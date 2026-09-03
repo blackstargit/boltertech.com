@@ -17,13 +17,14 @@ This is the single source of truth. Every platform's data should be copy-pasted 
 - [ ] **Company size** (5-10)
 - [ ] **Company type** (Pvt Ltd)
 - [ ] **Industry classification** — IT Services and IT Consulting/Software Development/Artificial Intelligence
-- [ ] **Service line breakdown** — 
-	- Software Development: 40%  
-	- AI Automation: 35%  
-	- Data Analytics and Data Science: 25%
+- [ ] **Service line breakdown** —
+  - Software Development: 40%
+  - AI Automation: 35%
+  - Data Analytics and Data Science: 25%
 - [ ] **Headquarters location** 303, 3rd Floor, Mehran Business Square, Plaza 3-H, Kunwar Block, Topcity-1, Islamabad
 - [ ] **Minimum project size** and **average hourly rate / rate range** — $200 , $15/hour
 - [ ] **Primary contact information** — contact@boltertech.com, +923347070209
+
 ## 2. Legal & Registration Documents
 
 Needed repeatedly across verification-heavy platforms (Fiverr business verification, Clutch Verified, GoodFirms Pro, Upwork business documentation, Freelancer.com verification).

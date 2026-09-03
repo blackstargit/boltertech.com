@@ -42,7 +42,9 @@ export const projectSchema = z.object({
   stack: z.array(z.string()).default([]),
   duration: z.string().default(""),
   year: z.number().int().min(2000).max(2100),
-  status: z.enum(["Live", "Delivered", "Ongoing", "Archived"]).default("Delivered"),
+  status: z
+    .enum(["Live", "Delivered", "Ongoing", "Archived"])
+    .default("Delivered"),
   featured: z.boolean().default(false),
   order: z.number().int().default(999),
   metrics: z.array(metricSchema).default([]),

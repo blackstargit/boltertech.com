@@ -68,7 +68,10 @@ export default async function ServicesPage({
         className="mt-6"
         fields={[
           { label: m.fields.practice, value: lead.name },
-          { label: m.services.supportingLabel, value: `${ordered.length - 1} lines` },
+          {
+            label: m.services.supportingLabel,
+            value: `${ordered.length - 1} lines`,
+          },
           { label: m.fields.base, value: site.address.city },
         ]}
       >
@@ -81,12 +84,18 @@ export default async function ServicesPage({
       {/* One page, three depths. Each line is a section rather than a
           separate page, so the site never claims to be three businesses. */}
       {ordered.map((service, i) => (
-        <Section key={service.id} id={service.id} labelledBy={`${service.id}-h`}>
+        <Section
+          key={service.id}
+          id={service.id}
+          labelledBy={`${service.id}-h`}
+        >
           <SectionHead
             id={`${service.id}-h`}
             code={`0${i + 1}`}
             title={service.name}
-            note={service.lead ? m.services.leadLabel : m.services.supportingLabel}
+            note={
+              service.lead ? m.services.leadLabel : m.services.supportingLabel
+            }
           />
 
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)]">

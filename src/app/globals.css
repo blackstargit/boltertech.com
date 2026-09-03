@@ -12,46 +12,46 @@
 
 :root {
   /* ── ground ─────────────────────────────────────────────────── */
-  --paper:       #f6f8fa;  /* page ground — drafting vellum */
-  --sheet:       #ffffff;  /* raised surfaces sit white on the ground */
-  --plate:       #061a2b;  /* dark chip the logo mark must sit on */
+  --paper: #f6f8fa; /* page ground — drafting vellum */
+  --sheet: #ffffff; /* raised surfaces sit white on the ground */
+  --plate: #061a2b; /* dark chip the logo mark must sit on */
 
   /* ── ink — cyanotype navy, never a neutral black ─────────────── */
-  --ink:         #0a2540;  /* 14.6:1 on paper */
-  --ink-muted:   #4a6480;  /*  5.7:1 on paper */
-  --ink-invert:  #f6f8fa;  /* text on --ink / --plate */
+  --ink: #0a2540; /* 14.6:1 on paper */
+  --ink-muted: #4a6480; /*  5.7:1 on paper */
+  --ink-invert: #f6f8fa; /* text on --ink / --plate */
 
   /* ── line weights ───────────────────────────────────────────── */
-  --rule:        #c9d6e2;
-  --rule-faint:  #e3eaf1;
+  --rule: #c9d6e2;
+  --rule-faint: #e3eaf1;
 
   /* ── the one accent ─────────────────────────────────────────── */
-  --accent:      #00688c;  /* 5.9:1 on paper */
+  --accent: #00688c; /* 5.9:1 on paper */
   --accent-soft: #e4f0f6;
 
   /* Semantic, kept separate from the accent per design system rules.
      --metric currently resolves to ink: outcome figures are set in ink
      and *measured* by a cyan dimension rule. Change this one line if a
      third colour is ever wanted for metrics. */
-  --metric:      var(--ink);
-  --positive:    #1b5e35;
-  --critical:    #8c1d18;
+  --metric: var(--ink);
+  --positive: #1b5e35;
+  --critical: #8c1d18;
 }
 
 [data-theme="dark"] {
-  --paper:       #061019;
-  --sheet:       #0c1b2a;
-  --plate:       #04121e;
-  --ink:         #dce9f5;  /* 15.5:1 on paper */
-  --ink-muted:   #8aa3bc;  /*  7.3:1 on paper */
-  --ink-invert:  #061019;
-  --rule:        #1c3247;
-  --rule-faint:  #122334;
-  --accent:      #4fd8f5;  /* 11.4:1 on paper */
+  --paper: #061019;
+  --sheet: #0c1b2a;
+  --plate: #04121e;
+  --ink: #dce9f5; /* 15.5:1 on paper */
+  --ink-muted: #8aa3bc; /*  7.3:1 on paper */
+  --ink-invert: #061019;
+  --rule: #1c3247;
+  --rule-faint: #122334;
+  --accent: #4fd8f5; /* 11.4:1 on paper */
   --accent-soft: #0d2b3b;
-  --metric:      var(--ink);
-  --positive:    #79d3a0;
-  --critical:    #f2b8b5;
+  --metric: var(--ink);
+  --positive: #79d3a0;
+  --critical: #f2b8b5;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -61,42 +61,42 @@
    runtime theme switch above work without rebuilding CSS.
    ═══════════════════════════════════════════════════════════════════ */
 @theme inline {
-  --color-paper:       var(--paper);
-  --color-sheet:       var(--sheet);
-  --color-plate:       var(--plate);
-  --color-ink:         var(--ink);
-  --color-ink-muted:   var(--ink-muted);
-  --color-ink-invert:  var(--ink-invert);
-  --color-rule:        var(--rule);
-  --color-rule-faint:  var(--rule-faint);
-  --color-accent:      var(--accent);
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-plate: var(--plate);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-invert: var(--ink-invert);
+  --color-rule: var(--rule);
+  --color-rule-faint: var(--rule-faint);
+  --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
-  --color-metric:      var(--metric);
-  --color-positive:    var(--positive);
-  --color-critical:    var(--critical);
+  --color-metric: var(--metric);
+  --color-positive: var(--positive);
+  --color-critical: var(--critical);
 
   /* Typefaces are injected by next/font in the root layout.
      --font-arabic is declared but unmapped until an RTL locale ships. */
   --font-display: var(--font-chivo), ui-sans-serif, system-ui, sans-serif;
-  --font-body:    var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-data:    var(--font-martian-mono), ui-monospace, Consolas, monospace;
+  --font-body: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-data: var(--font-martian-mono), ui-monospace, Consolas, monospace;
 
   /* Type scale — fluid, so there is no separate mobile scale to maintain */
-  --text-label:   0.625rem;
-  --text-micro:   0.6875rem;
-  --text-small:   0.8125rem;
-  --text-body:    0.9375rem;
-  --text-lede:    clamp(0.9375rem, 1.4vw, 1.0625rem);
-  --text-h3:      1.25rem;
-  --text-h2:      clamp(1.375rem, 2.6vw, 1.75rem);
-  --text-h1:      clamp(1.75rem, 4.6vw, 3.25rem);
+  --text-label: 0.625rem;
+  --text-micro: 0.6875rem;
+  --text-small: 0.8125rem;
+  --text-body: 0.9375rem;
+  --text-lede: clamp(0.9375rem, 1.4vw, 1.0625rem);
+  --text-h3: 1.25rem;
+  --text-h2: clamp(1.375rem, 2.6vw, 1.75rem);
+  --text-h1: clamp(1.75rem, 4.6vw, 3.25rem);
   /* Named --text-figure, not --text-metric: `--color-metric` already
      exists and both would generate a colliding `text-metric` utility. */
-  --text-figure:  clamp(1.5rem, 3vw, 2rem);
+  --text-figure: clamp(1.5rem, 3vw, 2rem);
 
   /* Drafting geometry. Blueprint has no rounded corners — this is a
      deliberate zero, not an oversight. */
-  --radius-none:  0px;
+  --radius-none: 0px;
   --spacing-gutter: clamp(1.15rem, 4vw, 3.25rem);
   --spacing-section: clamp(3rem, 7vw, 5.5rem);
 
@@ -124,7 +124,10 @@
 
   /* Headings take the display face by default so components don't
      have to remember to ask for it. */
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: -0.03em;
@@ -138,7 +141,10 @@
   }
 
   /* Long-form content should never scroll the page sideways. */
-  pre, table { overflow-x: auto; }
+  pre,
+  table {
+    overflow-x: auto;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -150,7 +156,9 @@
    things logical properties cannot express: directional glyphs and
    the drafting devices, which must mirror.
    ═══════════════════════════════════════════════════════════════════ */
-[dir="rtl"] .mirror-x { transform: scaleX(-1); }
+[dir="rtl"] .mirror-x {
+  transform: scaleX(-1);
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    Motion — native CSS only. No animation library is installed and
@@ -158,10 +166,16 @@
    engineering company shipping 46KB to fade in a heading is an
    argument about itself.
    ═══════════════════════════════════════════════════════════════════ */
-@keyframes draw-x { to { transform: scaleX(1); } }
+@keyframes draw-x {
+  to {
+    transform: scaleX(1);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

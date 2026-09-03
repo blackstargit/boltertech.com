@@ -117,7 +117,10 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Resend rejected the message:", error);
       return NextResponse.json(
-        { ok: false, error: "We could not send that. Please email us directly." },
+        {
+          ok: false,
+          error: "We could not send that. Please email us directly.",
+        },
         { status: 502 },
       );
     }
