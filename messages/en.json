@@ -1,0 +1,96 @@
+{
+  "nav": {
+    "services": "Services",
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "skipToContent": "Skip to content",
+    "menu": "Menu"
+  },
+  "common": {
+    "startProject": "Start a project",
+    "seeWork": "See our work",
+    "readCaseStudy": "Read case study",
+    "nextProject": "Next project",
+    "viewDemo": "View demo",
+    "backToWork": "All work",
+    "clientWithheld": "name withheld",
+    "placeholderNotice": "Placeholder content - replace before launch."
+  },
+  "fields": {
+    "client": "Client",
+    "sector": "Sector",
+    "category": "Category",
+    "stack": "Stack",
+    "duration": "Duration",
+    "year": "Year",
+    "status": "Status",
+    "established": "Est.",
+    "base": "Base",
+    "team": "Team",
+    "practice": "Practice",
+    "updated": "Last updated"
+  },
+  "home": {
+    "metaTitle": "Bolter Technologies - AI automation and software engineering",
+    "metaDescription": "We find the process that is quietly costing your team hours a week, automate it end to end, and stay on the hook for it. Islamabad-based software and AI engineering.",
+    "heroSub": "We start with the process that is costing you time, not the technology. Then we automate it, ship it, and stay on the hook for it.",
+    "offerHeading": "One practice, three depths",
+    "workHeading": "Selected work",
+    "outcomesHeading": "Outcomes",
+    "processHeading": "How we work",
+    "faqHeading": "Questions we get asked"
+  },
+  "services": {
+    "metaTitle": "Services - Bolter Technologies",
+    "metaDescription": "AI automation, software development, and data analytics - one practice, delivered by one team.",
+    "heading": "What we do",
+    "includesLabel": "What it includes",
+    "stackLabel": "Typically built with",
+    "leadLabel": "Lead practice",
+    "supportingLabel": "Supporting"
+  },
+  "work": {
+    "metaTitle": "Work - Bolter Technologies",
+    "metaDescription": "Case studies from our AI automation, software, and data engagements.",
+    "heading": "Work",
+    "filterAll": "All",
+    "empty": "No projects in this category yet.",
+    "problemHeading": "The problem",
+    "outcomeHeading": "Outcome",
+    "testimonialHeading": "What the client said"
+  },
+  "about": {
+    "metaTitle": "About - Bolter Technologies",
+    "metaDescription": "Who we are, how we work, and why we started Bolter Technologies.",
+    "heading": "About",
+    "teamHeading": "Founders",
+    "processHeading": "How we work"
+  },
+  "contact": {
+    "metaTitle": "Contact - Bolter Technologies",
+    "metaDescription": "Tell us what is slowing your team down. We reply within one business day.",
+    "heading": "Start a project",
+    "nameLabel": "Your name",
+    "emailLabel": "Email",
+    "companyLabel": "Company",
+    "typeLabel": "What kind of work",
+    "messageLabel": "What are you trying to solve?",
+    "submit": "Send",
+    "sending": "Sending",
+    "success": "Thanks - we have your message and will reply",
+    "error": "That did not send. Email us directly at",
+    "required": "Required"
+  },
+  "categories": {
+    "ai-automation": "AI automation",
+    "software": "Software",
+    "data": "Data analytics"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "registered": "Registered in Pakistan"
+  }
+}

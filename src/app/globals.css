@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOLTER TECHNOLOGIES — DESIGN TOKENS
+   Single source of truth. Components must never contain a raw hex,
+   a raw px, or a font-family. If you need a new value, add it here.
+
+   Themes: light is the launch theme. The dark block is complete and
+   ready — nothing sets [data-theme="dark"] yet. To ship dark mode,
+   set that attribute on <html>; no component changes required.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── ground ─────────────────────────────────────────────────── */
+  --paper:       #f6f8fa;  /* page ground — drafting vellum */
+  --sheet:       #ffffff;  /* raised surfaces sit white on the ground */
+  --plate:       #061a2b;  /* dark chip the logo mark must sit on */
+
+  /* ── ink — cyanotype navy, never a neutral black ─────────────── */
+  --ink:         #0a2540;  /* 14.6:1 on paper */
+  --ink-muted:   #4a6480;  /*  5.7:1 on paper */
+  --ink-invert:  #f6f8fa;  /* text on --ink / --plate */
+
+  /* ── line weights ───────────────────────────────────────────── */
+  --rule:        #c9d6e2;
+  --rule-faint:  #e3eaf1;
+
+  /* ── the one accent ─────────────────────────────────────────── */
+  --accent:      #00688c;  /* 5.9:1 on paper */
+  --accent-soft: #e4f0f6;
+
+  /* Semantic, kept separate from the accent per design system rules.
+     --metric currently resolves to ink: outcome figures are set in ink
+     and *measured* by a cyan dimension rule. Change this one line if a
+     third colour is ever wanted for metrics. */
+  --metric:      var(--ink);
+  --positive:    #1b5e35;
+  --critical:    #8c1d18;
+}
+
+[data-theme="dark"] {
+  --paper:       #061019;
+  --sheet:       #0c1b2a;
+  --plate:       #04121e;
+  --ink:         #dce9f5;  /* 15.5:1 on paper */
+  --ink-muted:   #8aa3bc;  /*  7.3:1 on paper */
+  --ink-invert:  #061019;
+  --rule:        #1c3247;
+  --rule-faint:  #122334;
+  --accent:      #4fd8f5;  /* 11.4:1 on paper */
+  --accent-soft: #0d2b3b;
+  --metric:      var(--ink);
+  --positive:    #79d3a0;
+  --critical:    #f2b8b5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Tailwind theme mapping.
+   `@theme inline` emits utilities that reference the custom properties
+   rather than baking in resolved values — which is what makes the
+   runtime theme switch above work without rebuilding CSS.
+   ═══════════════════════════════════════════════════════════════════ */
+@theme inline {
+  --color-paper:       var(--paper);
+  --color-sheet:       var(--sheet);
+  --color-plate:       var(--plate);
+  --color-ink:         var(--ink);
+  --color-ink-muted:   var(--ink-muted);
+  --color-ink-invert:  var(--ink-invert);
+  --color-rule:        var(--rule);
+  --color-rule-faint:  var(--rule-faint);
+  --color-accent:      var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-metric:      var(--metric);
+  --color-positive:    var(--positive);
+  --color-critical:    var(--critical);
+
+  /* Typefaces are injected by next/font in the root layout.
+     --font-arabic is declared but unmapped until an RTL locale ships. */
+  --font-display: var(--font-chivo), ui-sans-serif, system-ui, sans-serif;
+  --font-body:    var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-data:    var(--font-martian-mono), ui-monospace, Consolas, monospace;
+
+  /* Type scale — fluid, so there is no separate mobile scale to maintain */
+  --text-label:   0.625rem;
+  --text-micro:   0.6875rem;
+  --text-small:   0.8125rem;
+  --text-body:    0.9375rem;
+  --text-lede:    clamp(0.9375rem, 1.4vw, 1.0625rem);
+  --text-h3:      1.25rem;
+  --text-h2:      clamp(1.375rem, 2.6vw, 1.75rem);
+  --text-h1:      clamp(1.75rem, 4.6vw, 3.25rem);
+  /* Named --text-figure, not --text-metric: `--color-metric` already
+     exists and both would generate a colliding `text-metric` utility. */
+  --text-figure:  clamp(1.5rem, 3vw, 2rem);
+
+  /* Drafting geometry. Blueprint has no rounded corners — this is a
+     deliberate zero, not an oversight. */
+  --radius-none:  0px;
+  --spacing-gutter: clamp(1.15rem, 4vw, 3.25rem);
+  --spacing-section: clamp(3rem, 7vw, 5.5rem);
+
+  --container-sheet: 1220px;
+  --container-prose: 68ch;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Base
+   ═══════════════════════════════════════════════════════════════════ */
+@layer base {
+  html {
+    background-color: var(--paper);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Headings take the display face by default so components don't
+     have to remember to ask for it. */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Long-form content should never scroll the page sideways. */
+  pre, table { overflow-x: auto; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RTL
+
+   Urdu and Arabic are on the roadmap, so every component is written
+   with logical properties (padding-inline, margin-block, border-inline,
+   start/end) rather than left/right. The rules below cover the few
+   things logical properties cannot express: directional glyphs and
+   the drafting devices, which must mirror.
+   ═══════════════════════════════════════════════════════════════════ */
+[dir="rtl"] .mirror-x { transform: scaleX(-1); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Motion — native CSS only. No animation library is installed and
+   none should be: JS animation is the named INP offender, and an
+   engineering company shipping 46KB to fade in a heading is an
+   argument about itself.
+   ═══════════════════════════════════════════════════════════════════ */
+@keyframes draw-x { to { transform: scaleX(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,72 @@
+---
+title: "Dispatch routing engine"
+client: ""
+clientSector: "Logistics"
+category: "ai-automation"
+summary: "PLACEHOLDER. One sentence for the index card — the problem and the result, no adjectives."
+stack: ["Python", "FastAPI", "Postgres", "OR-Tools"]
+duration: "6 weeks"
+year: 2026
+status: "Live"
+featured: true
+order: 1
+metrics:
+  - value: "-73%"
+    label: "time spent on manual dispatch"
+  - value: "4.2x"
+    label: "jobs handled per planner"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+PLACEHOLDER. Two or three paragraphs on what this was costing the client
+before you arrived. Be concrete about the before state — how many people,
+how many hours, what broke when someone was on leave. This section is
+doing the work of making a reader recognise their own situation, so
+resist summarising it into a single tidy sentence.
+
+## Approach
+
+PLACEHOLDER. What you actually built and why that shape rather than
+another. Name the constraint that drove the decision — the integration
+that had to keep working, the data that turned out to be dirtier than
+expected, the thing you tried first that did not hold.
+
+This body is MDX, so headings, lists, images and code blocks all work:
+
+```python
+# A snippet is worth including when it shows a real decision,
+# not when it is here to look technical.
+```
+
+## Outcome
+
+PLACEHOLDER. What changed, quantified where you have the numbers and
+described honestly where you do not. The metric tiles above pull from the
+frontmatter, so do not repeat those figures here — use this space for what
+the numbers do not capture.
+
+<!--
+  Notes for whoever fills this in:
+
+  - `client: ""` means the client is not named. The title block shows the
+    sector and marks it withheld. Put a name in that field and it switches
+    automatically — no component change.
+  - `links: []` can carry a live demo on a subdomain, a repo, an article:
+      links:
+        - label: "Live demo"
+          url: "https://dispatch.boltertech.com"
+          type: "demo"
+  - `testimonial: null` hides the section entirely. To show it:
+      testimonial:
+        quote: "..."
+        author: "..."
+        role: "Head of Operations"
+  - `metrics: []` hides the outcome band. Any number of metrics works.
+  - `draft: true` hides the project in production but keeps it visible in
+    `npm run dev`, so you can write in the open without publishing.
+-->

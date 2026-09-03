@@ -1,0 +1,18 @@
+[
+  {
+    "step": "Discovery",
+    "detail": "We map the process before writing code. Usually a couple of calls and a look at how the work actually happens today, including the parts people have stopped noticing."
+  },
+  {
+    "step": "Written scope",
+    "detail": "A fixed scope and price per phase, in writing, with the assumptions named. If something is uncertain we say so rather than padding the estimate quietly."
+  },
+  {
+    "step": "Build in the open",
+    "detail": "You see working software early and often, not a status report. A fixed daily overlap window means questions get answered the same day rather than the next one."
+  },
+  {
+    "step": "Handover and after",
+    "detail": "PLACEHOLDER - state the real support commitment. Documentation, access, and whatever period of included support you decide on. This is the step that makes the tagline true, so it needs a real number in it."
+  }
+]

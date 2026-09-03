@@ -1,0 +1,26 @@
+[
+  {
+    "q": "Who owns the code and the intellectual property?",
+    "a": "You do, on final payment, in full. That includes the source, the infrastructure definitions, and the documentation. We keep no licence over your systems and we do not reuse client code in other engagements."
+  },
+  {
+    "q": "What timezone overlap do we actually get?",
+    "a": "We are in Islamabad (UTC+5). That is a full working morning overlapping Europe and an afternoon overlapping the US East Coast. We commit to a fixed daily overlap window in writing before a project starts rather than leaving it to chance."
+  },
+  {
+    "q": "What happens after launch?",
+    "a": "PLACEHOLDER - state the real support terms here. Something like: thirty days of included support after handover, then an optional monthly retainer. Whatever you commit to, this is the answer that most separates you from a cheaper bid, so make it concrete."
+  },
+  {
+    "q": "How do you scope and price a project?",
+    "a": "PLACEHOLDER - describe the real process. Typically: a discovery conversation, a written scope with a fixed price per phase, and a named change process so neither side is surprised. Avoid publishing hourly rates here."
+  },
+  {
+    "q": "Do you use AI to write our code, and will you tell us?",
+    "a": "PLACEHOLDER - this needs a real house policy before launch. You sell AI automation, so you will be asked, and a vague answer costs you credibility. State plainly what you use AI for, what a human reviews, and what you will disclose."
+  },
+  {
+    "q": "Will you sign an NDA or work under our contract?",
+    "a": "Yes to both. We sign client NDAs before discovery, and we are comfortable working under your master services agreement rather than insisting on our own paperwork."
+  }
+]

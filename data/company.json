@@ -1,0 +1,30 @@
+{
+  "legalName": "Bolter Technologies Private Limited",
+  "name": "Bolter Technologies",
+  "shortName": "Bolter",
+  "tagline": "We build software that works, and we stand behind it.",
+  "description": "Bolter Technologies is a software and technology company built around a simple idea: technology should make life easier for everyone. We work across software development, AI automation, and data analytics, helping businesses turn ideas, inefficient processes, and complex data into practical systems that actually work.",
+  "founded": 2024,
+  "teamSize": "5-10",
+  "companyType": "Private Limited",
+  "industry": "IT Services and IT Consulting",
+  "email": "contact@boltertech.com",
+  "phone": "+92 334 707 0209",
+  "phoneHref": "+923347070209",
+  "responseTime": "within one business day",
+  "address": {
+    "line1": "303, 3rd Floor, Mehran Business Square",
+    "line2": "Plaza 3-H, Kunwar Block, Topcity-1",
+    "city": "Islamabad",
+    "region": "Islamabad Capital Territory",
+    "postalCode": "",
+    "country": "PK",
+    "countryName": "Pakistan"
+  },
+  "social": {
+    "linkedin": "",
+    "github": "",
+    "clutch": "",
+    "goodfirms": ""
+  }
+}

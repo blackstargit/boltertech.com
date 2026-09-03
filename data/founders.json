@@ -1,0 +1,32 @@
+[
+  {
+    "id": "founder-one",
+    "name": "PLACEHOLDER - Founder One",
+    "role": "Co-founder & Engineering Lead",
+    "bio": "PLACEHOLDER. Two to four sentences in the founder's own register - what they build, what they were doing before Bolter, and the kind of problem they take personally. Specific beats impressive: name a system, a scale, or a constraint rather than listing adjectives.",
+    "focus": "Software development",
+    "photo": "",
+    "linkedin": "",
+    "email": ""
+  },
+  {
+    "id": "founder-two",
+    "name": "PLACEHOLDER - Founder Two",
+    "role": "Co-founder & AI Practice Lead",
+    "bio": "PLACEHOLDER. Same length and register as above. Because this is the AI-led positioning, this bio in particular should make a concrete claim about the kind of automation work they have actually shipped.",
+    "focus": "AI automation",
+    "photo": "",
+    "linkedin": "",
+    "email": ""
+  },
+  {
+    "id": "founder-three",
+    "name": "PLACEHOLDER - Founder Three",
+    "role": "Co-founder & Data Lead",
+    "bio": "PLACEHOLDER. Replace or delete this entry entirely - the About page renders however many founders are in this array, so two, three or five all lay out correctly without touching a component.",
+    "focus": "Data analytics",
+    "photo": "",
+    "linkedin": "",
+    "email": ""
+  }
+]

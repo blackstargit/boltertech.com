@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bolter Technologies">
+  <!--
+    PLACEHOLDER. Replace this file with the real flat single-colour mark.
+
+    Needed because the primary mark is a glow drawn for black grounds and
+    has no usable 16px size and no print size. This stand-in is a plain
+    hexagon so nothing renders broken in the meantime; it is deliberately
+    not an attempt to redraw the logo.
+
+    Use currentColor so it inherits ink or invert wherever it is placed.
+  -->
+  <path fill="none" stroke="currentColor" stroke-width="4"
+        d="M32 4 56 18v28L32 60 8 46V18Z"/>
+</svg>
