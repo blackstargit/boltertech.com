@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
+import { languageAlternates } from "@/lib/routes";
 import { site } from "@/lib/site";
 import { getProjects } from "@/lib/projects";
 import { breadcrumbSchema } from "@/lib/schema-org";
@@ -18,7 +19,10 @@ export async function generateMetadata({
   return {
     title: m.work.metaTitle,
     description: m.work.metaDescription,
-    alternates: { canonical: localePath(locale as Locale, "/work") },
+    alternates: {
+      canonical: localePath(locale as Locale, "/work"),
+      languages: languageAlternates("/work"),
+    },
   };
 }
 

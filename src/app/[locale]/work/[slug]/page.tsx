@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
+import { languageAlternates } from "@/lib/routes";
 import { site } from "@/lib/site";
 import { getProject, getProjects, getAdjacentProject } from "@/lib/projects";
 import { projectSchema, breadcrumbSchema } from "@/lib/schema-org";
@@ -34,7 +35,10 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.summary,
-    alternates: { canonical: localePath(locale as Locale, `/work/${slug}`) },
+    alternates: {
+      canonical: localePath(locale as Locale, `/work/${slug}`),
+      languages: languageAlternates(`/work/${slug}`),
+    },
     openGraph: {
       title: project.title,
       description: project.summary,

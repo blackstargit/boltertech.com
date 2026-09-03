@@ -29,7 +29,16 @@ export function LogoLock({
     <Link
       href={localePath(locale)}
       className="flex items-center gap-3.5"
-      aria-label={site.name}
+      /**
+       * Only label the link when there is no visible wordmark.
+       *
+       * With the wordmark shown, an aria-label of just "Bolter
+       * Technologies" overrides visible text that also reads
+       * "Technologies · Islamabad" — so a voice-control user saying what
+       * they can see does not match the accessible name. Lighthouse flags
+       * this as label-content-name-mismatch, and it is a real failure.
+       */
+      aria-label={showWordmark ? undefined : site.name}
     >
       <span className="grid place-items-center border border-rule bg-plate p-2">
         <Image

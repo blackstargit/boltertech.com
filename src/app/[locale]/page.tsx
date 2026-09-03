@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
+import { languageAlternates } from "@/lib/routes";
 import { site, serviceLines } from "@/lib/site";
 import { getFeaturedProjects, getHeadlineMetrics } from "@/lib/projects";
 import { TitleBlock } from "@/components/primitives/TitleBlock";
@@ -24,7 +25,10 @@ export async function generateMetadata({
   return {
     title: m.home.metaTitle,
     description: m.home.metaDescription,
-    alternates: { canonical: localePath(locale as Locale) },
+    alternates: {
+      canonical: localePath(locale as Locale),
+      languages: languageAlternates("/"),
+    },
   };
 }
 

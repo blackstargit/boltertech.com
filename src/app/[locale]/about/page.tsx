@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
+import { languageAlternates } from "@/lib/routes";
 import { site, team, serviceLines } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/schema-org";
 import { TitleBlock } from "@/components/primitives/TitleBlock";
@@ -21,7 +22,10 @@ export async function generateMetadata({
   return {
     title: m.about.metaTitle,
     description: m.about.metaDescription,
-    alternates: { canonical: localePath(locale as Locale, "/about") },
+    alternates: {
+      canonical: localePath(locale as Locale, "/about"),
+      languages: languageAlternates("/about"),
+    },
   };
 }
 
