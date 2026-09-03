@@ -20,7 +20,14 @@ export type CollectionEntry<T> = T & {
 
 function readDir(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir).filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
+  return fs.readdirSync(dir).filter((f) => {
+    if (!f.endsWith(".mdx") && !f.endsWith(".md")) return false;
+    // Notes and drafts can live alongside content without being published.
+    // Without this, dropping a README into a collection folder fails the
+    // build with a frontmatter error, which is a nasty surprise for
+    // someone who was only leaving a note for the next person.
+    return !f.startsWith("_") && !f.toUpperCase().startsWith("README");
+  });
 }
 
 /**
