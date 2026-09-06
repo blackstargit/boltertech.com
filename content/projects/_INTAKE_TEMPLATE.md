@@ -1,7 +1,7 @@
 
 I need you to fill in a project intake form for a public case study on our company website
 
-> (Bolter Technologies), for the project in `Zenith`.
+> (Bolter Technologies), for the project in `Xai-dr-detection`.
 >
 > **This is marketing copy for our own website, not an internal report.** Write it the way we'd
 > want a prospective client to read it: confident, proud, and specific. We built something real —
