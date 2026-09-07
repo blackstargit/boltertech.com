@@ -3,6 +3,8 @@ import founders from "../../data/founders.json";
 import services from "../../data/services.json";
 import faqs from "../../data/faqs.json";
 import process_ from "../../data/process.json";
+import engagements from "../../data/engagements.json";
+import commitments from "../../data/commitments.json";
 
 /**
  * Typed accessors for the JSON data files. Components import from here
@@ -50,3 +52,12 @@ export const SITE_URL =
 
 export const processSteps = process_;
 export type ProcessStep = (typeof process_)[number];
+
+/** How a client can buy. Rendered on /services; each page renders however
+ *  many entries are in the array, so one can be deleted outright. */
+export const engagementModels = engagements;
+export type Engagement = (typeof engagements)[number];
+
+/** What we promise in writing. Rendered on /about. */
+export const commitmentList = commitments;
+export type Commitment = (typeof commitments)[number];

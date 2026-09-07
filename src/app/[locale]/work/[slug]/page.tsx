@@ -14,7 +14,7 @@ import { SectionHead } from "@/components/primitives/SectionHead";
 import { Band } from "@/components/primitives/Band";
 import { ChipRow } from "@/components/primitives/Chip";
 import { MetricRow, SeriesChart } from "@/components/primitives/MetricTile";
-import { Prose } from "@/components/primitives/Prose";
+import { Prose, proseHeadings } from "@/components/primitives/Prose";
 import { Cta } from "@/components/primitives/Cta";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Label, Arrow } from "@/components/primitives/drafting";
@@ -65,6 +65,11 @@ export default async function CaseStudyPage({
   if (!project || project.draft) notFound();
 
   const next = getAdjacentProject(slug);
+
+  /* Parsed from the body, so the rail cannot list a section that is not
+     there. One heading is not a table of contents — the rail is dropped. */
+  const headings = proseHeadings(project.body);
+  const hasRail = headings.length > 1;
 
   /**
    * The conditional-client rule.
@@ -201,22 +206,80 @@ export default async function CaseStudyPage({
       {project.metrics.length > 0 ? (
         <Band tone="light" labelledBy="outcome">
           <SectionHead id="outcome" title={m.work.outcomeHeading} />
-          <MetricRow metrics={project.metrics} />
-          <SeriesChart
-            series={project.series}
-            label={project.seriesLabel || undefined}
-            caption={project.duration || undefined}
-            height="h-[180px]"
-            placeholder={{
-              notice: m.placeholders.notice,
-              label: m.placeholders.chart,
-            }}
-          />
+          <div className="grid gap-12">
+            <MetricRow metrics={project.metrics} />
+            <SeriesChart
+              series={project.series}
+              label={project.seriesLabel || undefined}
+              caption={project.duration || undefined}
+              height="h-[180px]"
+              placeholder={{
+                notice: m.placeholders.notice,
+                label: m.placeholders.chart,
+              }}
+            />
+          </div>
         </Band>
       ) : null}
 
+      {/* The body, with a contents rail alongside it on wide viewports.
+          Headings are parsed from the MDX itself, so the rail can never
+          list a section that is not there — and it disappears entirely
+          for a short case study that does not need one. */}
       <Band>
-        <Prose source={project.body} />
+        <div
+          className={
+            hasRail
+              ? "grid gap-12 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)] lg:gap-16"
+              : ""
+          }
+        >
+          {hasRail ? (
+            <nav
+              aria-labelledby="contents"
+              className="hidden self-start lg:sticky lg:top-28 lg:block"
+            >
+              <Label as="h2" id="contents" className="mb-5">
+                {m.work.onThisPage}
+              </Label>
+              <ul className="grid">
+                {headings.map((h) => (
+                  <li key={h.id} className="border-b border-rule">
+                    <a
+                      href={`#${h.id}`}
+                      className="block py-2.5 text-small text-ink-muted transition-colors hover:text-accent"
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <dl className="mt-8 grid gap-4 rounded-md border border-rule bg-sheet p-5">
+                {project.duration ? (
+                  <div className="grid gap-1.5">
+                    <dt>
+                      <Label>{m.fields.duration}</Label>
+                    </dt>
+                    <dd className="font-display text-small font-medium">
+                      {project.duration}
+                    </dd>
+                  </div>
+                ) : null}
+                <div className="grid gap-1.5">
+                  <dt>
+                    <Label>{m.fields.status}</Label>
+                  </dt>
+                  <dd className="font-display text-small font-medium">
+                    {project.status}
+                  </dd>
+                </div>
+              </dl>
+            </nav>
+          ) : null}
+
+          <Prose source={project.body} />
+        </div>
       </Band>
 
       {/* A real testimonial, or — pre-launch only — the shape one will

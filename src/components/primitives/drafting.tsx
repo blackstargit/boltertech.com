@@ -19,11 +19,13 @@ export function Label({
   children,
   as: Tag = "span",
   tone = "faint",
+  id,
   className = "",
 }: {
   children: ReactNode;
   as?: "span" | "div" | "p" | "h2" | "h3";
   tone?: "faint" | "accent" | "ink";
+  id?: string;
   className?: string;
 }) {
   const color =
@@ -34,6 +36,7 @@ export function Label({
         : "text-ink-faint";
   return (
     <Tag
+      id={id}
       className={`font-data text-label font-medium tracking-[0.16em] uppercase ${color} ${className}`}
     >
       {children}

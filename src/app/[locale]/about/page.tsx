@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
-import { site, team, serviceLines } from "@/lib/site";
+import { site, team, serviceLines, commitmentList } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/schema-org";
 import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
 import { SectionHead } from "@/components/primitives/SectionHead";
@@ -71,9 +71,36 @@ export default async function AboutPage({
         </PageHero>
       </Band>
 
+      {/* The commitments come before the founders deliberately: a
+          sceptical first-time visitor cares what you are on the hook for
+          before they care who you are. */}
+      <Band tone="light" labelledBy="commitments">
+        <SectionHead
+          id="commitments"
+          title={m.about.commitmentsHeading}
+          eyebrow={m.about.processHeading}
+        />
+        <ol className="grid grid-cols-[repeat(auto-fit,minmax(min(250px,100%),1fr))] gap-x-7 gap-y-10">
+          {commitmentList.map((c, i) => (
+            <li
+              key={c.id}
+              className="grid content-start gap-3.5 border-t-2 border-ink pt-5"
+            >
+              <span className="font-data text-micro font-semibold text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="text-h4">{c.name}</h3>
+              <p className="text-small text-pretty text-ink-muted">
+                {c.detail}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </Band>
+
       {/* Renders however many founders are in data/founders.json — two,
           three or five all lay out correctly without touching this file. */}
-      <Band tone="light" labelledBy="team">
+      <Band labelledBy="team">
         <SectionHead
           id="team"
           title={m.about.teamHeading}
@@ -116,7 +143,8 @@ export default async function AboutPage({
         </div>
       </Band>
 
-      <Band labelledBy="process">
+      {/* Seamed: two dark bands in a row would merge into one field. */}
+      <Band labelledBy="process" className="border-t border-rule">
         <SectionHead id="process" title={m.about.processHeading} />
         <ProcessGrid />
       </Band>

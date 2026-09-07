@@ -1,21 +1,9 @@
-## Launch blocker — turn the placeholders off
+## Placeholders
 
-Set `NEXT_PUBLIC_SHOW_PLACEHOLDERS=0` in the **Vercel production** environment
-(leave it unset in preview and local). Until then, every unwritten optional
-field renders a hatched, dashed, captioned stand-in instead of nothing:
-
-| Slot                  | What is missing today                             |
-| --------------------- | ------------------------------------------------- |
-| Case study cover      | all 11 — `cover: ""`                              |
-| Outcome chart         | all 11 — no `series:` on any project              |
-| Metric proportion bar | all 38 metrics — no `bar:` on any                 |
-| Client testimonial    | 10 of 11 — only `current-by-logmate` has one      |
-| Founder portrait      | all 3 — `photo: ""` and names still `PLACEHOLDER` |
-
-Switching the flag off restores absent-by-default: the slot renders nothing
-at all, with no empty heading and no orphaned label. Filling a field in makes
-its real version appear whether the flag is on or off — the flag only governs
-the stand-in. See `src/lib/placeholders.ts`.
+Everything on the site that is not real yet — written placeholders, hatched
+stand-ins, and the launch checklist — is inventoried in **`PLACEHOLDERS.md`**.
+Includes the one hard blocker (`[JURISDICTION]` in `terms.mdx`) and the
+production switch that turns the stand-ins off.
 
 ---
 

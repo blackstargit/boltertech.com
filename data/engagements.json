@@ -1,0 +1,23 @@
+[
+  {
+    "id": "discovery-sprint",
+    "kind": "PLACEHOLDER - Start here",
+    "name": "PLACEHOLDER - Discovery sprint",
+    "summary": "PLACEHOLDER. What this engagement is and who it suits. Two sentences. Say plainly what the client walks away with, and be honest about when this is the wrong shape for them - naming the case you are not right for is what makes the rest credible.",
+    "terms": "PLACEHOLDER - duration and pricing shape, e.g. '2 weeks, fixed fee'. No hourly rates: see the locked decision in CLAUDE.md."
+  },
+  {
+    "id": "fixed-scope-build",
+    "kind": "PLACEHOLDER - Most common",
+    "name": "PLACEHOLDER - Fixed-scope build",
+    "summary": "PLACEHOLDER. Same length and register as above. This is the engagement most visitors will be reading for, so it should be the most specific of the three.",
+    "terms": "PLACEHOLDER - minimum duration and how pricing is structured per phase."
+  },
+  {
+    "id": "retained-engineering",
+    "kind": "PLACEHOLDER - After launch",
+    "name": "PLACEHOLDER - Retained engineering",
+    "summary": "PLACEHOLDER. Delete this entry entirely if you do not want to offer a retainer - the services page renders however many entries are in this array.",
+    "terms": "PLACEHOLDER - billing period and notice period."
+  }
+]

@@ -50,7 +50,9 @@
     "includesLabel": "What it includes",
     "stackLabel": "Typically built with",
     "leadLabel": "Lead practice",
-    "supportingLabel": "Supporting"
+    "supportingLabel": "Supporting",
+    "engagementHeading": "How you can engage us",
+    "termsLabel": "Terms"
   },
   "work": {
     "metaTitle": "Work - Bolter Technologies",
@@ -60,14 +62,16 @@
     "empty": "No projects in this category yet.",
     "problemHeading": "The problem",
     "outcomeHeading": "Outcome",
-    "testimonialHeading": "What the client said"
+    "testimonialHeading": "What the client said",
+    "onThisPage": "On this page"
   },
   "about": {
     "metaTitle": "About - Bolter Technologies",
     "metaDescription": "Who we are, how we work, and why we started Bolter Technologies.",
     "heading": "About",
     "teamHeading": "Founders",
-    "processHeading": "How we work"
+    "processHeading": "How we work",
+    "commitmentsHeading": "What we commit to in writing"
   },
   "contact": {
     "metaTitle": "Contact - Bolter Technologies",

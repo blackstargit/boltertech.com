@@ -129,25 +129,40 @@ export function ContactForm({
             onChange={(e) => set("company", e.target.value)}
           />
         </Field>
-
-        <Field id="projectType" label={m.contact.typeLabel}>
-          <select
-            id="projectType"
-            name="projectType"
-            className={fieldClass}
-            value={values.projectType}
-            onChange={(e) =>
-              set("projectType", e.target.value as ContactInput["projectType"])
-            }
-          >
-            {projectTypes.map((t) => (
-              <option key={t.value} value={t.value}>
-                {t.label}
-              </option>
-            ))}
-          </select>
-        </Field>
       </div>
+
+      {/* Chips rather than a <select>: five options are worth showing all
+          at once, and a dropdown hides four of them behind a tap. Still a
+          single choice, so the payload and the Zod schema are unchanged —
+          this is a radio group wearing chips. */}
+      <fieldset className="grid gap-3 border-0 p-0">
+        <legend className={`${labelClass} mb-1`}>{m.contact.typeLabel}</legend>
+        <div className="flex flex-wrap gap-2">
+          {projectTypes.map((t) => {
+            const checked = values.projectType === t.value;
+            return (
+              <label
+                key={t.value}
+                className={`cursor-pointer rounded-sm border px-4 py-2.5 font-data text-micro font-medium transition-colors select-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                  checked
+                    ? "border-accent bg-accent-soft text-accent"
+                    : "border-rule text-ink-muted hover:border-ink hover:text-ink"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="projectType"
+                  value={t.value}
+                  checked={checked}
+                  onChange={() => set("projectType", t.value)}
+                  className="sr-only"
+                />
+                {t.label}
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
 
       <Field id="message" label={m.contact.messageLabel} error={errors.message}>
         <textarea

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "named-lead",
+    "name": "PLACEHOLDER - One named lead",
+    "detail": "PLACEHOLDER. Two sentences on what this commitment actually means in practice, written as something you would be willing to have quoted back at you. A commitment that cannot be broken is not a commitment - each of these should name a thing you would owe the client if you failed it."
+  },
+  {
+    "id": "fixed-price",
+    "name": "PLACEHOLDER - Fixed price per phase",
+    "detail": "PLACEHOLDER. Same length and register. This one overlaps with the pricing FAQ answer, so keep the two consistent - a visitor will read both."
+  },
+  {
+    "id": "you-own-it",
+    "name": "PLACEHOLDER - You own everything",
+    "detail": "PLACEHOLDER. The IP answer already exists in data/faqs.json and is real - reuse its substance here rather than writing a second, subtly different version."
+  },
+  {
+    "id": "support-after",
+    "name": "PLACEHOLDER - Support after handover",
+    "detail": "PLACEHOLDER. Blocked on the same decision as process step 4 and the 'What happens after launch?' FAQ. Settle the real support commitment once and write it into all three."
+  }
+]

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
-import { site, serviceLines } from "@/lib/site";
+import { site, serviceLines, engagementModels } from "@/lib/site";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema-org";
 import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
 import { SectionHead } from "@/components/primitives/SectionHead";
@@ -132,7 +132,34 @@ export default async function ServicesPage({
         </Band>
       ))}
 
-      <Band labelledBy="process" className="border-t border-rule">
+      {/* How a client can buy. Three shapes rather than a price list —
+          the no-pricing decision means this section carries the "what
+          does working with you actually look like" question on its own. */}
+      <Band tone="light" labelledBy="engage">
+        <SectionHead id="engage" title={m.services.engagementHeading} />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-5">
+          {engagementModels.map((e) => (
+            <article
+              key={e.id}
+              className="flex flex-col gap-4 rounded-md border border-rule bg-sheet p-7"
+            >
+              <Label tone="accent">{e.kind}</Label>
+              <h3 className="text-h3">{e.name}</h3>
+              <p className="text-small text-pretty text-ink-muted">
+                {e.summary}
+              </p>
+              <div className="mt-auto border-t border-rule pt-5">
+                <Label className="mb-2 block">{m.services.termsLabel}</Label>
+                <p className="font-data text-micro leading-relaxed text-ink">
+                  {e.terms}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Band>
+
+      <Band labelledBy="process">
         <SectionHead id="process" title={m.home.processHeading} />
         <ProcessGrid />
       </Band>
