@@ -1,4 +1,3 @@
-
 <!--
 FOR REVIEW — not yet verified, confirm before publishing:
 - Client name/sector left generic/withheld: project docs reference a classified evaluation

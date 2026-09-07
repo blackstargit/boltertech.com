@@ -96,5 +96,11 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "registered": "Registered in Pakistan"
+  },
+  "analytics": {
+    "message": "We use cookies to understand how visitors use this site.",
+    "privacyLink": "Privacy Policy",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

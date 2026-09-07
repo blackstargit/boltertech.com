@@ -1,4 +1,3 @@
-
 I need you to fill in a project intake form for a public case study on our company website
 
 > (Bolter Technologies), for the project in `Xai-dr-detection`.
@@ -17,7 +16,7 @@ I need you to fill in a project intake form for a public case study on our compa
 > don't refuse to guess — give your best reasonable estimate based on the scope of what was built,
 > and mark it clearly as a placeholder in the "For review" note (see Output below), not inside the
 > published copy itself. I will correct these against real data before anything goes live. The
-> template's "must be a number you can point to a source for" instinct is right for the *record*
+> template's "must be a number you can point to a source for" instinct is right for the _record_
 > we keep internally — it is wrong for what you hand back to me here. Guess, flag, move on.
 >
 > **Keep internal build narrative out of the public sections entirely.** The problem/approach/
@@ -26,7 +25,7 @@ I need you to fill in a project intake form for a public case study on our compa
 > deployed," internal disagreements, or how the sausage got made. If a real constraint shaped a
 > decision, present it as a deliberate design choice ("built to handle X reliably" not "we had to
 > rebuild this because Y broke"). If a capability isn't finished or isn't live yet, either leave it
-> out of the copy or describe only the part that *is* done — don't narrate the gap.
+> out of the copy or describe only the part that _is_ done — don't narrate the gap.
 >
 > Only include a client name or testimonial quote if you can confirm we have the client's
 > permission to publish it. If unsure, leave both blank and say so **in your reply to me**, not in
@@ -97,7 +96,7 @@ recognize their own situation: scale, stakes, what was at risk or what kept brea
 about the client's world, not our build process.
 
 **Approach** — What we built, described as a confident set of product/technical decisions. Real
-constraints can and should inform *why* something was built a certain way, but frame them as
+constraints can and should inform _why_ something was built a certain way, but frame them as
 engineering judgment ("designed for X"), never as trouble we ran into.
 
 **Outcome** — What changed for the client, in words (numbers live in Metrics, don't repeat them
@@ -127,6 +126,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 -->
 
 ### Project: dispatch-routing-engine
+
 ...
 ```
 

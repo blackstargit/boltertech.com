@@ -1,4 +1,3 @@
-
 <!--
 FOR REVIEW — not yet verified, confirm before publishing:
 - No client engagement is evident anywhere in the project (git history, docs, code) — this reads
@@ -55,7 +54,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 
 **Featured?**: no
 
-**Priority order**: 
+**Priority order**:
 
 **Metrics**:
 

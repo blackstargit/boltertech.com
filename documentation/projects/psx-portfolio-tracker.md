@@ -1,4 +1,3 @@
-
 <!--
 FOR REVIEW — not yet verified, confirm before publishing:
 - Written into this repo's own documentation/projects/ folder, not the boltertech.com

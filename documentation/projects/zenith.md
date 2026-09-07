@@ -1,4 +1,3 @@
-
 <!--
 FOR REVIEW — not yet verified, confirm before publishing:
 - No external client: Zenith started as an internally built product (a personal/self-hosted

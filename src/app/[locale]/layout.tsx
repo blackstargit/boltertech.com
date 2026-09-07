@@ -10,8 +10,10 @@ import {
   getMessages,
   isLocale,
   localeCodes,
+  localePath,
   type Locale,
 } from "@/lib/i18n";
+import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { SITE_URL, site } from "@/lib/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -103,6 +105,13 @@ export default async function LocaleLayout({
         <SiteFooter locale={typedLocale} messages={messages} />
         <Analytics />
         <SpeedInsights />
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <ConsentBanner
+            measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+            privacyHref={localePath(typedLocale, "/privacy")}
+            messages={messages.analytics}
+          />
+        )}
       </body>
     </html>
   );

@@ -1,4 +1,3 @@
-
 ### Project: current-by-logmate
 
 Title: Current by Logmate — Electricity Billing & Recovery System
@@ -35,7 +34,7 @@ Links: https://current.boltertech.com
 
 Testimonial: this product has effectively reduced our workload by three-fourth, Hamid Mehmood, COO
 
-Cover image: 
+Cover image:
 
 ---
 
