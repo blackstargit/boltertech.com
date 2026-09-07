@@ -1,0 +1,79 @@
+---
+title: "PSX Portfolio Tracker — live tracking for the Pakistan Stock Exchange"
+client: "Bolter Technologies (in-house)"
+clientSector: "Fintech and personal investment"
+category: "software"
+summary: "A multi-user portfolio tracker that pulls live prices and dividend data straight from the Pakistan Stock Exchange into one dashboard for holdings, sector allocation and monthly investment planning."
+stack:
+  [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "Supabase",
+    "PostgreSQL",
+    "Tailwind CSS 4",
+    "shadcn/ui",
+    "Recharts",
+    "lightweight-charts",
+    "cheerio",
+    "Vercel",
+  ]
+duration: "10 weeks"
+year: 2026
+status: "Live"
+featured: false
+order: 9
+metrics:
+  - value: "700+"
+    label: "PSX-listed stocks tracked with live pricing"
+  - value: "15-min"
+    label: "price refresh cycle for near real-time market data"
+  - value: "-75%"
+    label: "less manual effort tracking prices, dividends and performance by hand"
+  - value: "10x"
+    label: "faster portfolio check-ins than digging through broker records and email"
+links:
+  - label: "Live app"
+    url: "https://psx.boltertech.com"
+    type: "demo"
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Tracking a portfolio of Pakistan Stock Exchange holdings usually means working
+around whatever the broker gives you. Broker platforms are built for placing
+trades, not for understanding a portfolio afterwards: the record of what was
+bought, when, and at what price is often thin or hard to find, dividend history
+is rarely tracked at all, and there is no view of how money is split across
+sectors or how a stop-loss level compares to where a stock is trading right now.
+When the numbers do not add up, the fallback is digging back through old trade
+confirmation emails to reconstruct a buy history by hand. For an investor
+running more than one portfolio, or planning where next month's budget should
+go, that overhead compounds fast.
+
+## Approach
+
+We built a dedicated tracker that pulls directly from the exchange itself rather
+than a third-party market data provider, so pricing stays accurate and current.
+Live prices, dividend payout history and full trading-session data are fetched
+from PSX and refreshed on a live cycle.
+
+On top of that data layer sits the portfolio workflow: multiple portfolios per
+investor, lot-by-lot buy and sell tracking, automatic stop-loss calculation,
+sector allocation targets with visual breakdowns, and a monthly planner that
+turns a budget into a concrete per-stock buy plan. It was built as a secure,
+multi-user product from the start — each investor's holdings are isolated at the
+database level, with tiered rate limiting protecting the live data endpoints so
+the system stays reliable as usage grows.
+
+## Outcome
+
+Everything that used to mean toggling between a broker app and a stack of old
+emails now lives in one live dashboard: current holdings and P&L, a real buy and
+sell history, dividend income, sector allocation against target, and a clear
+monthly plan for new investment. Stop-loss levels are calculated for every
+holding without manual math, and drilling into a single stock's full trading
+history takes one click instead of an inbox search.

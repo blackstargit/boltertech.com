@@ -1,0 +1,80 @@
+---
+title: "Current by Logmate — billing and recovery platform"
+client: "Logmate Engineering and Services Private Limited"
+clientSector: "Energy and property management"
+category: "automation"
+summary: "An automated electricity billing and payment-recovery platform for a multi-site commercial mall, handling tiered billing, invoicing, multi-channel delivery and bank reconciliation for 250+ tenants."
+stack:
+  [
+    "TypeScript",
+    "Next.js 16",
+    "React 19",
+    "PostgreSQL",
+    "Prisma",
+    "NextAuth v5",
+    "Tailwind CSS 4",
+    "shadcn/ui",
+    "Supabase Storage",
+    "Upstash Redis + QStash",
+    "Baileys",
+    "Cloudflare Workers",
+    "Zod",
+  ]
+duration: "13 weeks"
+year: 2026
+status: "Ongoing"
+featured: false
+order: 7
+metrics:
+  - value: "250+"
+    label: "tenant accounts billed automatically every month"
+  - value: "100%"
+    label: "of bills calculated, generated and delivered without manual entry"
+  - value: "~70%"
+    label: "less manual effort spent on billing and reconciliation"
+  - value: "24/7"
+    label: "automated bank payment reconciliation"
+links:
+  - label: "Live platform"
+    url: "https://current.boltertech.com"
+    type: "demo"
+cover: ""
+testimonial:
+  quote: "This product has effectively reduced our workload by three quarters."
+  author: "Hamid Mehmood"
+  role: "Chief Operating Officer, Logmate"
+draft: false
+---
+
+## The problem
+
+Billing electricity accurately for a commercial mall with over 250 tenants
+across multiple sites is a moving target every single month. Every unit sits on
+a different consumption tier, every bill has to reach the right tenant through
+the right channel, and every incoming payment has to be tracked down and matched
+to the right account before anyone can say who has paid and who has not. On top
+of that, ownership needs clean recovery and profitability numbers every month.
+Done by hand, that is a process with a lot of surface area for something to
+slip.
+
+## Approach
+
+We built a dedicated billing and recovery platform that owns the entire cycle.
+Meter readings go in once a month and the system takes it from there:
+calculating every tenant's tiered bill, generating a PDF invoice, and delivering
+it by email and WhatsApp, with automatic reminders and escalation for anything
+that goes unpaid.
+
+On the collections side, incoming bank transactions are read directly from daily
+statements and matched to the right tenant and bill automatically, so payments
+are applied and reconciled without anyone cross-referencing a bank feed by hand.
+The platform runs on a queue-backed architecture built to carry the full tenant
+base through a billing run every month without manual babysitting.
+
+## Outcome
+
+The mall runs its entire monthly billing and collections cycle end to end,
+across every site it operates. Tenants receive accurate, on-time bills through
+the channels they actually check, overdue accounts are caught and escalated
+without anyone chasing them, and the business gets ready-to-use recovery and
+profitability reporting each month instead of assembling it by hand.

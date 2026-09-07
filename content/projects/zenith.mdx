@@ -1,0 +1,69 @@
+---
+title: "Zenith — a reading platform for serialised web fiction"
+client: "Bolter Technologies (in-house)"
+clientSector: "Digital publishing"
+category: "software"
+summary: "A scattered, ad-heavy web fiction library turned into one fast, distraction-free reading platform with offline chapters, built-in text-to-speech and a native Android app."
+stack:
+  [
+    "FastAPI",
+    "PostgreSQL",
+    "SQLAlchemy",
+    "Playwright",
+    "BeautifulSoup4",
+    "httpx",
+    "React 19",
+    "Vite 7",
+    "Tailwind CSS 4",
+    "React Router v7",
+    "Capacitor 8",
+  ]
+duration: "4 months"
+year: 2025
+status: "Delivered"
+featured: false
+order: 11
+metrics:
+  - value: "200+"
+    label: "novels imported and organised from a single library export"
+  - value: "10,000+"
+    label: "chapters scraped, formatted and made available offline"
+  - value: "-80%"
+    label: "less time spent on ads and page loads before reaching a chapter"
+  - value: "3"
+    label: "ways to organize your library for easier storage"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Readers who follow serialised web fiction end up managing sprawling libraries —
+hundreds of ongoing titles and tens of thousands of chapters, all on a single
+ad-heavy site with inconsistent formatting and no way to organise anything.
+Tracking what has been read, picking back up where you left off, and grouping a
+library by genre or priority are simply not options there. Nothing treats a
+personal reading library as a library rather than a stream of individual novels.
+
+## Approach
+
+We built Zenith as a complete reading platform, not a scraper. A FastAPI and
+PostgreSQL backend ingests an entire existing library in a single import step,
+then asynchronously fetches and normalises chapter content and book metadata
+through a headless browser layer built to handle dynamic, JavaScript-rendered
+pages. The data model separates novels, chapters, descriptions, tags and
+categories, so a library of any size stays fast to browse, search and organise.
+
+The reader ships with integrated text-to-speech, and the same codebase is
+packaged as an installable web app and a native Android build, so the reading
+experience is consistent on a phone, tablet or desktop.
+
+## Outcome
+
+An entire library in one place: imported in a single step, kept organised with
+categories and tags, and readable offline in a clean, consistent format with
+none of the original site's clutter. Library and reading progress carry across
+the web app and the Android build, with text-to-speech built in for hands-free
+reading.

@@ -11,7 +11,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 
 **Title**: PKNVD — National Cyber Vulnerability Database & Intelligence Platform
 
-**Client name**: 
+**Client name**:
 
 **Client sector**: Public Sector & Cybersecurity
 

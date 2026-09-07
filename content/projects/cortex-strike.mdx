@@ -1,0 +1,88 @@
+---
+title: "Cortex Strike — autonomous penetration testing agent"
+client: ""
+clientSector: "Government and critical infrastructure"
+category: "ai"
+summary: "An AI agent that plans and runs real, multi-tool penetration tests through one conversation, keeping a full audit trail of every scan, finding and report."
+stack:
+  [
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "SQLAlchemy",
+    "Alembic",
+    "llama.cpp",
+    "Model Context Protocol",
+    "Docker",
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "Electron",
+  ]
+duration: "1 year"
+year: 2026
+status: "Delivered"
+featured: true
+order: 3
+metrics:
+  - value: "90+"
+    label: "security tools an operator can run through one AI-guided conversation"
+  - value: "24+ hrs"
+    label: "longest autonomous assessment run without operator intervention"
+  - value: "~20%"
+    label: "better results than the same tools driven by hand"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Running a real penetration test means operating dozens of separate command-line
+tools by hand — a network scanner here, a web fuzzer there, a credential tester
+somewhere else — then manually correlating everything each one turns up before a
+single finding can be written down. For teams testing sensitive or critical
+infrastructure, that overhead is compounded by strict confidentiality
+requirements: the tooling has to run entirely inside the client's own
+environment, sometimes fully air-gapped, with no data ever leaving the network.
+Every extra minute spent context-switching between tools is a minute not spent
+finding real vulnerabilities, and a manual process makes it harder to guarantee
+that every step taken during an assessment is captured for the record.
+
+## Approach
+
+We built Cortex Strike as a single conversational front end for a full
+penetration-testing toolkit: an AI agent that plans an assessment and calls the
+right tool for each step itself, rather than requiring an operator to drive each
+tool by hand. Over 90 security tools — network scanners, web application
+testers, credential and intelligence tools — are exposed to the agent through
+the Model Context Protocol and run in an isolated container, so the agent
+reasons about the target and executes real commands against it in the same
+session.
+
+The platform was designed to run entirely on local infrastructure, including
+fully air-gapped deployments, using a self-hosted LLM rather than a cloud API —
+a deliberate choice for engagements where nothing about the target or the
+findings can leave the client's network. To keep long-running assessments
+coherent, every tool result gets a compact, verifiable receipt instead of a raw
+output dump in the conversation, and older results fold into a persistent,
+retrievable ledger as the assessment grows. A multi-hour engagement never loses
+track of an exact finding, port or credential, no matter how long the session
+runs. Every tool invocation, its full output and any report the agent writes are
+persisted automatically, giving each engagement a complete, queryable record.
+The system is multi-user by design, with per-operator accounts, customisable
+tool access and isolated file storage, and it streams every step of an
+assessment live so an operator can watch the agent work in real time.
+
+## Outcome
+
+Operators run full, multi-tool security assessments through a single guided
+conversation, with the agent actively helping interpret findings, connect
+signals and steer the assessment as it unfolds. Instead of juggling tools and
+outputs, the platform turns raw security data into actionable insight while
+capturing findings, tool output and reports on its own. Because it runs entirely
+within the client's own environment — air-gapped deployments included — that
+capability reaches sensitive and critical infrastructure without compromising
+confidentiality.

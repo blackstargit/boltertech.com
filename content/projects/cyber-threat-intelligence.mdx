@@ -1,0 +1,74 @@
+---
+title: "Threat intelligence and adversary tracking platform"
+client: ""
+clientSector: "Cybersecurity and defence"
+category: "data"
+summary: "An automated threat intelligence platform that ingests 80+ global feeds, scores and correlates tens of thousands of indicators daily, and maps live campaigns onto MITRE ATT&CK."
+stack:
+  [
+    "Python 3.12",
+    "FastAPI",
+    "PostgreSQL",
+    "SQLAlchemy",
+    "React 19",
+    "Vite",
+    "Tailwind CSS",
+    "Three.js",
+    "WebGL",
+    "STIX/TAXII",
+    "Docker",
+  ]
+duration: "8 months"
+year: 2025
+status: "Delivered"
+featured: true
+order: 1
+metrics:
+  - value: "80+"
+    label: "OSINT, STIX/TAXII and commercial feeds ingested automatically"
+  - value: "50,000+"
+    label: "indicators of compromise normalised and scored every day"
+  - value: "3D"
+    label: "geospatial command centre for real-time adversary tracking"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Enterprise security operations centres and threat hunting teams are inundated
+with disconnected feeds of IP addresses, domain names, file hashes and malware
+signatures. Manually pulling from dozens of open-source and proprietary threat
+lists leaves analysts drowning in false positives and stale data, with no
+automated way to connect an isolated malicious IP to an active threat actor
+campaign, a known malware family, or the MITRE ATT&CK techniques being
+leveraged. Correlating indicators across disjointed spreadsheets and threat
+portals wastes critical response time while high-risk threats slip through
+undetected.
+
+## Approach
+
+We built a unified cyber threat intelligence platform with an automated
+ingestion and normalisation pipeline capable of processing over 80 global
+OSINT, STIX/TAXII and commercial intelligence feeds. The backend uses FastAPI
+and PostgreSQL with JSONB schema flexibility to continuously deduplicate,
+cross-reference and calculate composite risk scores across indicators based on
+feed reliability, threat recency and historical attribution.
+
+The system automatically tags indicators with threat actor profiles — APT
+groups, malware strains — and maps observed behaviours directly onto the MITRE
+ATT&CK matrix. On the frontend, a React application drives an interactive 3D
+WebGL geospatial threat globe, real-time indicator filtering, and deep-dive
+entity correlation views that let an analyst pivot from a single IP to an
+entire adversary infrastructure in seconds.
+
+## Outcome
+
+Raw, noisy threat feeds became an organised, actionable intelligence hub.
+Analysts replaced hours of manual indicator cross-referencing with automated
+risk scoring and instant campaign context, cutting triage time sharply.
+Security teams gain immediate visibility into global adversary activity,
+high-risk emerging indicators and relevant countermeasures from a single
+high-density command centre rather than a dozen browser tabs.

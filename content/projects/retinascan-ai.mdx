@@ -1,0 +1,79 @@
+---
+title: "RetinaScan AI — explainable diabetic retinopathy screening"
+client: "Bolter Technologies (in-house)"
+clientSector: "Healthcare and medical imaging"
+category: "ai"
+summary: "A diagnostic workstation that turns a single retinal photo into a five-stage diabetic retinopathy read, with a visual map of where the evidence is and a plain-language clinical explanation."
+stack:
+  [
+    "Python",
+    "TensorFlow",
+    "Keras",
+    "ResNet50",
+    "OpenCV",
+    "Flask",
+    "React",
+    "Vite",
+  ]
+duration: "5 months"
+year: 2026
+status: "Delivered"
+featured: false
+order: 10
+metrics:
+  - value: "5"
+    label: "DR severity stages classified per scan, healthy to proliferative"
+  - value: "4"
+    label: "clinical findings flagged and explained per scan"
+  - value: "30,657"
+    label: "labelled fundus images used to train the diagnostic model"
+  - value: "<15s"
+    label: "from image upload to full diagnostic report"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Diabetic retinopathy is one of the leading causes of preventable blindness in
+working-age adults, and it is entirely manageable when caught early. The problem
+is catching it. Screening depends on a specialist reading a retinal photo and
+judging where it falls across five stages of severity, from no disease to
+sight-threatening proliferative disease. That is slow, it does not scale to the
+volume of screening diabetic populations actually need, and every "AI can do
+this instead" pitch runs into the same wall: a black-box model that outputs a
+number with no way to see why. Clinicians will not act on a diagnosis they
+cannot inspect, and a screening tool nobody trusts is a screening tool nobody
+uses.
+
+## Approach
+
+We designed RetinaScan AI around a simple principle: a diagnosis is only useful
+if you can see the reasoning behind it. At the core is a ResNet50 convolutional
+network fine-tuned to classify retinal fundus images into the five clinically
+recognised DR severity stages.
+
+Every prediction is paired with a Grad-CAM attribution map highlighting the
+regions of the retina the model weighted most heavily, rendered as an
+interactive overlay so a viewer can blend between the raw photo and the model's
+heatmap and see precisely where the evidence lives. On top of that sits a
+clinical explanation layer that translates the activated regions into
+plain-language findings — microaneurysms, hard exudates, haemorrhages,
+neovascularisation — each with its own description on demand, so the output
+reads like a report rather than a probability score.
+
+The whole thing ships as a single-page diagnostic workstation: drop in a fundus
+photo and get the classification, the heatmap overlay and the clinical write-up
+in one pass, from a Flask API behind a React front end. Procedurally generated
+sample cases spanning normal, moderate and severe presentations let the full
+pipeline be demonstrated end to end without depending on real patient imagery.
+
+## Outcome
+
+An inspectable alternative to black-box DR screening: one photo in, a severity
+read and a visual, plain-language explanation out. Rather than trusting a single
+number, a viewer can see which part of the retina drove the classification and
+what clinical feature it corresponds to — which is the gap between "the model
+said so" and "here is the evidence."

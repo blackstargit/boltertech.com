@@ -11,7 +11,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 
 **Title**: LTE Trove — Virtual 4G LTE Network Lab & Orchestration Platform
 
-**Client name**: 
+**Client name**:
 
 **Client sector**: Telecommunications
 

@@ -10,7 +10,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 
 **Title**: DCAS — High-Throughput Data Correlation & Entity Resolution Platform
 
-**Client name**: 
+**Client name**:
 
 **Client sector**: Data Intelligence & Analytics
 

@@ -10,7 +10,7 @@ FOR REVIEW — not yet verified, confirm before publishing:
 
 **Title**: Enterprise Cyber Threat Intelligence & Adversary Tracking Platform
 
-**Client name**: 
+**Client name**:
 
 **Client sector**: Cybersecurity & Defense
 

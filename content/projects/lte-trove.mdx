@@ -1,0 +1,75 @@
+---
+title: "LTE Trove — virtual 4G network lab"
+client: ""
+clientSector: "Telecommunications"
+category: "software"
+summary: "A cloud-native 4G LTE simulation platform and browser-managed network operations centre that provisions multi-node EPC networks and validates 3GPP signalling without any RF hardware."
+stack:
+  [
+    "React 19",
+    "Vite",
+    "Tailwind CSS",
+    "Zustand",
+    "Node.js",
+    "Express",
+    "Docker Engine",
+    "Dockerode",
+    "OpenAirInterface",
+    "Cassandra",
+    "WebSocket",
+    "Server-Sent Events",
+  ]
+duration: "6 months"
+year: 2026
+status: "Delivered"
+featured: true
+order: 6
+metrics:
+  - value: "100%"
+    label: "software-defined RF simulation, no physical hardware dependency"
+  - value: "< 3 min"
+    label: "to provision and orchestrate a full multi-node virtual EPC and RAN"
+  - value: "7"
+    label: "automated 3GPP milestone verification suites, M1 to M7"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Testing and validating cellular network protocols traditionally requires
+dedicated RF testbenches, physical eNodeB base stations, software-defined
+radios, RF shielding enclosures and programmable USIM cards — tens of thousands
+of dollars per bench. Physical test rigs create constant contention across
+engineering teams, introduce hardware misconfigurations that are difficult to
+isolate, and demand hours of manual wiring and flashing just to test a single
+core configuration or handover scenario. There was no repeatable,
+software-defined way to spin up an isolated cellular sandbox for automated QA,
+protocol experimentation or training.
+
+## Approach
+
+We built LTE Trove as a cloud-native 4G LTE simulation platform and virtual
+network operations centre, powered by OpenAirInterface RF simulation
+(`rfsim`). The backend pairs Node.js with Dockerode to orchestrate containerised
+Evolved Packet Core microservices — HSS, MME and the serving and packet gateways
+— alongside a Cassandra subscriber registry, isolated Linux bridges and kernel
+TUN interfaces.
+
+On the frontend, a React 19 application with Zustand state management and
+WebSocket event streaming gives operators an interactive topology canvas, live
+3GPP signalling waterfall inspection across S1AP, NAS, S6a and X2AP, virtual UE
+handset commissioning, and an automated milestone verification engine for
+continuous regression testing.
+
+## Outcome
+
+The dependency on specialised lab hardware is gone: complete, isolated 4G LTE
+networks now spin up on standard compute workstations and in CI. Protocol
+engineers configure multi-eNodeB topologies, simulate subscriber authentication,
+execute X2 handovers and verify end-to-end data session flows through automated
+suites in minutes rather than days. Network state and protocol captures are
+fully deterministic, which is what makes cellular regression testing, protocol
+debugging and telecom training repeatable instead of bench-dependent.

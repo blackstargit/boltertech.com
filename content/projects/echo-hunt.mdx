@@ -1,0 +1,87 @@
+---
+title: "EchoHunt — digital discourse monitoring"
+client: ""
+clientSector: "Government and public sector communications"
+category: "ai"
+summary: "An AI platform that watches Twitter, Instagram, YouTube and Facebook for emerging narratives in real time and hands communications teams a ready-to-execute counter-narrative strategy."
+stack:
+  [
+    "Python 3.12",
+    "FastAPI",
+    "React 19",
+    "TypeScript",
+    "Redux Toolkit",
+    "Tailwind CSS",
+    "Selenium",
+    "CrewAI",
+    "PaddleOCR-VL",
+    "Whisper",
+    "NLLB-200",
+    "GLiNER",
+    "XLM-RoBERTa",
+    "Sentence-Transformers",
+    "llama.cpp",
+  ]
+duration: "10 months"
+year: 2025
+status: "Delivered"
+featured: true
+order: 4
+metrics:
+  - value: "180,000+"
+    label: "posts collected, enriched and analysed"
+  - value: "4"
+    label: "platforms monitored at once — Twitter, Instagram, YouTube, Facebook"
+  - value: "100%"
+    label: "of the core pipeline runs on local infrastructure, no cloud required"   
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Narratives move fast across social media, and by the time a harmful or
+misleading story is obvious to a communications team, it has often already
+spread across multiple platforms and languages. Manually tracking thousands of
+posts across Twitter, Instagram, YouTube and Facebook — in multiple languages,
+including text baked into images and spoken in videos — is not something a human
+team can do at scale or in real time. Worse, once a narrative is spotted, teams
+typically start a response from scratch: figuring out who is driving it, how
+credible those sources are, which platforms need the most attention, and what to
+actually say, all under time pressure while the story keeps moving.
+
+## Approach
+
+We built an end-to-end platform that takes a topic, hashtag or account and turns
+raw social media activity into a ranked map of the narratives forming around it,
+then drafts a response. Posts are collected across all four platforms and
+enriched so nothing is missed for being outside the caption or outside English:
+on-image and on-video text is extracted via OCR, spoken audio is transcribed,
+and everything is translated to a common language before analysis.
+
+From there a multilingual NLP pipeline detects entities, sentiment and stance
+toward a chosen target, then clusters posts into distinct narrative storylines —
+weighted by credibility signals such as account verification and official-source
+status rather than raw engagement, so a narrative pushed by a handful of
+credible accounts is not buried under viral but low-credibility noise. Each
+cluster is scored for influence using a transparent, weighted framework, so an
+analyst can see exactly why a narrative ranked where it did. A three-agent AI
+crew — analyst, strategist and tactician — then reads the clusters and produces
+a platform-by-platform counter-narrative plan: what to say, in which language,
+on which platform, and how urgently. The pipeline runs on local GPU
+infrastructure by default, so sensitive monitoring data never has to leave the
+client's own environment, with cloud LLMs available as an opt-in,
+bring-your-own-key choice rather than a requirement.
+
+## Outcome
+
+Communications and analyst teams get one workflow in place of hours of manual,
+multi-platform monitoring: scrape, enrich, detect, review, respond. Instead of
+discovering a narrative after it has already spread and then starting a response
+cold, they see narratives ranked by real credibility and influence signals and
+receive a drafted, platform-specific strategy they can act on immediately. The
+system handles the full multilingual, multi-platform picture — including content
+that never appears in searchable text — so a narrative cannot hide in an image,
+a video, or a language nobody was watching for.

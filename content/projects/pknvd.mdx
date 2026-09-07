@@ -1,0 +1,67 @@
+---
+title: "PKNVD — national vulnerability database"
+client: ""
+clientSector: "Public sector cybersecurity"
+category: "data"
+summary: "A vulnerability intelligence platform that unifies 200,000+ CVE records with live exploit registries and gives analysts sub-50ms search and triage across the full catalogue."
+stack:
+  [
+    "React 19",
+    "Vite",
+    "Tailwind CSS",
+    "Recharts",
+    "Python 3.12",
+    "FastAPI",
+    "PostgreSQL",
+    "NIST NVD 2.0 API",
+    "CISA KEV",
+    "Vulners API",
+    "Docker",
+  ]
+duration: "9 weeks"
+year: 2026
+status: "Delivered"
+featured: false
+order: 8
+metrics:
+  - value: "200,000+"
+    label: "CVE records indexed and cross-referenced with exploit registries"
+  - value: "< 50ms"
+    label: "multi-facet query response across the full vulnerability catalogue"
+  - value: "100%"
+    label: "automated weaponisation tracking across CISA KEV and public exploit sources"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Security teams and national CERTs face thousands of new CVEs every month.
+Relying on base CVSS severity alone leaves analysts in the dark: a theoretical
+CVSS 9.8 flaw with no known exploit monopolises an emergency patching cycle
+while an actively weaponised CVSS 7.5 vulnerability goes unnoticed. Because NIST
+NVD, CISA's Known Exploited Vulnerabilities catalogue and the exploit
+repositories are separate feeds, analysts cross-reference them by hand — which
+slows response and leaves critical infrastructure exposed to live exploits.
+
+## Approach
+
+We architected PKNVD as a unified vulnerability intelligence database and triage
+platform. The backend uses FastAPI with asynchronous PostgreSQL connection
+pooling (`psycopg-pool`) to ingest, parse and synchronise global feeds from NIST
+NVD 2.0, CISA KEV and active exploit databases. Composite and GIN indexes power
+fast filtering across CVE IDs, CVSS v2/v3/v4 metrics, Common Platform
+Enumerations and weaponisation flags.
+
+The frontend is a React 19 triage dashboard with multi-facet filters, real-time
+severity distribution analytics and automated advisory generation.
+
+## Outcome
+
+Security teams can isolate the vulnerabilities that have working public exploit
+code in a single click, rather than reconstructing that picture across several
+browser tabs. Contextual severity scoring — exploited in the wild, not merely
+theoretically severe — is what changes patch prioritisation, and it is now the
+default view rather than a manual research task.

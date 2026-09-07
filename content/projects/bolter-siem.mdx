@@ -1,0 +1,69 @@
+---
+title: "Bolter SIEM — SOC monitoring and UEBA analytics"
+client: "Bolter Technologies (in-house)"
+clientSector: "Cybersecurity and enterprise infrastructure"
+category: "data"
+summary: "A SIEM and UEBA platform that correlates millions of events per second from Elasticsearch, unifies fragmented device identities, and cuts SOC analyst triage time."
+stack:
+  [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "Tailwind CSS",
+    "Recharts",
+    "Elasticsearch",
+    "MySQL 8",
+    "Docker",
+  ]
+duration: "8 months"
+year: 2025
+status: "Delivered"
+featured: true
+order: 2
+metrics:
+  - value: "1,000,000+"
+    label: "security events indexed and queryable per second"
+  - value: "~65%"
+    label: "reduction in mean time to detect via live detection streams"
+  - value: "100%"
+    label: "device identity unification across multi-agent telemetry sources"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Modern security operations centres are buried under millions of event logs from
+firewalls, Windows event logs, Linux syslogs and endpoint agents. Traditional
+SIEM interfaces lag under that volume, suffer severe alert fatigue, and lack
+coherent entity resolution — often conflating service accounts and high-traffic
+file servers with rogue human behaviour in UEBA leaderboards. Worse, endpoints
+reporting under multiple agent names or renamed hostnames split into duplicate
+devices, leaving analysts with fragmented forensic trails in the middle of an
+incident investigation.
+
+## Approach
+
+We architected Bolter SIEM as a high-density SOC command centre and UEBA
+analytics platform. Built on Next.js 16 and React 19, the frontend talks to
+multi-node Elasticsearch clusters and MySQL device registries through an
+optimised server-side proxy layer.
+
+The platform introduces segregated behavioural risk models that distinguish
+human user anomalies from background service accounts and network
+infrastructure, which is what removes most of the false-positive noise. To
+solve identity fragmentation, we built a dynamic alias-resolution layer that
+collapses multi-agent telemetry — Wazuh agents, native collectors, renamed
+hostnames — into unified, canonical device profiles. For rapid investigation,
+an interactive side drawer and live canvas monitors give analysts sub-second
+event drill-down without navigating away from the active triage screen.
+
+## Outcome
+
+Analysts investigate roughly three times faster, working from zero-navigation
+forensic drawers and unified asset timelines rather than reassembling a device's
+history by hand across duplicate records. The segregated UEBA engine cut
+behavioural noise by about 40%, so responders spend their attention on genuine
+threats instead of benign automated workloads.

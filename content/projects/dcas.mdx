@@ -1,0 +1,68 @@
+---
+title: "DCAS — data correlation and entity resolution"
+client: ""
+clientSector: "Data intelligence and analytics"
+category: "data"
+summary: "A high-throughput correlation engine that unifies heterogeneous datasets, resolves identities across dirty records, and streams live match results to analysts as a run progresses."
+stack:
+  [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "Python",
+    "RapidFuzz",
+    "MongoDB",
+    "Server-Sent Events",
+    "Tailwind CSS",
+    "Recharts",
+  ]
+duration: "6 weeks"
+year: 2026
+status: "Delivered"
+featured: true
+order: 5
+metrics:
+  - value: "99.8%"
+    label: "entity resolution precision across dirty and unstructured records"
+  - value: "10x"
+    label: "faster cross-database correlation than manual spreadsheet lookups"
+  - value: "0 sec"
+    label: "UI freeze during multi-million record runs, via streamed progress"
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Analysts and intelligence teams routinely work against fragmented data silos:
+internal databases, customer registries, transaction logs, external
+communication records. Each dataset follows different schema conventions, lacks
+standardised formatting — inconsistent phone numbers, partial names, typos,
+alias variations — and runs to millions of rows. Cross-referencing records by
+hand across separate spreadsheets, or firing naive batch queries at each
+database in turn, produces severe bottlenecks, missed connections and high
+false-positive rates in exactly the investigations where time matters most.
+
+## Approach
+
+We designed DCAS as a high-throughput entity resolution and correlation
+platform, pairing a Python correlation engine with MongoDB's flexible schema
+storage and a Next.js 16 web interface.
+
+The engine applies a two-tier matching strategy: an exact normalisation layer
+for structured identifiers — national IDs, standardised phone numbers, email
+hashes — followed by a token-sort fuzzy pipeline built on RapidFuzz that scores
+name variations and partial aliases against fine-grained confidence thresholds.
+Correlation runs execute on asynchronous workers that stream live progress and
+verified match batches straight to the browser over Server-Sent Events, so a run
+across millions of records never blocks the interface an analyst is watching it
+from.
+
+## Outcome
+
+Days of manual spreadsheet lookups and brittle one-off scripts collapsed into an
+automated correlation workflow with visible progress. Analysts can watch a run
+resolve linkages across massive datasets in real time, then export verified
+match clusters and audit-ready reports directly to stakeholders.

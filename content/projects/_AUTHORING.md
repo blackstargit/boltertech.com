@@ -22,12 +22,10 @@ its whole section disappears — no empty heading, no orphaned label, no
 | `cover`       | No cover image                                                      |
 | `duration`    | That field is dropped from the title block                          |
 
-The files currently here are deliberately different shapes so you can see
-each case: `dispatch-routing` is anonymous with metrics,
-`invoice-extraction` is named with a demo link and a testimonial,
-`retention-forecasting` has none of the optional fields at all, and
-`internal-tools-migration` exists to give the `software` category a
-project to show (it's the only one of the four).
+Live examples of each shape: `current-by-logmate` is a named client with a
+live link and a testimonial, `cortex-strike` is an anonymous engagement with
+metrics and neither, and `zenith` is an in-house product. Copy whichever is
+closest.
 
 ## Frontmatter reference
 
@@ -79,5 +77,6 @@ show them. Use that section for what the numbers do not capture.
 
 ## Images
 
-Put them in `public/work/<slug>/` and reference them as
-`/work/<slug>/filename.png`.
+Every project already has a folder at `public/work/<slug>/`. Drop images in
+and set `cover: "/work/<slug>/filename.png"` for the image under the title
+block, or reference them from the body as `![alt](/work/<slug>/name.png)`.

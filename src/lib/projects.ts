@@ -28,10 +28,13 @@ export function getProjectsByCategory(category: Category): ProjectEntry[] {
 /**
  * The homepage outcome band reads from real project frontmatter rather
  * than hand-written numbers, so editing a case study updates the home page.
+ *
+ * One metric per project, not the first three off the top project — three
+ * figures from a single case study reads as one client, not a track record.
  */
 export function getHeadlineMetrics(limit = 3) {
   return getFeaturedProjects(limit)
-    .flatMap((p) => p.metrics.map((m) => ({ ...m, slug: p.slug })))
+    .flatMap((p) => (p.metrics[0] ? [{ ...p.metrics[0], slug: p.slug }] : []))
     .slice(0, limit);
 }
 
