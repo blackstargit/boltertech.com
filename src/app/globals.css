@@ -5,51 +5,64 @@
    Single source of truth. Components must never contain a raw hex,
    a raw px, or a font-family. If you need a new value, add it here.
 
-   Themes: light is the launch theme. The dark block is complete and
-   ready — nothing sets [data-theme="dark"] yet. To ship dark mode,
-   set that attribute on <html>; no component changes required.
+   Themes are BAND SCOPES, not just a page setting. `<html>` carries
+   data-theme="dark" and any section can carry data-theme="light" to
+   flip the ground under it. Both blocks below are complete and both
+   are reachable, so a component written against these tokens renders
+   correctly in either band with no per-band variants.
    ═══════════════════════════════════════════════════════════════════ */
 
-:root {
+/* Light — the warm bone band. Also the :root fallback, so a page that
+   forgets to declare a theme still renders legibly. */
+:root,
+[data-theme="light"] {
   /* ── ground ─────────────────────────────────────────────────── */
-  --paper: #f6f8fa; /* page ground — drafting vellum */
+  --paper: #f3f1ed; /* band ground — warm bone, not white */
   --sheet: #ffffff; /* raised surfaces sit white on the ground */
-  --plate: #061a2b; /* dark chip the logo mark must sit on */
+  --plate: #0a0b0c; /* dark chip; the logo mark is drawn for this */
 
-  /* ── ink — cyanotype navy, never a neutral black ─────────────── */
-  --ink: #0a2540; /* 14.6:1 on paper */
-  --ink-muted: #4a6480; /*  5.7:1 on paper */
-  --ink-invert: #f6f8fa; /* text on --ink / --plate */
+  /* ── ink ────────────────────────────────────────────────────── */
+  --ink: #14161a; /* 15.4:1 on paper */
+  --ink-muted: #5b6066; /*  6.4:1 on paper — body-size secondary text */
+  --ink-faint: #6f6a5f; /*  5.2:1 on paper — the 10px labels live here */
+  --ink-invert: #f3f1ed; /* text on --ink / --plate */
 
   /* ── line weights ───────────────────────────────────────────── */
-  --rule: #c9d6e2;
-  --rule-faint: #e3eaf1;
+  --rule: #dcd8d0;
+  --rule-faint: #e9e5de;
 
   /* ── the one accent ─────────────────────────────────────────── */
-  --accent: #00688c; /* 5.9:1 on paper */
-  --accent-soft: #e4f0f6;
+  /* Amber, darkened for the bone ground. The brand amber (#e8a33d)
+     measures 2.2:1 here, which is not a usable text colour — the dark
+     band below carries the bright value. Same hue, two grounds. */
+  --accent: #8f5d0a; /* 5.6:1 on paper */
+  --accent-soft: #f0e2c8;
+  --on-accent: #0a0b0c; /* text sitting on an --accent fill */
 
-  /* Semantic, kept separate from the accent per design system rules.
-     --metric currently resolves to ink: outcome figures are set in ink
-     and *measured* by a cyan dimension rule. Change this one line if a
-     third colour is ever wanted for metrics. */
-  --metric: var(--ink);
+  --metric: var(--accent);
   --positive: #1b5e35;
   --critical: #8c1d18;
 }
 
+/* Dark — the page ground. */
 [data-theme="dark"] {
-  --paper: #061019;
-  --sheet: #0c1b2a;
-  --plate: #04121e;
-  --ink: #dce9f5; /* 15.5:1 on paper */
-  --ink-muted: #8aa3bc; /*  7.3:1 on paper */
-  --ink-invert: #061019;
-  --rule: #1c3247;
-  --rule-faint: #122334;
-  --accent: #4fd8f5; /* 11.4:1 on paper */
-  --accent-soft: #0d2b3b;
-  --metric: var(--ink);
+  --paper: #0a0b0c;
+  --sheet: #0e1011;
+  --plate: #0a0b0c;
+
+  --ink: #ffffff; /* 19.5:1 on paper */
+  --ink-muted: #b6b7b8; /* 10.0:1 on paper */
+  --ink-faint: #8b8d8f; /*  5.6:1 on paper */
+  --ink-invert: #0a0b0c;
+
+  --rule: #26282a;
+  --rule-faint: #191b1c;
+
+  --accent: #e8a33d; /* 9.0:1 on paper */
+  --accent-soft: #2a1f0d;
+  --on-accent: #0a0b0c;
+
+  --metric: var(--accent);
   --positive: #79d3a0;
   --critical: #f2b8b5;
 }
@@ -57,8 +70,8 @@
 /* ═══════════════════════════════════════════════════════════════════
    Tailwind theme mapping.
    `@theme inline` emits utilities that reference the custom properties
-   rather than baking in resolved values — which is what makes the
-   runtime theme switch above work without rebuilding CSS.
+   rather than baking in resolved values — which is what makes a nested
+   band re-resolve every colour without rebuilding CSS.
    ═══════════════════════════════════════════════════════════════════ */
 @theme inline {
   --color-paper: var(--paper);
@@ -66,41 +79,50 @@
   --color-plate: var(--plate);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
   --color-ink-invert: var(--ink-invert);
   --color-rule: var(--rule);
   --color-rule-faint: var(--rule-faint);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
   --color-metric: var(--metric);
   --color-positive: var(--positive);
   --color-critical: var(--critical);
 
   /* Typefaces are injected by next/font in the root layout.
      --font-arabic is declared but unmapped until an RTL locale ships. */
-  --font-display: var(--font-chivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-data: var(--font-martian-mono), ui-monospace, Consolas, monospace;
+  --font-data: var(--font-plex-mono), ui-monospace, Consolas, monospace;
 
-  /* Type scale — fluid, so there is no separate mobile scale to maintain */
-  --text-label: 0.625rem;
-  --text-micro: 0.6875rem;
-  --text-small: 0.8125rem;
-  --text-body: 0.9375rem;
-  --text-lede: clamp(0.9375rem, 1.4vw, 1.0625rem);
-  --text-h3: 1.25rem;
-  --text-h2: clamp(1.375rem, 2.6vw, 1.75rem);
-  --text-h1: clamp(1.75rem, 4.6vw, 3.25rem);
+  /* Type scale — fluid, so there is no separate mobile scale to maintain.
+     The h1→label range is deliberately wide: hierarchy is carried by size
+     here, not by rules and boxes. */
+  --text-label: 0.65625rem; /* 10.5px */
+  --text-micro: 0.75rem; /* 12px   */
+  --text-small: 0.84375rem; /* 13.5px */
+  --text-body: 0.9375rem; /* 15px   */
+  --text-lede: clamp(1rem, 1.3vw, 1.15625rem);
+  --text-h4: 1.1875rem; /* 19px   */
+  --text-h3: 1.375rem; /* 22px   */
+  --text-h2: clamp(1.875rem, 3.6vw, 3rem);
+  --text-h1: clamp(2.375rem, 5.4vw, 4.5rem);
   /* Named --text-figure, not --text-metric: `--color-metric` already
      exists and both would generate a colliding `text-metric` utility. */
-  --text-figure: clamp(1.5rem, 3vw, 2rem);
+  --text-figure: clamp(1.875rem, 3.4vw, 2.75rem);
 
-  /* Drafting geometry. Blueprint has no rounded corners — this is a
-     deliberate zero, not an oversight. */
-  --radius-none: 0px;
-  --spacing-gutter: clamp(1.15rem, 4vw, 3.25rem);
-  --spacing-section: clamp(3rem, 7vw, 5.5rem);
+  /* Geometry. Four steps, each with one job — resist adding a fifth. */
+  --radius-xs: 5px; /* chips, small badges          */
+  --radius-sm: 7px; /* buttons, inputs              */
+  --radius-md: 10px; /* card grids, panels           */
+  --radius-lg: 14px; /* the contact form shell       */
 
-  --container-sheet: 1220px;
+  --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
+  --spacing-section: clamp(3.5rem, 7vw, 6.5rem);
+
+  --container-sheet: 1320px;
   --container-prose: 68ch;
 }
 
@@ -125,16 +147,22 @@
   }
 
   /* Headings take the display face by default so components don't
-     have to remember to ask for it. */
+     have to remember to ask for it. Space Grotesk carries this design
+     at 600 — 700 is too heavy at the new h1 size. */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.03em;
-    line-height: 1.08;
+    line-height: 1.06;
     text-wrap: balance;
+  }
+
+  h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.03;
   }
 
   :focus-visible {
@@ -150,16 +178,84 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   Tabset — tab panels with no JavaScript.
+
+   Markup contract (see OutcomeTabs.tsx):
+
+     .tabset
+       > input[type=radio] × N     (visually hidden, one per tab)
+       > div                       (the label row — exactly one div)
+       > article[data-panel] × N   (the panels, in the same order)
+
+   Panels are <article> and the label row is the only <div>, so
+   :nth-of-type counts panels and inputs independently and the k-th
+   input reveals the k-th panel. Capped at six, which is five more
+   than the site needs today and cheaper than a generated stylesheet.
+
+   Why not useState: the home page ships zero client JavaScript, and a
+   native radiogroup already implements arrow-key navigation between
+   tabs — behaviour a hand-rolled tablist would have to reimplement
+   with keydown handlers and a roving tabindex, usually incorrectly.
+   ═══════════════════════════════════════════════════════════════════ */
+.tabset > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tabset > article {
+  display: none;
+}
+
+.tabset > input:nth-of-type(1):checked ~ article:nth-of-type(1),
+.tabset > input:nth-of-type(2):checked ~ article:nth-of-type(2),
+.tabset > input:nth-of-type(3):checked ~ article:nth-of-type(3),
+.tabset > input:nth-of-type(4):checked ~ article:nth-of-type(4),
+.tabset > input:nth-of-type(5):checked ~ article:nth-of-type(5),
+.tabset > input:nth-of-type(6):checked ~ article:nth-of-type(6) {
+  display: grid;
+}
+
+.tabset > input:nth-of-type(1):checked ~ div > label:nth-of-type(1),
+.tabset > input:nth-of-type(2):checked ~ div > label:nth-of-type(2),
+.tabset > input:nth-of-type(3):checked ~ div > label:nth-of-type(3),
+.tabset > input:nth-of-type(4):checked ~ div > label:nth-of-type(4),
+.tabset > input:nth-of-type(5):checked ~ div > label:nth-of-type(5),
+.tabset > input:nth-of-type(6):checked ~ div > label:nth-of-type(6) {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* The input is visually hidden, so its focus ring would be invisible.
+   Move the ring onto the label the user can actually see. */
+.tabset > input:nth-of-type(1):focus-visible ~ div > label:nth-of-type(1),
+.tabset > input:nth-of-type(2):focus-visible ~ div > label:nth-of-type(2),
+.tabset > input:nth-of-type(3):focus-visible ~ div > label:nth-of-type(3),
+.tabset > input:nth-of-type(4):focus-visible ~ div > label:nth-of-type(4),
+.tabset > input:nth-of-type(5):focus-visible ~ div > label:nth-of-type(5),
+.tabset > input:nth-of-type(6):focus-visible ~ div > label:nth-of-type(6) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    RTL
 
    Urdu and Arabic are on the roadmap, so every component is written
    with logical properties (padding-inline, margin-block, border-inline,
    start/end) rather than left/right. The rules below cover the few
    things logical properties cannot express: directional glyphs and
-   the drafting devices, which must mirror.
+   the marquee, which must travel the other way.
    ═══════════════════════════════════════════════════════════════════ */
 [dir="rtl"] .mirror-x {
   transform: scaleX(-1);
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -171,6 +267,48 @@
 @keyframes draw-x {
   to {
     transform: scaleX(1);
+  }
+}
+
+@keyframes ticker-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.ticker-track {
+  animation: ticker-slide 42s linear infinite;
+}
+
+.pulse-dot {
+  animation: soft-pulse 2.4s ease-in-out infinite;
+}
+
+/* Scroll-driven entrance. Guarded: without a timeline, `both` fill
+   would leave every below-fold element stuck at opacity:0 forever in
+   a browser that lacks scroll-driven animation. No guard, no reveal. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise 0.55s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
   }
 }
 

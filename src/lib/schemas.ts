@@ -23,6 +23,11 @@ const linkSchema = z.object({
 const metricSchema = z.object({
   value: z.string().min(1),
   label: z.string().min(1),
+  /** 0–100. Draws a proportion bar under the figure — how much of the
+   *  thing the figure describes was actually moved. Omit it and no bar is
+   *  drawn: an empty track next to a real number reads as a missing
+   *  measurement, which is worse than no bar at all. */
+  bar: z.number().min(0).max(100).optional(),
 });
 
 const testimonialSchema = z.object({
@@ -48,6 +53,12 @@ export const projectSchema = z.object({
   featured: z.boolean().default(false),
   order: z.number().int().default(999),
   metrics: z.array(metricSchema).default([]),
+  /** Optional time series for the outcome chart — one number per period,
+   *  each 0–100, oldest first. Absent means no chart is rendered anywhere;
+   *  the site never draws an invented trend. Needs at least four points to
+   *  be a shape rather than noise. */
+  series: z.array(z.number().min(0).max(100)).min(4).optional(),
+  seriesLabel: z.string().default(""),
   links: z.array(linkSchema).default([]),
   cover: z.string().default(""),
   testimonial: testimonialSchema.nullable().default(null),

@@ -2,15 +2,12 @@ import type { ReactNode } from "react";
 import { Label } from "./drafting";
 
 /**
- * Title block — the header device from a drawing set.
+ * The page hero, and the facts strip that goes under it.
  *
- * A row of real fields above the content. On a case study it carries
- * client, sector, stack, duration and status; on the homepage it carries
- * the company facts that answer "are these people real" before a visitor
- * reads a word of marketing copy.
- *
- * The same fields feed the JSON-LD, so metadata cannot drift from what
- * the page displays.
+ * The facts answer "are these people real" before a visitor reads a word
+ * of marketing copy, which is what a directory referral or a cold-outbound
+ * click is actually checking. The same fields feed the JSON-LD, so
+ * metadata cannot drift from what the page displays.
  */
 
 export type FieldSpec = {
@@ -22,9 +19,9 @@ export type FieldSpec = {
 
 export function Field({ label, value, note }: FieldSpec) {
   return (
-    <div className="grid gap-0.5 px-3 py-2">
+    <div className="grid content-start gap-2 bg-paper px-4 py-4">
       <Label>{label}</Label>
-      <b className="font-data text-micro font-semibold tracking-[-0.01em] text-ink">
+      <b className="font-display text-small font-medium text-ink">
         {value}
         {note ? (
           <span className="ms-1.5 font-normal text-ink-muted">({note})</span>
@@ -38,6 +35,9 @@ export function Field({ label, value, note }: FieldSpec) {
  * Fields whose value is empty are dropped, not rendered blank. That is
  * what lets a project ship with three fields filled in and grow to six
  * without anyone touching this component.
+ *
+ * The 1px gap over a rule-coloured ground is what draws the hairlines —
+ * no per-cell borders to get wrong at the edges.
  */
 export function FieldRow({
   fields,
@@ -51,7 +51,7 @@ export function FieldRow({
 
   return (
     <div
-      className={`grid grid-cols-[repeat(auto-fit,minmax(122px,1fr))] divide-x divide-rule ${className}`}
+      className={`grid grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-px overflow-hidden rounded-md border border-rule bg-rule ${className}`}
     >
       {present.map((f) => (
         <Field key={f.label} {...f} />
@@ -60,19 +60,34 @@ export function FieldRow({
   );
 }
 
-export function TitleBlock({
-  fields,
+/**
+ * Page hero. Eyebrow, h1, lede, then whatever the page needs — CTAs, a
+ * facts strip, a panel.
+ */
+export function PageHero({
+  eyebrow,
+  title,
+  lede,
   children,
   className = "",
 }: {
-  fields: FieldSpec[];
-  children: ReactNode;
+  /** A plain string is wrapped in a Label; pass a node to decorate it. */
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  lede?: ReactNode;
+  children?: ReactNode;
   className?: string;
 }) {
   return (
-    <header className={`border border-ink bg-sheet ${className}`}>
-      <FieldRow fields={fields} className="border-b border-ink" />
-      <div className="grid gap-5 px-5 py-7 sm:px-9 sm:py-10">{children}</div>
+    <header className={`grid content-start gap-6 ${className}`}>
+      {typeof eyebrow === "string" ? <Label>{eyebrow}</Label> : eyebrow}
+      <h1 className="max-w-[20ch] text-h1">{title}</h1>
+      {lede ? (
+        <p className="max-w-[56ch] text-lede text-pretty text-ink-muted">
+          {lede}
+        </p>
+      ) : null}
+      {children}
     </header>
   );
 }

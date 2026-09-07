@@ -7,21 +7,23 @@ import { ImageResponse } from "next/og";
  * logo belongs on — so a link pasted into Slack or LinkedIn looks like the
  * site rather than like a generic card.
  *
- * Deliberately no custom font: loading Chivo here would mean shipping a
- * font file into the edge bundle for every image. Satori's default sans is
- * close enough at this size, and the layout is doing the identifying work.
+ * Deliberately no custom font: loading Space Grotesk here would mean
+ * shipping a font file into the edge bundle for every image. Satori's
+ * default sans is close enough at this size, and the layout is doing the
+ * identifying work.
  */
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-// Token values, inlined because ImageResponse renders outside the document
-// and cannot read CSS custom properties.
-const PLATE = "#061a2b";
-const INK_INVERT = "#f6f8fa";
-const MUTED = "#8aa3bc";
-const ACCENT = "#4fd8f5";
-const RULE = "#1c3247";
+// The one place on the site that carries raw hex. ImageResponse renders
+// outside the document, so it cannot read CSS custom properties — these
+// must be updated by hand when the dark band tokens in globals.css change.
+const PLATE = "#0a0b0c";
+const INK_INVERT = "#ffffff";
+const MUTED = "#8b8d8f";
+const ACCENT = "#e8a33d";
+const RULE = "#26282a";
 
 export type OgFields = { label: string; value: string }[];
 

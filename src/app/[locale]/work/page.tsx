@@ -5,9 +5,11 @@ import { languageAlternates } from "@/lib/routes";
 import { site } from "@/lib/site";
 import { getProjects } from "@/lib/projects";
 import { breadcrumbSchema } from "@/lib/schema-org";
-import { TitleBlock } from "@/components/primitives/TitleBlock";
+import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
+import { Band } from "@/components/primitives/Band";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { WorkList } from "@/components/work/WorkList";
+import { CtaBand } from "@/components/sections/CtaBand";
 
 export async function generateMetadata({
   params,
@@ -57,26 +59,27 @@ export default async function WorkIndexPage({
         ])}
       />
 
-      <TitleBlock
-        className="mt-6"
-        fields={[
-          { label: "Projects", value: String(projects.length) },
-          {
-            label: "Latest",
-            value: String(Math.max(...projects.map((p) => p.year))),
-          },
-          { label: m.fields.base, value: site.address.city },
-        ]}
-      >
-        <h1 className="max-w-[16ch] text-h1">{m.work.heading}</h1>
-        <p className="max-w-[56ch] text-lede text-ink-muted">
-          {m.work.metaDescription}
-        </p>
-      </TitleBlock>
+      <Band>
+        <PageHero title={m.work.heading} lede={m.work.metaDescription}>
+          <FieldRow
+            className="mt-5 max-w-xl"
+            fields={[
+              { label: m.work.heading, value: String(projects.length) },
+              {
+                label: m.fields.year,
+                value: String(Math.max(...projects.map((p) => p.year))),
+              },
+              { label: m.fields.base, value: site.address.city },
+            ]}
+          />
+        </PageHero>
+      </Band>
 
-      <div className="mt-12">
+      <Band className="border-t border-rule">
         <WorkList projects={rows} locale={l} messages={m} />
-      </div>
+      </Band>
+
+      <CtaBand locale={l} messages={m} />
     </>
   );
 }

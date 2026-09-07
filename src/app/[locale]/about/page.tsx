@@ -5,12 +5,13 @@ import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
 import { site, team, serviceLines } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/schema-org";
-import { TitleBlock } from "@/components/primitives/TitleBlock";
-import { Section, SectionHead } from "@/components/primitives/SectionHead";
+import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
+import { SectionHead } from "@/components/primitives/SectionHead";
+import { Band } from "@/components/primitives/Band";
 import { ProcessGrid } from "@/components/sections/ProcessGrid";
-import { Cta } from "@/components/primitives/Cta";
+import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Label, DimensionRule } from "@/components/primitives/drafting";
+import { Label } from "@/components/primitives/drafting";
 
 export async function generateMetadata({
   params,
@@ -48,51 +49,55 @@ export default async function AboutPage({
         ])}
       />
 
-      <TitleBlock
-        className="mt-6"
-        fields={[
-          { label: m.fields.established, value: String(site.founded) },
-          { label: m.fields.team, value: `${site.teamSize} engineers` },
-          { label: m.fields.practice, value: lead.name },
-          {
-            label: m.fields.base,
-            value: `${site.address.city}, ${site.address.countryName}`,
-          },
-        ]}
-      >
-        <h1 className="max-w-[18ch] text-h1">{site.tagline}</h1>
-        <p className="max-w-prose text-lede text-ink-muted">
-          {site.description}
-        </p>
-      </TitleBlock>
+      <Band>
+        <PageHero
+          eyebrow={m.about.heading}
+          title={site.tagline}
+          lede={site.description}
+        >
+          <FieldRow
+            className="mt-5 max-w-2xl"
+            fields={[
+              { label: m.fields.established, value: String(site.founded) },
+              { label: m.fields.team, value: `${site.teamSize} engineers` },
+              { label: m.fields.practice, value: lead.name },
+              {
+                label: m.fields.base,
+                value: `${site.address.city}, ${site.address.countryName}`,
+              },
+            ]}
+          />
+        </PageHero>
+      </Band>
 
       {/* Renders however many founders are in data/founders.json — two,
           three or five all lay out correctly without touching this file. */}
-      <Section labelledBy="team">
+      <Band tone="light" labelledBy="team">
         <SectionHead
           id="team"
           title={m.about.teamHeading}
-          note={`${team.length}`}
+          note={<Label>{`${team.length}`}</Label>}
         />
-        <div className="grid gap-px border border-rule bg-rule md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-px overflow-hidden rounded-md border border-rule bg-rule">
           {team.map((person) => (
             <article
               key={person.id}
-              className="grid content-start gap-4 bg-sheet p-6"
+              className="grid content-start gap-4 bg-sheet p-7"
             >
               <FounderPortrait name={person.name} photo={person.photo} />
-              <div className="grid gap-1.5">
-                <h3 className="text-body font-medium">{person.name}</h3>
+              <div className="grid gap-2">
+                <h3 className="text-h4">{person.name}</h3>
                 <Label>{person.role}</Label>
-                <DimensionRule tone="accent" className="max-w-24" />
               </div>
-              <p className="text-small text-ink-muted">{person.bio}</p>
+              <p className="text-small text-pretty text-ink-muted">
+                {person.bio}
+              </p>
               {person.linkedin ? (
                 <a
                   href={person.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="justify-self-start font-data text-label tracking-[0.07em] text-accent uppercase hover:text-ink"
+                  className="justify-self-start border-b border-accent pb-0.5 text-small font-semibold text-accent transition-colors hover:border-ink hover:text-ink"
                 >
                   LinkedIn
                 </a>
@@ -100,20 +105,14 @@ export default async function AboutPage({
             </article>
           ))}
         </div>
-      </Section>
+      </Band>
 
-      <Section labelledBy="process">
+      <Band labelledBy="process">
         <SectionHead id="process" title={m.about.processHeading} />
         <ProcessGrid />
-      </Section>
+      </Band>
 
-      <Section>
-        <div className="flex flex-wrap items-center gap-6 border border-ink bg-sheet p-8">
-          <h2 className="text-h2">{m.contact.heading}</h2>
-          <span className="flex-1" />
-          <Cta href={localePath(l, "/contact")}>{m.common.startProject}</Cta>
-        </div>
-      </Section>
+      <CtaBand locale={l} messages={m} showContactDetails={false} />
     </>
   );
 }
@@ -132,8 +131,8 @@ function FounderPortrait({ name, photo }: { name: string; photo: string }) {
         src={photo}
         alt={name}
         width={320}
-        height={320}
-        className="aspect-square w-full object-cover"
+        height={400}
+        className="aspect-[4/5] w-full rounded-md object-cover"
       />
     );
   }
@@ -149,9 +148,9 @@ function FounderPortrait({ name, photo }: { name: string; photo: string }) {
   return (
     <div
       aria-hidden="true"
-      className="grid aspect-square w-full place-items-center border border-rule bg-plate"
+      className="grid aspect-[4/5] w-full place-items-center rounded-md border border-rule bg-plate"
     >
-      <span className="font-display text-h2 font-bold tracking-[0.08em] text-ink-invert opacity-70">
+      <span className="font-display text-h2 font-semibold tracking-[0.08em] text-ink-invert opacity-60">
         {initials}
       </span>
     </div>

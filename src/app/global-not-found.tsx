@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Chivo, IBM_Plex_Sans, Martian_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 
 import "./globals.css";
 
@@ -9,6 +9,7 @@ export const metadata = {
 };
 import { defaultLocale, directionOf, localePath } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { ctaClasses } from "@/components/primitives/Cta";
 
 /**
  * Not found.
@@ -26,22 +27,22 @@ import { site } from "@/lib/site";
  * the layout's shell, which is why the page is kept deliberately small.
  */
 
-const chivo = Chivo({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-chivo",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   variable: "--font-plex-sans",
   display: "swap",
 });
-const martianMono = Martian_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-martian-mono",
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -50,12 +51,12 @@ export default function GlobalNotFound() {
     <html
       lang={defaultLocale}
       dir={directionOf(defaultLocale)}
-      className={`${chivo.variable} ${plexSans.variable} ${martianMono.variable}`}
-      data-theme="light"
+      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable}`}
+      data-theme="dark"
     >
       <body>
-        <main className="mx-auto grid max-w-sheet gap-5 px-gutter py-24">
-          <span className="font-data text-label tracking-[0.07em] text-ink-muted uppercase">
+        <main className="mx-auto grid max-w-sheet gap-6 px-gutter py-32">
+          <span className="font-data text-label font-medium tracking-[0.16em] text-ink-faint uppercase">
             Error 404
           </span>
           <h1 className="max-w-[16ch] text-h1">This page is not in the set.</h1>
@@ -63,22 +64,22 @@ export default function GlobalNotFound() {
             The page you asked for does not exist, or it moved. The work index
             is the best place to pick the thread back up.
           </p>
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="mt-2 flex flex-wrap items-center gap-3">
             <Link
               href={localePath(defaultLocale, "/work")}
-              className="border border-ink bg-ink px-4 py-2.5 font-data text-micro tracking-[0.08em] text-ink-invert uppercase transition-colors hover:border-accent hover:bg-accent"
+              className={ctaClasses("solid")}
             >
               See our work
             </Link>
             <Link
               href={localePath(defaultLocale)}
-              className="font-data text-micro tracking-[0.08em] text-accent uppercase hover:text-ink"
+              className={ctaClasses("outline")}
             >
               Home
             </Link>
             <a
               href={`mailto:${site.email}`}
-              className="font-data text-micro tracking-[0.08em] text-ink-muted uppercase hover:text-accent"
+              className="text-small text-ink-muted transition-colors hover:text-accent"
             >
               {site.email}
             </a>

@@ -47,7 +47,7 @@ export function WorkList({
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-2">
+      <div className="mb-10 flex flex-wrap items-center gap-2">
         <FilterButton
           active={active === "all"}
           onClick={() => setActive("all")}
@@ -68,7 +68,7 @@ export function WorkList({
       </div>
 
       {visible.length === 0 ? (
-        <p className="border border-rule bg-sheet p-6 text-small text-ink-muted">
+        <p className="rounded-md border border-rule bg-sheet p-8 text-ink-muted">
           {m.work.empty}
         </p>
       ) : (
@@ -77,17 +77,19 @@ export function WorkList({
             <li key={p.slug} className="border-b border-rule">
               <Link
                 href={localePath(locale, `/work/${p.slug}`)}
-                className="group grid gap-x-4 gap-y-1 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-baseline"
+                className="group block py-6 transition-colors hover:bg-sheet sm:grid sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-baseline sm:gap-5 sm:px-2"
               >
                 <Label>{`W-${String(i + 1).padStart(2, "0")}`}</Label>
-                <span className="grid gap-1">
-                  <span className="text-body transition-colors group-hover:text-accent">
+                <span className="mt-2 grid gap-1.5 sm:mt-0">
+                  <span className="font-display text-h3 leading-tight font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">
                     {p.title}
                   </span>
-                  <span className="text-small text-ink-muted">{p.summary}</span>
+                  <span className="text-small text-pretty text-ink-muted">
+                    {p.summary}
+                  </span>
                 </span>
-                <span className="flex items-baseline gap-3">
-                  <Label>{m.categories[p.category]}</Label>
+                <span className="mt-3 flex items-baseline gap-3 sm:mt-0">
+                  <Label tone="accent">{m.categories[p.category]}</Label>
                   <Label>{p.year}</Label>
                 </span>
               </Link>
@@ -115,10 +117,10 @@ function FilterButton({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`border px-3 py-1.5 font-data text-label tracking-[0.07em] uppercase transition-colors ${
+      className={`rounded-sm border px-4 py-3 font-data text-micro font-medium transition-colors ${
         active
-          ? "border-ink bg-ink text-ink-invert"
-          : "border-rule text-ink-muted hover:border-accent hover:text-accent"
+          ? "border-ink bg-ink text-paper"
+          : "border-rule text-ink-muted hover:border-ink hover:text-ink"
       }`}
     >
       {children}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Chivo, IBM_Plex_Sans, Martian_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -26,24 +26,24 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
  * When an RTL locale ships, add an Arabic/Nastaliq face here and expose
  * it as --font-arabic; the token file already reserves the slot.
  */
-const chivo = Chivo({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-chivo",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   variable: "--font-plex-sans",
   display: "swap",
 });
 
-const martianMono = Martian_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-martian-mono",
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -84,24 +84,24 @@ export default async function LocaleLayout({
     <html
       lang={typedLocale}
       dir={dir}
-      className={`${chivo.variable} ${plexSans.variable} ${martianMono.variable}`}
-      /* Light is the launch theme. Set data-theme="dark" here (or from a
-         toggle) to switch the whole site — every colour reads from tokens,
-         so no component changes are required. */
-      data-theme="light"
+      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable}`}
+      /* Dark is the page ground. Individual sections opt into the bone
+         band with data-theme="light" — see the Band primitive. Both token
+         blocks are complete, so nothing here needs a per-band variant. */
+      data-theme="dark"
     >
       <body>
         <ScrollProgress />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:bg-ink focus:px-4 focus:py-2 focus:text-ink-invert"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent"
         >
           {messages.nav.skipToContent}
         </a>
         <SiteHeader locale={typedLocale} messages={messages} />
-        <main id="main" className="mx-auto max-w-sheet px-gutter pb-4">
-          {children}
-        </main>
+        {/* No container here — Bands are full-bleed and cap their own
+            content, which is what lets the ground colour reach the edge. */}
+        <main id="main">{children}</main>
         <SiteFooter locale={typedLocale} messages={messages} />
         <Analytics />
         <SpeedInsights />

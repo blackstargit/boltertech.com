@@ -2,58 +2,42 @@ import type { ReactNode } from "react";
 import { Label } from "./drafting";
 
 /**
- * Section header — a heading with an optional code on the start side and
- * an optional note on the end side, over a full rule.
+ * Section header — eyebrow, heading, and an optional link or note pushed
+ * to the end of the baseline.
  *
- * The code is only worth using where a real sequence exists (numbered
- * work rows, ordered process steps). Do not number things that are not
- * ordered; the numbering is meant to carry information, not decorate.
+ * The heading is real h2 size. The previous version hardcoded text-h3 for
+ * every section on the site regardless of its `level`, which is why the
+ * page had almost no vertical hierarchy: a section heading and a card
+ * heading were the same size, so nothing announced a new subject.
  */
 export function SectionHead({
-  code,
+  eyebrow,
   title,
   note,
   id,
   level = 2,
+  className = "",
 }: {
-  code?: string;
+  eyebrow?: string;
   title: string;
   note?: ReactNode;
   id?: string;
   level?: 2 | 3;
+  className?: string;
 }) {
   const Heading = level === 2 ? "h2" : "h3";
   return (
-    <div className="mb-6 flex flex-wrap items-baseline gap-x-5 gap-y-2 border-b border-ink pb-2">
-      {code ? <Label>{code}</Label> : null}
-      <Heading id={id} className="text-h3">
-        {title}
-      </Heading>
-      <span className="flex-1" />
-      {note ? <Label>{note}</Label> : null}
-    </div>
-  );
-}
-
-/** Page-level section wrapper. Keeps vertical rhythm in one place. */
-export function Section({
-  children,
-  className = "",
-  id,
-  labelledBy,
-}: {
-  children: ReactNode;
-  className?: string;
-  id?: string;
-  labelledBy?: string;
-}) {
-  return (
-    <section
-      id={id}
-      aria-labelledby={labelledBy}
-      className={`pt-section ${className}`}
+    <div
+      className={`mb-10 flex flex-wrap items-end gap-x-6 gap-y-4 ${className}`}
     >
-      {children}
-    </section>
+      <div className="grid gap-3.5">
+        {eyebrow ? <Label>{eyebrow}</Label> : null}
+        <Heading id={id} className={level === 2 ? "text-h2" : "text-h3"}>
+          {title}
+        </Heading>
+      </div>
+      <span className="flex-1" />
+      {note ? <div className="pb-1 text-small">{note}</div> : null}
+    </div>
   );
 }

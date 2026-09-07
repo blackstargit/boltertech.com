@@ -4,17 +4,15 @@ import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
 import { site, serviceLines } from "@/lib/site";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema-org";
-import { TitleBlock } from "@/components/primitives/TitleBlock";
-import { Section, SectionHead } from "@/components/primitives/SectionHead";
-import { Cta } from "@/components/primitives/Cta";
+import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
+import { SectionHead } from "@/components/primitives/SectionHead";
+import { Band } from "@/components/primitives/Band";
+import { ChipRow } from "@/components/primitives/Chip";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FaqList } from "@/components/sections/FaqList";
 import { ProcessGrid } from "@/components/sections/ProcessGrid";
-import {
-  Label,
-  DimensionRule,
-  NodeTrace,
-} from "@/components/primitives/drafting";
+import { CtaBand } from "@/components/sections/CtaBand";
+import { Label } from "@/components/primitives/drafting";
 
 export async function generateMetadata({
   params,
@@ -64,95 +62,85 @@ export default async function ServicesPage({
         ]}
       />
 
-      <TitleBlock
-        className="mt-6"
-        fields={[
-          { label: m.fields.practice, value: lead.name },
-          {
-            label: m.services.supportingLabel,
-            value: `${ordered.length - 1} lines`,
-          },
-          { label: m.fields.base, value: site.address.city },
-        ]}
-      >
-        <h1 className="max-w-[20ch] text-h1">{m.services.heading}</h1>
-        <p className="max-w-[58ch] text-lede text-ink-muted">
-          {site.description}
-        </p>
-      </TitleBlock>
+      <Band>
+        <PageHero
+          eyebrow={m.home.capabilitiesLabel}
+          title={m.services.heading}
+          lede={site.description}
+        >
+          <FieldRow
+            className="mt-5 max-w-xl"
+            fields={[
+              { label: m.fields.practice, value: lead.name },
+              {
+                label: m.services.supportingLabel,
+                value: `${ordered.length - 1} lines`,
+              },
+              { label: m.fields.base, value: site.address.city },
+            ]}
+          />
+        </PageHero>
+      </Band>
 
       {/* One page, four depths. Each line is a section rather than a
-          separate page, so the site never claims to be four businesses. */}
+          separate page, so the site never claims to be four businesses.
+          The bands alternate so the four read as distinct depths rather
+          than as one long scroll of identical blocks. */}
       {ordered.map((service, i) => (
-        <Section
+        <Band
           key={service.id}
           id={service.id}
+          tone={i % 2 === 0 ? "dark" : "light"}
           labelledBy={`${service.id}-h`}
         >
-          <SectionHead
-            id={`${service.id}-h`}
-            code={`0${i + 1}`}
-            title={service.name}
-            note={
-              service.lead ? m.services.leadLabel : m.services.supportingLabel
-            }
-          />
-
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)]">
-            <div className="grid content-start gap-5">
-              <p className="max-w-prose text-lede text-ink">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
+            <div className="grid content-start gap-6">
+              <SectionHead
+                id={`${service.id}-h`}
+                className="mb-0"
+                eyebrow={`${String(i + 1).padStart(2, "0")} · ${
+                  service.lead ? m.services.leadLabel : m.services.supportingLabel
+                }`}
+                title={service.name}
+              />
+              <p className="max-w-[46ch] text-lede text-pretty text-ink-muted">
                 {service.summary}
               </p>
-
               <div className="grid gap-3">
-                <Label>{m.services.includesLabel}</Label>
-                <DimensionRule />
-                <ul className="grid gap-2.5">
-                  {service.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <NodeTrace length={14} className="mt-2.5 shrink-0" />
-                      <span className="text-small text-ink-muted">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <Label>{m.services.stackLabel}</Label>
+                <ChipRow items={service.stack} />
               </div>
             </div>
 
-            <aside className="grid content-start gap-3 border border-rule bg-sheet p-5">
-              <Label>{m.services.stackLabel}</Label>
-              <DimensionRule tone="accent" />
-              <ul className="flex flex-wrap gap-x-3 gap-y-1.5">
-                {service.stack.map((tech) => (
-                  <li
-                    key={tech}
-                    className="font-data text-micro text-ink-muted"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </aside>
+            {/* Lettered rather than numbered: these are facets of one
+                offer, not an ordered sequence like the process steps. */}
+            <ul className="grid gap-px overflow-hidden rounded-md border border-rule bg-rule">
+              {service.includes.map((item, j) => (
+                <li key={item} className="flex gap-4 bg-paper p-5 sm:p-6">
+                  <span className="font-data text-micro font-medium text-accent">
+                    {String.fromCharCode(97 + j)}
+                  </span>
+                  <span className="text-small text-pretty text-ink-muted">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </Section>
+        </Band>
       ))}
 
-      <Section labelledBy="process">
+      <Band labelledBy="process" className="border-t border-rule">
         <SectionHead id="process" title={m.home.processHeading} />
         <ProcessGrid />
-      </Section>
+      </Band>
 
-      <Section labelledBy="faq">
+      <Band labelledBy="faq" className="border-t border-rule">
         <SectionHead id="faq" title={m.home.faqHeading} />
         <FaqList />
-      </Section>
+      </Band>
 
-      <Section>
-        <div className="flex flex-wrap items-center gap-6 border border-ink bg-sheet p-8">
-          <h2 className="text-h2">{m.contact.heading}</h2>
-          <span className="flex-1" />
-          <Cta href={localePath(l, "/contact")}>{m.common.startProject}</Cta>
-        </div>
-      </Section>
+      <CtaBand locale={l} messages={m} showContactDetails={false} />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { processSteps } from "@/lib/site";
-import { Label } from "@/components/primitives/drafting";
 
 /**
  * How we work.
@@ -7,15 +6,23 @@ import { Label } from "@/components/primitives/drafting";
  * Numbered because this genuinely is a sequence — the numbering carries
  * information rather than decorating. Renders however many steps are in
  * data/process.json, so adding or removing one is a data edit.
+ *
+ * A heavy top rule per column instead of a bordered cell: the steps read
+ * as a progression across the page rather than as four separate cards.
  */
 export function ProcessGrid() {
   return (
-    <ol className="grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-x-7 gap-y-10">
       {processSteps.map((step, i) => (
-        <li key={step.step} className="grid content-start gap-2 bg-sheet p-5">
-          <Label>{String(i + 1).padStart(2, "0")}</Label>
-          <h3 className="text-body font-medium">{step.step}</h3>
-          <p className="text-small text-ink-muted">{step.detail}</p>
+        <li
+          key={step.step}
+          className="grid content-start gap-3.5 border-t-2 border-ink pt-5"
+        >
+          <span className="font-data text-micro font-semibold text-accent">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <h3 className="text-h4">{step.step}</h3>
+          <p className="text-small text-pretty text-ink-muted">{step.detail}</p>
         </li>
       ))}
     </ol>

@@ -1,27 +1,40 @@
 import type { ReactNode } from "react";
 
 /**
- * The drawing devices, taken from the logo's own grammar.
+ * The small marking devices.
  *
- * All four are written with logical properties (inline/block, start/end)
- * so they mirror correctly under dir="rtl" without a second stylesheet.
- * Anything directional that CSS cannot mirror on its own carries the
- * `mirror-x` class defined in globals.css.
+ * Written with logical properties (inline/block, start/end) so they mirror
+ * correctly under dir="rtl" without a second stylesheet. Anything
+ * directional that CSS cannot mirror on its own carries the `mirror-x`
+ * class defined in globals.css.
  */
 
-/** Uppercase mono label. The only place the data face is allowed at size. */
+/**
+ * Uppercase mono label — the eyebrow above a heading, the key in a field,
+ * the caption under a chart. The only place the data face is allowed at
+ * size, and the smallest text on the site, which is why it reads from
+ * --ink-faint: that token is the governed contrast floor.
+ */
 export function Label({
   children,
   as: Tag = "span",
+  tone = "faint",
   className = "",
 }: {
   children: ReactNode;
   as?: "span" | "div" | "p" | "h2" | "h3";
+  tone?: "faint" | "accent" | "ink";
   className?: string;
 }) {
+  const color =
+    tone === "accent"
+      ? "text-accent"
+      : tone === "ink"
+        ? "text-ink"
+        : "text-ink-faint";
   return (
     <Tag
-      className={`font-data text-label tracking-[0.07em] text-ink-muted uppercase ${className}`}
+      className={`font-data text-label font-medium tracking-[0.16em] uppercase ${color} ${className}`}
     >
       {children}
     </Tag>
@@ -29,91 +42,15 @@ export function Label({
 }
 
 /**
- * Dimension rule — a line with end ticks. Reads as measurement, which is
- * the claim every case study metric is making. Used under figures and as
- * the section rule.
+ * A live indicator. Slow opacity pulse, killed by the global
+ * prefers-reduced-motion rule.
  */
-export function DimensionRule({
-  tone = "rule",
-  className = "",
-}: {
-  tone?: "rule" | "accent";
-  className?: string;
-}) {
-  const color = tone === "accent" ? "bg-accent" : "bg-rule";
+export function PulseDot({ className = "" }: { className?: string }) {
   return (
-    <span aria-hidden="true" className={`flex h-3 items-center ${className}`}>
-      <i className={`block h-[9px] w-px ${color}`} />
-      <s className={`block h-px flex-1 no-underline ${color}`} />
-      <i className={`block h-[9px] w-px ${color}`} />
-    </span>
-  );
-}
-
-/**
- * Node connector — 1px trace, 5px terminal dot, lifted off the mark's
- * circuit paths. Used for annotation callouts and as the hover indicator
- * on work rows.
- */
-export function NodeTrace({
-  length = 26,
-  reverse = false,
-  className = "",
-}: {
-  length?: number;
-  reverse?: boolean;
-  className?: string;
-}) {
-  const dot = (
-    <i className="block size-[5px] shrink-0 rounded-full bg-accent" />
-  );
-  const trace = (
-    <s
-      className="block h-px bg-accent no-underline"
-      style={{ inlineSize: `${length}px` }}
+    <span
+      aria-hidden="true"
+      className={`pulse-dot block size-[7px] shrink-0 rounded-full bg-accent ${className}`}
     />
-  );
-  return (
-    <span aria-hidden="true" className={`flex items-center ${className}`}>
-      {reverse ? (
-        <>
-          {dot}
-          {trace}
-        </>
-      ) : (
-        <>
-          {trace}
-          {dot}
-        </>
-      )}
-    </span>
-  );
-}
-
-/**
- * Corner brackets — crop marks instead of a full border. Separates an
- * object without spending a border, a radius and a shadow on every block,
- * which is what flattens most agency sites into a grid of identical cards.
- */
-export function Bracketed({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`relative bg-sheet p-5 sm:p-7 ${className}`}>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute start-0 top-0 size-3.5 border-s border-t border-accent"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute end-0 bottom-0 size-3.5 border-e border-b border-accent"
-      />
-      {children}
-    </div>
   );
 }
 

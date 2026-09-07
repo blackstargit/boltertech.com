@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { getEntry } from "@/lib/content";
 import { legalSchema } from "@/lib/schemas";
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
-import { TitleBlock } from "@/components/primitives/TitleBlock";
+import { PageHero, FieldRow } from "@/components/primitives/TitleBlock";
+import { Band } from "@/components/primitives/Band";
 import { Prose } from "@/components/primitives/Prose";
 
 /**
@@ -45,18 +46,17 @@ export async function LegalDocument({
 
   return (
     <article>
-      <TitleBlock
-        className="mt-6"
-        fields={[{ label: m.fields.updated, value: doc.updated }]}
-      >
-        <h1 className="text-h2">{doc.title}</h1>
-        {doc.summary ? (
-          <p className="max-w-prose text-lede text-ink-muted">{doc.summary}</p>
-        ) : null}
-      </TitleBlock>
-      <div className="mt-10">
+      <Band className="pb-0">
+        <PageHero title={doc.title} lede={doc.summary || undefined}>
+          <FieldRow
+            className="mt-3 max-w-xs"
+            fields={[{ label: m.fields.updated, value: doc.updated }]}
+          />
+        </PageHero>
+      </Band>
+      <Band>
         <Prose source={doc.body} />
-      </div>
+      </Band>
     </article>
   );
 }

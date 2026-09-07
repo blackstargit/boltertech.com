@@ -39,7 +39,9 @@
     "workHeading": "Selected work",
     "outcomesHeading": "Outcomes",
     "processHeading": "How we work",
-    "faqHeading": "Questions we get asked"
+    "faqHeading": "Questions we get asked",
+    "snapshotHeading": "Selected engagements",
+    "capabilitiesLabel": "Capabilities"
   },
   "services": {
     "metaTitle": "Services - Bolter Technologies",
@@ -95,7 +97,12 @@
     "rights": "All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms",
-    "registered": "Registered in Pakistan"
+    "registered": "Registered in Pakistan",
+    "contact": "Contact",
+    "legal": "Legal",
+    "company": "Company",
+    "practice": "Practice",
+    "replies": "Replies"
   },
   "analytics": {
     "message": "We use cookies to understand how visitors use this site.",

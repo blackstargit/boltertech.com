@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useSendEnquiryMutation } from "@/store/contactApi";
 import { contactSchema, type ContactInput } from "@/lib/contact-schema";
+import { ctaClasses } from "@/components/primitives/Cta";
 import type { Messages } from "@/lib/i18n";
 
 type FieldErrors = Partial<Record<keyof ContactInput, string>>;
@@ -17,9 +18,9 @@ const EMPTY: ContactInput = {
 };
 
 const fieldClass =
-  "border border-rule bg-sheet px-3 py-2.5 text-body text-ink outline-none transition-colors focus:border-accent";
+  "rounded-sm border border-rule bg-paper px-4 py-3.5 text-body text-ink outline-none transition-colors focus:border-accent";
 const labelClass =
-  "font-data text-label uppercase tracking-[0.07em] text-ink-muted";
+  "font-data text-label font-medium uppercase tracking-[0.16em] text-ink-faint";
 
 export function ContactForm({
   messages: m,
@@ -181,12 +182,12 @@ export function ContactForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center gap-2.5 border border-ink bg-ink px-4 py-2.5 font-data text-micro tracking-[0.08em] text-ink-invert uppercase transition-colors hover:border-accent hover:bg-accent disabled:opacity-60"
+          className={`${ctaClasses("solid")} disabled:opacity-60`}
         >
           {isLoading ? `${m.contact.sending}…` : m.contact.submit}
         </button>
         <span className="text-small text-ink-muted">
-          Replies {responseTime}.
+          {m.footer.replies} {responseTime}.
         </span>
       </div>
 

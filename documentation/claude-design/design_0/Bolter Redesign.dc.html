@@ -1,0 +1,2938 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+          body {
+            margin: 0;
+            background: #0a0b0c;
+            font-family: "IBM Plex Sans", system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+          }
+          a {
+            color: inherit;
+            text-decoration: none;
+          }
+          a:hover {
+            color: var(--acc, #e8a33d);
+          }
+          @keyframes bolt-ticker {
+            from {
+              transform: translateX(0);
+            }
+            to {
+              transform: translateX(-50%);
+            }
+          }
+          @keyframes bolt-pulse {
+            0%,
+            100% {
+              opacity: 0.35;
+            }
+            50% {
+              opacity: 1;
+            }
+          }
+        </style>
+      </helmet>
+
+      <div style="background: #0a0b0c; min-height: 100vh">
+        <div
+          style="
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 18px;
+            background: #17191b;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          "
+        >
+          <span
+            style="
+              font:
+                500 10px/1 &quot;IBM Plex Mono&quot;,
+                monospace;
+              letter-spacing: 0.14em;
+              color: rgba(255, 255, 255, 0.4);
+              text-transform: uppercase;
+            "
+            >Bolter · redesign mockups</span
+          >
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto"
+          >
+            <sc-for list="{{ screens }}" as="s" hint-placeholder-count="5">
+              <button
+                onClick="{{ s.go }}"
+                style="font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;padding:7px 11px;border-radius:5px;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.fg }};cursor:pointer"
+              >
+                {{ s.label }}
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <nav
+          style="
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 20px clamp(20px, 5vw, 64px);
+            background: rgba(10, 11, 12, 0.92);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            position: sticky;
+            top: 41px;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <a
+            onClick="{{ goHome }}"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 11px;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 26px;
+                height: 26px;
+                border-radius: 6px;
+                background: var(--acc, #e8a33d);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font:
+                  700 13px/1 &quot;Space Grotesk&quot;,
+                  sans-serif;
+                color: #0a0b0c;
+              "
+              >B</span
+            >
+            <span
+              style="
+                font:
+                  600 15px/1 &quot;Space Grotesk&quot;,
+                  sans-serif;
+                letter-spacing: -0.01em;
+                color: #fff;
+              "
+              >BOLTER<span
+                style="font-weight: 400; color: rgba(255, 255, 255, 0.45)"
+              >
+                Technologies</span
+              ></span
+            >
+          </a>
+          <div
+            style="display: none; gap: 26px; margin-left: 20px"
+            style-hover="display:none"
+          ></div>
+          <div
+            style="
+              margin-left: auto;
+              display: flex;
+              align-items: center;
+              gap: 26px;
+            "
+          >
+            <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="4">
+              <a
+                onClick="{{ n.go }}"
+                style="font:500 13.5px/1 'IBM Plex Sans',sans-serif;color:{{ n.fg }};cursor:pointer;letter-spacing:.01em"
+                >{{ n.label }}</a
+              >
+            </sc-for>
+            <a
+              onClick="{{ goContact }}"
+              style="
+                font:
+                  600 13px/1 &quot;IBM Plex Sans&quot;,
+                  sans-serif;
+                color: #0a0b0c;
+                background: #f3f1ed;
+                padding: 11px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+              "
+              style-hover="background:var(--acc,#e8a33d);color:#0a0b0c"
+              >Start a project</a
+            >
+          </div>
+        </nav>
+
+        <!-- ============ HOME ============ -->
+        <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <section
+              style="
+                padding: clamp(48px, 7vw, 96px) clamp(20px, 5vw, 64px)
+                  clamp(40px, 5vw, 72px);
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(min(420px, 100%), 1fr)
+                );
+                gap: clamp(32px, 5vw, 64px);
+                align-items: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div style="min-width: 0">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 9px;
+                    margin-bottom: 26px;
+                  "
+                >
+                  <span
+                    style="
+                      width: 7px;
+                      height: 7px;
+                      border-radius: 50%;
+                      background: var(--acc, #e8a33d);
+                      animation: bolt-pulse 2.4s ease-in-out infinite;
+                    "
+                  ></span>
+                  <span
+                    style="
+                      font:
+                        500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.16em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.55);
+                    "
+                    >AI engineering · Islamabad · est. 2024</span
+                  >
+                </div>
+                <h1
+                  style="
+                    margin: 0;
+                    font:
+                      600 clamp(38px, 5.4vw, 72px)/1.02
+                        &quot;Space Grotesk&quot;,
+                      sans-serif;
+                    letter-spacing: -0.035em;
+                    color: #fff;
+                    text-wrap: balance;
+                  "
+                >
+                  AI systems that survive contact with production.
+                </h1>
+                <p
+                  style="
+                    margin: 24px 0 0;
+                    max-width: 52ch;
+                    font:
+                      400 clamp(16px, 1.3vw, 18.5px)/1.62
+                        &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    color: rgba(255, 255, 255, 0.72);
+                    text-wrap: pretty;
+                  "
+                >
+                  We start with the process that is costing you time, not the
+                  technology. Then we automate it end to end, ship it, and stay
+                  on the hook for it — with a named engineer, a fixed written
+                  scope, and thirty days of included support after handover.
+                </p>
+                <div
+                  style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    margin-top: 34px;
+                  "
+                >
+                  <a
+                    onClick="{{ goContact }}"
+                    style="
+                      font:
+                        600 14px/1 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: #0a0b0c;
+                      background: var(--acc, #e8a33d);
+                      padding: 15px 24px;
+                      border-radius: 7px;
+                      cursor: pointer;
+                    "
+                    style-hover="background:#fff"
+                    >Start a project →</a
+                  >
+                  <a
+                    onClick="{{ goCase }}"
+                    style="
+                      font:
+                        600 14px/1 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: #fff;
+                      border: 1px solid rgba(255, 255, 255, 0.22);
+                      padding: 15px 24px;
+                      border-radius: 7px;
+                      cursor: pointer;
+                    "
+                    style-hover="border-color:#fff;background:rgba(255,255,255,.06)"
+                    >See how we work</a
+                  >
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                    gap: 1px;
+                    margin-top: 52px;
+                    background: rgba(255, 255, 255, 0.11);
+                    border: 1px solid rgba(255, 255, 255, 0.11);
+                    border-radius: 8px;
+                    overflow: hidden;
+                  "
+                >
+                  <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+                    <div style="background: #0a0b0c; padding: 15px 16px">
+                      <div
+                        style="
+                          font:
+                            500 9.5px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          letter-spacing: 0.14em;
+                          text-transform: uppercase;
+                          color: rgba(255, 255, 255, 0.42);
+                        "
+                      >
+                        {{ f.k }}
+                      </div>
+                      <div
+                        style="
+                          margin-top: 7px;
+                          font:
+                            500 15px/1.2 &quot;Space Grotesk&quot;,
+                            sans-serif;
+                          color: #fff;
+                        "
+                      >
+                        {{ f.v }}
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div
+                style="
+                  min-width: 0;
+                  border: 1px solid rgba(255, 255, 255, 0.13);
+                  border-radius: 12px;
+                  background: linear-gradient(180deg, #101214, #0c0e0f);
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 12px 16px;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+                  "
+                >
+                  <span
+                    style="
+                      width: 6px;
+                      height: 6px;
+                      border-radius: 50%;
+                      background: var(--acc, #e8a33d);
+                    "
+                  ></span>
+                  <span
+                    style="
+                      font:
+                        500 10px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.13em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.5);
+                    "
+                    >Engagement snapshot · anonymised</span
+                  >
+                </div>
+                <div style="padding: 22px 20px 24px">
+                  <sc-for
+                    list="{{ heroRows }}"
+                    as="r"
+                    hint-placeholder-count="4"
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        align-items: baseline;
+                        gap: 14px;
+                        padding: 13px 0;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+                      "
+                    >
+                      <span
+                        style="
+                          font:
+                            500 10px/1.4 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          color: rgba(255, 255, 255, 0.38);
+                          min-width: 34px;
+                        "
+                        >{{ r.id }}</span
+                      >
+                      <div style="flex: 1; min-width: 0">
+                        <div
+                          style="
+                            font:
+                              500 14.5px/1.35 &quot;IBM Plex Sans&quot;,
+                              sans-serif;
+                            color: #fff;
+                          "
+                        >
+                          {{ r.title }}
+                        </div>
+                        <div
+                          style="
+                            margin-top: 3px;
+                            font:
+                              400 12px/1.4 &quot;IBM Plex Sans&quot;,
+                              sans-serif;
+                            color: rgba(255, 255, 255, 0.5);
+                          "
+                        >
+                          {{ r.sub }}
+                        </div>
+                      </div>
+                      <span
+                        style="
+                          font:
+                            600 16px/1 &quot;Space Grotesk&quot;,
+                            sans-serif;
+                          color: var(--acc, #e8a33d);
+                        "
+                        >{{ r.stat }}</span
+                      >
+                    </div>
+                  </sc-for>
+                  <div
+                    style="
+                      margin-top: 20px;
+                      height: 104px;
+                      display: flex;
+                      align-items: flex-end;
+                      gap: 5px;
+                    "
+                  >
+                    <sc-for
+                      list="{{ spark }}"
+                      as="b"
+                      hint-placeholder-count="18"
+                    >
+                      <div
+                        style="flex:1;height:{{ b.h }};border-radius:2px 2px 0 0;background:{{ b.c }}"
+                      ></div>
+                    </sc-for>
+                  </div>
+                  <div
+                    style="
+                      margin-top: 11px;
+                      font:
+                        400 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      color: rgba(255, 255, 255, 0.35);
+                    "
+                  >
+                    Manual hours removed per week · 18-week rolling
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <sc-if value="{{ showTicker }}" hint-placeholder-val="{{ true }}">
+              <div
+                style="
+                  overflow: hidden;
+                  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+                  padding: 15px 0;
+                  background: #0d0f10;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    width: max-content;
+                    gap: 44px;
+                    animation: bolt-ticker 34s linear infinite;
+                  "
+                >
+                  <sc-for
+                    list="{{ ticker }}"
+                    as="t"
+                    hint-placeholder-count="16"
+                  >
+                    <span
+                      style="
+                        font:
+                          500 11.5px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.13em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.4);
+                        white-space: nowrap;
+                      "
+                      >{{ t.label }}</span
+                    >
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <section
+              style="
+                background: #f3f1ed;
+                padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 64px);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: flex-end;
+                  gap: 20px;
+                  margin-bottom: 44px;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font:
+                        500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.16em;
+                      text-transform: uppercase;
+                      color: #8a8478;
+                    "
+                  >
+                    What we do
+                  </div>
+                  <h2
+                    style="
+                      margin: 14px 0 0;
+                      font:
+                        600 clamp(30px, 3.6vw, 48px)/1.05
+                          &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      letter-spacing: -0.03em;
+                      color: #14161a;
+                    "
+                  >
+                    One practice, four depths
+                  </h2>
+                </div>
+                <a
+                  onClick="{{ goServices }}"
+                  style="
+                    margin-left: auto;
+                    font:
+                      600 13.5px/1 &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    color: #14161a;
+                    border-bottom: 1.5px solid #14161a;
+                    padding-bottom: 3px;
+                    cursor: pointer;
+                  "
+                  >All capabilities →</a
+                >
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(260px, 100%), 1fr)
+                  );
+                  gap: 1px;
+                  background: #dcd8d0;
+                  border: 1px solid #dcd8d0;
+                  border-radius: 10px;
+                  overflow: hidden;
+                "
+              >
+                <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+                  <a
+                    onClick="{{ s.go }}"
+                    style="
+                      background: #fff;
+                      padding: 30px 26px 34px;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 14px;
+                      cursor: pointer;
+                      min-height: 288px;
+                    "
+                    style-hover="background:#0a0b0c;color:#fff"
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      "
+                    >
+                      <span
+                        style="
+                          font:
+                            500 9.5px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          letter-spacing: 0.14em;
+                          text-transform: uppercase;
+                          color: #8a8478;
+                        "
+                        >{{ s.rank }}</span
+                      >
+                      <span
+                        style="
+                          font:
+                            500 9.5px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          color: #c3bcb0;
+                        "
+                        >{{ s.no }}</span
+                      >
+                    </div>
+                    <h3
+                      style="
+                        margin: 0;
+                        font:
+                          600 22px/1.15 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.02em;
+                      "
+                    >
+                      {{ s.name }}
+                    </h3>
+                    <p
+                      style="
+                        margin: 0;
+                        font:
+                          400 14px/1.6 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: #5b6066;
+                        text-wrap: pretty;
+                      "
+                    >
+                      {{ s.desc }}
+                    </p>
+                    <span
+                      style="
+                        margin-top: auto;
+                        font:
+                          500 12.5px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: var(--acc, #e8a33d);
+                      "
+                      >{{ s.cta }}</span
+                    >
+                  </a>
+                </sc-for>
+              </div>
+            </section>
+
+            <section
+              style="
+                padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 64px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: flex-end;
+                  gap: 20px;
+                  margin-bottom: 38px;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font:
+                        500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.16em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.45);
+                    "
+                  >
+                    Outcomes · interactive
+                  </div>
+                  <h2
+                    style="
+                      margin: 14px 0 0;
+                      font:
+                        600 clamp(30px, 3.6vw, 48px)/1.05
+                          &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      letter-spacing: -0.03em;
+                      color: #fff;
+                    "
+                  >
+                    What changed after we shipped
+                  </h2>
+                </div>
+                <p
+                  style="
+                    margin: 0 0 4px auto;
+                    max-width: 34ch;
+                    font:
+                      400 14px/1.6 &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    color: rgba(255, 255, 255, 0.55);
+                    text-wrap: pretty;
+                  "
+                >
+                  Client names withheld under NDA. Figures are measured from the
+                  client's own systems, not our estimates.
+                </p>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  margin-bottom: 26px;
+                "
+              >
+                <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+                  <button
+                    onClick="{{ t.go }}"
+                    style="font:500 12.5px/1 'IBM Plex Mono',monospace;letter-spacing:.05em;padding:12px 17px;border-radius:7px;cursor:pointer;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }}"
+                  >
+                    {{ t.label }}
+                  </button>
+                </sc-for>
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(300px, 100%), 1fr)
+                  );
+                  gap: 20px;
+                  align-items: stretch;
+                "
+              >
+                <div
+                  style="
+                    border: 1px solid rgba(255, 255, 255, 0.13);
+                    border-radius: 12px;
+                    padding: 26px 24px 28px;
+                    background: #0e1011;
+                  "
+                >
+                  <div
+                    style="
+                      font:
+                        500 10px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.14em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.42);
+                    "
+                  >
+                    Sector
+                  </div>
+                  <div
+                    style="
+                      margin-top: 10px;
+                      font:
+                        600 21px/1.2 &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      color: #fff;
+                    "
+                  >
+                    {{ panel.sector }}
+                  </div>
+                  <p
+                    style="
+                      margin: 16px 0 0;
+                      font:
+                        400 14px/1.62 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: rgba(255, 255, 255, 0.68);
+                      text-wrap: pretty;
+                    "
+                  >
+                    {{ panel.brief }}
+                  </p>
+                  <div
+                    style="
+                      margin-top: 24px;
+                      padding-top: 20px;
+                      border-top: 1px solid rgba(255, 255, 255, 0.1);
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 8px;
+                    "
+                  >
+                    <sc-for
+                      list="{{ panel.stack }}"
+                      as="s"
+                      hint-placeholder-count="4"
+                    >
+                      <span
+                        style="
+                          font:
+                            500 11px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          padding: 7px 10px;
+                          border-radius: 5px;
+                          background: rgba(255, 255, 255, 0.07);
+                          color: rgba(255, 255, 255, 0.7);
+                        "
+                        >{{ s.label }}</span
+                      >
+                    </sc-for>
+                  </div>
+                  <a
+                    onClick="{{ goCase }}"
+                    style="
+                      display: inline-block;
+                      margin-top: 26px;
+                      font:
+                        600 13px/1 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: var(--acc, #e8a33d);
+                      cursor: pointer;
+                      border-bottom: 1px solid rgba(232, 163, 61, 0.4);
+                      padding-bottom: 3px;
+                    "
+                    >Read the full case →</a
+                  >
+                </div>
+
+                <div
+                  style="
+                    grid-column: span 2;
+                    min-width: 0;
+                    border: 1px solid rgba(255, 255, 255, 0.13);
+                    border-radius: 12px;
+                    padding: 26px 24px 28px;
+                    background: #0e1011;
+                  "
+                >
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: repeat(
+                        auto-fit,
+                        minmax(min(150px, 100%), 1fr)
+                      );
+                      gap: 22px;
+                    "
+                  >
+                    <sc-for
+                      list="{{ panel.metrics }}"
+                      as="m"
+                      hint-placeholder-count="3"
+                    >
+                      <div>
+                        <div
+                          style="
+                            font:
+                              600 clamp(30px, 3.4vw, 44px)/1
+                                &quot;Space Grotesk&quot;,
+                              sans-serif;
+                            letter-spacing: -0.03em;
+                            color: var(--acc, #e8a33d);
+                          "
+                        >
+                          {{ m.value }}
+                        </div>
+                        <div
+                          style="
+                            margin-top: 9px;
+                            font:
+                              400 13px/1.45 &quot;IBM Plex Sans&quot;,
+                              sans-serif;
+                            color: rgba(255, 255, 255, 0.72);
+                          "
+                        >
+                          {{ m.label }}
+                        </div>
+                        <div
+                          style="
+                            margin-top: 12px;
+                            height: 5px;
+                            border-radius: 3px;
+                            background: rgba(255, 255, 255, 0.1);
+                            overflow: hidden;
+                          "
+                        >
+                          <div
+                            style="height:100%;border-radius:3px;background:var(--acc,#e8a33d);width:{{ m.pct }};transition:width .7s cubic-bezier(.2,.8,.2,1)"
+                          ></div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div
+                    style="
+                      margin-top: 30px;
+                      padding-top: 24px;
+                      border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        align-items: baseline;
+                        justify-content: space-between;
+                        margin-bottom: 14px;
+                      "
+                    >
+                      <span
+                        style="
+                          font:
+                            500 10px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          letter-spacing: 0.14em;
+                          text-transform: uppercase;
+                          color: rgba(255, 255, 255, 0.42);
+                        "
+                        >{{ panel.chartLabel }}</span
+                      >
+                      <span
+                        style="
+                          font:
+                            400 10.5px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          color: rgba(255, 255, 255, 0.35);
+                        "
+                        >weeks 1–12</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 150px;
+                        display: flex;
+                        align-items: flex-end;
+                        gap: 6px;
+                      "
+                    >
+                      <sc-for
+                        list="{{ panel.series }}"
+                        as="b"
+                        hint-placeholder-count="12"
+                      >
+                        <div
+                          style="
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-end;
+                            height: 100%;
+                          "
+                        >
+                          <div
+                            style="height:{{ b.h }};border-radius:3px 3px 0 0;background:{{ b.c }};transition:height .7s cubic-bezier(.2,.8,.2,1)"
+                          ></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              style="
+                padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 64px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: flex-end;
+                  gap: 20px;
+                  margin-bottom: 40px;
+                "
+              >
+                <h2
+                  style="
+                    margin: 0;
+                    font:
+                      600 clamp(30px, 3.6vw, 48px)/1.05
+                        &quot;Space Grotesk&quot;,
+                      sans-serif;
+                    letter-spacing: -0.03em;
+                    color: #fff;
+                  "
+                >
+                  Selected work
+                </h2>
+                <a
+                  onClick="{{ goCase }}"
+                  style="
+                    margin-left: auto;
+                    font:
+                      600 13.5px/1 &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    color: #fff;
+                    border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+                    padding-bottom: 3px;
+                    cursor: pointer;
+                  "
+                  >All work →</a
+                >
+              </div>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.12)">
+                <sc-for list="{{ work }}" as="w" hint-placeholder-count="4">
+                  <a
+                    onClick="{{ goCase }}"
+                    style="
+                      display: grid;
+                      grid-template-columns:
+                        minmax(0, 56px) minmax(0, 3fr)
+                        minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 20px);
+                      gap: 18px;
+                      align-items: center;
+                      padding: 26px 8px;
+                      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                      cursor: pointer;
+                    "
+                    style-hover="background:rgba(255,255,255,.045)"
+                  >
+                    <span
+                      style="
+                        font:
+                          500 11px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: rgba(255, 255, 255, 0.38);
+                      "
+                      >{{ w.id }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          500 clamp(17px, 1.8vw, 23px)/1.25
+                            &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.02em;
+                        color: #fff;
+                      "
+                      >{{ w.title }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          400 13px/1.45 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.55);
+                      "
+                      >{{ w.client }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          500 11px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.1em;
+                        text-transform: uppercase;
+                        color: var(--acc, #e8a33d);
+                      "
+                      >{{ w.tag }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          400 15px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: rgba(255, 255, 255, 0.4);
+                        text-align: right;
+                      "
+                      >→</span
+                    >
+                  </a>
+                </sc-for>
+              </div>
+            </section>
+
+            <section
+              style="
+                background: #f3f1ed;
+                padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 64px);
+              "
+            >
+              <div
+                style="
+                  font:
+                    500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                  color: #8a8478;
+                "
+              >
+                Method
+              </div>
+              <h2
+                style="
+                  margin: 14px 0 46px;
+                  font:
+                    600 clamp(30px, 3.6vw, 48px)/1.05 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.03em;
+                  color: #14161a;
+                "
+              >
+                Four phases, priced in writing
+              </h2>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(240px, 100%), 1fr)
+                  );
+                  gap: 28px;
+                "
+              >
+                <sc-for list="{{ steps }}" as="p" hint-placeholder-count="4">
+                  <div style="border-top: 2px solid #14161a; padding-top: 20px">
+                    <div
+                      style="
+                        font:
+                          600 12px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: var(--acc, #e8a33d);
+                      "
+                    >
+                      {{ p.no }}
+                    </div>
+                    <h3
+                      style="
+                        margin: 14px 0 10px;
+                        font:
+                          600 19px/1.2 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.02em;
+                        color: #14161a;
+                      "
+                    >
+                      {{ p.name }}
+                    </h3>
+                    <p
+                      style="
+                        margin: 0;
+                        font:
+                          400 13.5px/1.6 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: #5b6066;
+                        text-wrap: pretty;
+                      "
+                    >
+                      {{ p.desc }}
+                    </p>
+                    <div
+                      style="
+                        margin-top: 16px;
+                        font:
+                          500 11px/1.4 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.08em;
+                        text-transform: uppercase;
+                        color: #8a8478;
+                      "
+                    >
+                      {{ p.out }}
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <section
+              style="
+                padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 64px);
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(min(280px, 100%), 1fr)
+                );
+                gap: clamp(28px, 5vw, 72px);
+                align-items: start;
+              "
+            >
+              <div>
+                <h2
+                  style="
+                    margin: 0;
+                    font:
+                      600 clamp(28px, 3.2vw, 42px)/1.06
+                        &quot;Space Grotesk&quot;,
+                      sans-serif;
+                    letter-spacing: -0.03em;
+                    color: #fff;
+                  "
+                >
+                  Questions we get asked
+                </h2>
+                <p
+                  style="
+                    margin: 18px 0 0;
+                    max-width: 34ch;
+                    font:
+                      400 14.5px/1.62 &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    color: rgba(255, 255, 255, 0.6);
+                    text-wrap: pretty;
+                  "
+                >
+                  Straight answers, including the ones most agencies keep vague.
+                </p>
+              </div>
+              <div
+                style="
+                  grid-column: span 2;
+                  min-width: 0;
+                  border-top: 1px solid rgba(255, 255, 255, 0.13);
+                "
+              >
+                <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="5">
+                  <div
+                    style="border-bottom: 1px solid rgba(255, 255, 255, 0.13)"
+                  >
+                    <button
+                      onClick="{{ q.toggle }}"
+                      style="
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 18px;
+                        padding: 22px 4px;
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        text-align: left;
+                      "
+                    >
+                      <span
+                        style="
+                          flex: 1;
+                          font:
+                            500 clamp(15px, 1.5vw, 18px)/1.4
+                              &quot;IBM Plex Sans&quot;,
+                            sans-serif;
+                          color: #fff;
+                        "
+                        >{{ q.q }}</span
+                      >
+                      <span
+                        style="
+                          font:
+                            400 18px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          color: var(--acc, #e8a33d);
+                        "
+                        >{{ q.sign }}</span
+                      >
+                    </button>
+                    <sc-if value="{{ q.open }}">
+                      <p
+                        style="
+                          margin: 0;
+                          padding: 0 46px 24px 4px;
+                          font:
+                            400 14.5px/1.68 &quot;IBM Plex Sans&quot;,
+                            sans-serif;
+                          color: rgba(255, 255, 255, 0.7);
+                          text-wrap: pretty;
+                        "
+                      >
+                        {{ q.a }}
+                      </p>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+          </div>
+        </sc-if>
+
+        <!-- ============ SERVICES ============ -->
+        <sc-if value="{{ isServices }}">
+          <div>
+            <section
+              style="
+                padding: clamp(48px, 6vw, 88px) clamp(20px, 5vw, 64px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div
+                style="
+                  font:
+                    500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.45);
+                "
+              >
+                Capabilities
+              </div>
+              <h1
+                style="
+                  margin: 16px 0 0;
+                  max-width: 20ch;
+                  font:
+                    600 clamp(34px, 4.8vw, 64px)/1.03 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.035em;
+                  color: #fff;
+                "
+              >
+                AI is the lead practice. The other three make it defensible.
+              </h1>
+              <p
+                style="
+                  margin: 24px 0 0;
+                  max-width: 56ch;
+                  font:
+                    400 clamp(15px, 1.2vw, 17.5px)/1.62
+                      &quot;IBM Plex Sans&quot;,
+                    sans-serif;
+                  color: rgba(255, 255, 255, 0.68);
+                  text-wrap: pretty;
+                "
+              >
+                We are not a marketplace of forty services. One practice, four
+                depths, and an honest answer about which of them your problem
+                actually needs — sometimes it is none of them.
+              </p>
+            </section>
+
+            <sc-for
+              list="{{ serviceDetail }}"
+              as="d"
+              hint-placeholder-count="4"
+            >
+              <section
+                style="padding:clamp(44px,5.5vw,80px) clamp(20px,5vw,64px);border-bottom:1px solid rgba(255,255,255,.09);background:{{ d.bg }};display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:clamp(28px,4vw,64px);align-items:start"
+              >
+                <div style="min-width: 0">
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                      margin-bottom: 18px;
+                    "
+                  >
+                    <span
+                      style="font:500 10px/1 'IBM Plex Mono',monospace;color:{{ d.muted }}"
+                      >{{ d.no }}</span
+                    >
+                    <span
+                      style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:4px;background:{{ d.pillBg }};color:{{ d.pillFg }}"
+                      >{{ d.rank }}</span
+                    >
+                  </div>
+                  <h2
+                    style="margin:0;font:600 clamp(26px,3vw,40px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.03em;color:{{ d.fg }}"
+                  >
+                    {{ d.name }}
+                  </h2>
+                  <p
+                    style="margin:20px 0 0;max-width:46ch;font:400 15px/1.65 'IBM Plex Sans',sans-serif;color:{{ d.body }};text-wrap:pretty"
+                  >
+                    {{ d.desc }}
+                  </p>
+                  <div
+                    style="
+                      margin-top: 28px;
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 8px;
+                    "
+                  >
+                    <sc-for
+                      list="{{ d.stack }}"
+                      as="s"
+                      hint-placeholder-count="5"
+                    >
+                      <span
+                        style="font:500 11px/1 'IBM Plex Mono',monospace;padding:8px 11px;border-radius:5px;border:1px solid {{ d.chipBorder }};color:{{ d.body }}"
+                        >{{ s.label }}</span
+                      >
+                    </sc-for>
+                  </div>
+                </div>
+                <div
+                  style="min-width:0;display:grid;gap:1px;background:{{ d.chipBorder }};border:1px solid {{ d.chipBorder }};border-radius:10px;overflow:hidden"
+                >
+                  <sc-for
+                    list="{{ d.items }}"
+                    as="i"
+                    hint-placeholder-count="4"
+                  >
+                    <div
+                      style="background:{{ d.bg }};padding:20px 22px;display:flex;gap:16px;align-items:baseline"
+                    >
+                      <span
+                        style="
+                          font:
+                            500 10px/1.5 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          color: var(--acc, #e8a33d);
+                          min-width: 22px;
+                        "
+                        >{{ i.no }}</span
+                      >
+                      <div>
+                        <div
+                          style="font:500 15px/1.35 'IBM Plex Sans',sans-serif;color:{{ d.fg }}"
+                        >
+                          {{ i.title }}
+                        </div>
+                        <div
+                          style="margin-top:5px;font:400 13px/1.55 'IBM Plex Sans',sans-serif;color:{{ d.body }};text-wrap:pretty"
+                        >
+                          {{ i.desc }}
+                        </div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+            </sc-for>
+
+            <section
+              style="padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 64px)"
+            >
+              <h2
+                style="
+                  margin: 0 0 40px;
+                  font:
+                    600 clamp(28px, 3.4vw, 44px)/1.05 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.03em;
+                  color: #fff;
+                "
+              >
+                How you can engage us
+              </h2>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(260px, 100%), 1fr)
+                  );
+                  gap: 20px;
+                "
+              >
+                <sc-for
+                  list="{{ engagements }}"
+                  as="e"
+                  hint-placeholder-count="3"
+                >
+                  <div
+                    style="
+                      border: 1px solid rgba(255, 255, 255, 0.14);
+                      border-radius: 12px;
+                      padding: 28px 24px 30px;
+                      background: #0e1011;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 14px;
+                    "
+                  >
+                    <div
+                      style="
+                        font:
+                          500 10px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.14em;
+                        text-transform: uppercase;
+                        color: var(--acc, #e8a33d);
+                      "
+                    >
+                      {{ e.kind }}
+                    </div>
+                    <h3
+                      style="
+                        margin: 0;
+                        font:
+                          600 22px/1.15 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.02em;
+                        color: #fff;
+                      "
+                    >
+                      {{ e.name }}
+                    </h3>
+                    <p
+                      style="
+                        margin: 0;
+                        font:
+                          400 13.5px/1.6 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.66);
+                        text-wrap: pretty;
+                      "
+                    >
+                      {{ e.desc }}
+                    </p>
+                    <div
+                      style="
+                        margin-top: auto;
+                        padding-top: 18px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.1);
+                        font:
+                          500 12.5px/1.5 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: rgba(255, 255, 255, 0.8);
+                      "
+                    >
+                      {{ e.terms }}
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+          </div>
+        </sc-if>
+
+        <!-- ============ CASE STUDY ============ -->
+        <sc-if value="{{ isCase }}">
+          <div>
+            <section
+              style="
+                padding: clamp(44px, 6vw, 84px) clamp(20px, 5vw, 64px)
+                  clamp(36px, 4vw, 56px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 14px;
+                  align-items: center;
+                  font:
+                    500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.13em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.45);
+                "
+              >
+                <span>W-01</span
+                ><span style="color: rgba(255, 255, 255, 0.2)">/</span
+                ><span style="color: var(--acc, #e8a33d)">Automation</span
+                ><span style="color: rgba(255, 255, 255, 0.2)">/</span
+                ><span>2026</span>
+              </div>
+              <h1
+                style="
+                  margin: 20px 0 0;
+                  max-width: 22ch;
+                  font:
+                    600 clamp(34px, 4.8vw, 62px)/1.03 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.035em;
+                  color: #fff;
+                "
+              >
+                Dispatch routing engine for a 40-vehicle field operation
+              </h1>
+              <p
+                style="
+                  margin: 24px 0 0;
+                  max-width: 58ch;
+                  font:
+                    400 clamp(15px, 1.2vw, 18px)/1.64 &quot;IBM Plex Sans&quot;,
+                    sans-serif;
+                  color: rgba(255, 255, 255, 0.7);
+                  text-wrap: pretty;
+                "
+              >
+                Two planners were spending most of every morning rebuilding the
+                same route board by hand in a spreadsheet. We replaced the
+                morning with a solver, kept the planners in control of the
+                exceptions, and handed over a system their own team now extends.
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(160px, 100%), 1fr)
+                  );
+                  gap: 1px;
+                  margin-top: 46px;
+                  background: rgba(255, 255, 255, 0.12);
+                  border: 1px solid rgba(255, 255, 255, 0.12);
+                  border-radius: 10px;
+                  overflow: hidden;
+                "
+              >
+                <sc-for
+                  list="{{ caseStats }}"
+                  as="c"
+                  hint-placeholder-count="4"
+                >
+                  <div style="background: #0a0b0c; padding: 24px 22px">
+                    <div
+                      style="
+                        font:
+                          600 clamp(26px, 3vw, 38px)/1 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.03em;
+                        color: var(--acc, #e8a33d);
+                      "
+                    >
+                      {{ c.v }}
+                    </div>
+                    <div
+                      style="
+                        margin-top: 10px;
+                        font:
+                          400 12.5px/1.45 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      {{ c.k }}
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <div style="padding: clamp(20px, 3vw, 40px) clamp(20px, 5vw, 64px)">
+              <div
+                style="
+                  border-radius: 12px;
+                  height: clamp(220px, 32vw, 420px);
+                  border: 1px solid rgba(255, 255, 255, 0.13);
+                  background: repeating-linear-gradient(
+                    135deg,
+                    #121415 0 12px,
+                    #0d0f10 12px 24px
+                  );
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 10px;
+                "
+              >
+                <span
+                  style="
+                    font:
+                      500 11px/1 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.55);
+                  "
+                  >[ image placeholder ]</span
+                >
+                <span
+                  style="
+                    font:
+                      400 12.5px/1.5 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    color: rgba(255, 255, 255, 0.35);
+                    text-align: center;
+                    max-width: 36ch;
+                  "
+                  >Screenshot of the planner board — anonymised route names,
+                  1600×900</span
+                >
+              </div>
+            </div>
+
+            <section
+              style="
+                padding: clamp(44px, 5.5vw, 80px) clamp(20px, 5vw, 64px);
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(min(300px, 100%), 1fr)
+                );
+                gap: clamp(28px, 4vw, 64px);
+                align-items: start;
+              "
+            >
+              <div style="position: sticky; top: 120px">
+                <div
+                  style="
+                    font:
+                      500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.45);
+                    margin-bottom: 18px;
+                  "
+                >
+                  On this page
+                </div>
+                <sc-for list="{{ caseNav }}" as="n" hint-placeholder-count="4">
+                  <div
+                    style="
+                      padding: 10px 0;
+                      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                      font:
+                        400 13.5px/1.4 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: rgba(255, 255, 255, 0.6);
+                    "
+                  >
+                    {{ n.label }}
+                  </div>
+                </sc-for>
+                <div
+                  style="
+                    margin-top: 28px;
+                    padding: 20px;
+                    border: 1px solid rgba(255, 255, 255, 0.13);
+                    border-radius: 10px;
+                    background: #0e1011;
+                  "
+                >
+                  <div
+                    style="
+                      font:
+                        500 10px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.13em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.42);
+                    "
+                  >
+                    Duration
+                  </div>
+                  <div
+                    style="
+                      margin-top: 8px;
+                      font:
+                        500 15px/1.3 &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      color: #fff;
+                    "
+                  >
+                    11 weeks · 3 phases
+                  </div>
+                  <div
+                    style="
+                      margin-top: 18px;
+                      font:
+                        500 10px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.13em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.42);
+                    "
+                  >
+                    Team
+                  </div>
+                  <div
+                    style="
+                      margin-top: 8px;
+                      font:
+                        500 15px/1.3 &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      color: #fff;
+                    "
+                  >
+                    2 engineers, 1 lead
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  grid-column: span 2;
+                  min-width: 0;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 44px;
+                "
+              >
+                <sc-for
+                  list="{{ caseBlocks }}"
+                  as="b"
+                  hint-placeholder-count="4"
+                >
+                  <div>
+                    <h2
+                      style="
+                        margin: 0 0 16px;
+                        font:
+                          600 clamp(22px, 2.4vw, 30px)/1.15
+                            &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.025em;
+                        color: #fff;
+                      "
+                    >
+                      {{ b.h }}
+                    </h2>
+                    <p
+                      style="
+                        margin: 0;
+                        max-width: 66ch;
+                        font:
+                          400 15.5px/1.72 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.72);
+                        text-wrap: pretty;
+                      "
+                    >
+                      {{ b.p }}
+                    </p>
+                    <sc-if value="{{ b.hasList }}">
+                      <div
+                        style="
+                          margin-top: 20px;
+                          display: flex;
+                          flex-direction: column;
+                          gap: 10px;
+                        "
+                      >
+                        <sc-for
+                          list="{{ b.list }}"
+                          as="l"
+                          hint-placeholder-count="3"
+                        >
+                          <div
+                            style="
+                              display: flex;
+                              gap: 14px;
+                              align-items: baseline;
+                            "
+                          >
+                            <span
+                              style="
+                                font:
+                                  500 11px/1.6 &quot;IBM Plex Mono&quot;,
+                                  monospace;
+                                color: var(--acc, #e8a33d);
+                              "
+                              >—</span
+                            >
+                            <span
+                              style="
+                                font:
+                                  400 14.5px/1.6 &quot;IBM Plex Sans&quot;,
+                                  sans-serif;
+                                color: rgba(255, 255, 255, 0.7);
+                              "
+                              >{{ l.label }}</span
+                            >
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <blockquote
+                  style="
+                    margin: 0;
+                    padding: 32px 34px;
+                    border-left: 2px solid var(--acc, #e8a33d);
+                    background: #0e1011;
+                    border-radius: 0 10px 10px 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font:
+                        400 clamp(17px, 1.8vw, 22px)/1.5
+                          &quot;Space Grotesk&quot;,
+                        sans-serif;
+                      letter-spacing: -0.015em;
+                      color: #fff;
+                      text-wrap: pretty;
+                    "
+                  >
+                    "The part I did not expect was that they argued us out of
+                    two features. The thing we launched is smaller than what we
+                    asked for and it is still running untouched."
+                  </p>
+                  <footer
+                    style="
+                      margin-top: 20px;
+                      font:
+                        500 12px/1.5 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.08em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.5);
+                    "
+                  >
+                    Head of operations · logistics client, name withheld
+                  </footer>
+                </blockquote>
+              </div>
+            </section>
+          </div>
+        </sc-if>
+
+        <!-- ============ ABOUT ============ -->
+        <sc-if value="{{ isAbout }}">
+          <div>
+            <section
+              style="
+                padding: clamp(48px, 6vw, 88px) clamp(20px, 5vw, 64px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(min(320px, 100%), 1fr)
+                );
+                gap: clamp(28px, 5vw, 64px);
+                align-items: end;
+              "
+            >
+              <div>
+                <div
+                  style="
+                    font:
+                      500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.45);
+                  "
+                >
+                  About
+                </div>
+                <h1
+                  style="
+                    margin: 16px 0 0;
+                    max-width: 18ch;
+                    font:
+                      600 clamp(34px, 4.8vw, 64px)/1.03
+                        &quot;Space Grotesk&quot;,
+                      sans-serif;
+                    letter-spacing: -0.035em;
+                    color: #fff;
+                  "
+                >
+                  Small on purpose. Accountable by design.
+                </h1>
+              </div>
+              <p
+                style="
+                  margin: 0;
+                  max-width: 48ch;
+                  font:
+                    400 clamp(15px, 1.2vw, 17.5px)/1.66
+                      &quot;IBM Plex Sans&quot;,
+                    sans-serif;
+                  color: rgba(255, 255, 255, 0.7);
+                  text-wrap: pretty;
+                "
+              >
+                Bolter Technologies is an Islamabad software and AI engineering
+                company, founded in 2024. Between five and ten engineers,
+                deliberately. Every project has a named lead who was in the
+                discovery calls and is still there at handover — there is no
+                bench to hide behind.
+              </p>
+            </section>
+
+            <section
+              style="
+                background: #f3f1ed;
+                padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 64px);
+              "
+            >
+              <div
+                style="
+                  font:
+                    500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                  color: #8a8478;
+                "
+              >
+                How we operate
+              </div>
+              <h2
+                style="
+                  margin: 14px 0 46px;
+                  font:
+                    600 clamp(28px, 3.4vw, 44px)/1.05 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.03em;
+                  color: #14161a;
+                "
+              >
+                Four commitments we put in the contract
+              </h2>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(250px, 100%), 1fr)
+                  );
+                  gap: 1px;
+                  background: #dcd8d0;
+                  border: 1px solid #dcd8d0;
+                  border-radius: 10px;
+                  overflow: hidden;
+                "
+              >
+                <sc-for
+                  list="{{ principles }}"
+                  as="p"
+                  hint-placeholder-count="4"
+                >
+                  <div style="background: #fff; padding: 30px 26px 34px">
+                    <div
+                      style="
+                        font:
+                          600 12px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: var(--acc, #e8a33d);
+                      "
+                    >
+                      {{ p.no }}
+                    </div>
+                    <h3
+                      style="
+                        margin: 16px 0 10px;
+                        font:
+                          600 19px/1.2 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        letter-spacing: -0.02em;
+                        color: #14161a;
+                      "
+                    >
+                      {{ p.name }}
+                    </h3>
+                    <p
+                      style="
+                        margin: 0;
+                        font:
+                          400 13.5px/1.62 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: #5b6066;
+                        text-wrap: pretty;
+                      "
+                    >
+                      {{ p.desc }}
+                    </p>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <section
+              style="
+                padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 64px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: flex-end;
+                  gap: 20px;
+                  margin-bottom: 40px;
+                "
+              >
+                <h2
+                  style="
+                    margin: 0;
+                    font:
+                      600 clamp(28px, 3.4vw, 44px)/1.05
+                        &quot;Space Grotesk&quot;,
+                      sans-serif;
+                    letter-spacing: -0.03em;
+                    color: #fff;
+                  "
+                >
+                  The people you will actually work with
+                </h2>
+                <span
+                  style="
+                    margin-left: auto;
+                    font:
+                      400 12.5px/1.5 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    color: rgba(255, 255, 255, 0.4);
+                  "
+                  >headshots to be supplied</span
+                >
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(210px, 100%), 1fr)
+                  );
+                  gap: 20px;
+                "
+              >
+                <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+                  <div>
+                    <div
+                      style="
+                        aspect-ratio: 4/5;
+                        border-radius: 10px;
+                        border: 1px solid rgba(255, 255, 255, 0.13);
+                        background: repeating-linear-gradient(
+                          135deg,
+                          #121415 0 10px,
+                          #0d0f10 10px 20px
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <span
+                        style="
+                          font:
+                            500 10px/1 &quot;IBM Plex Mono&quot;,
+                            monospace;
+                          letter-spacing: 0.14em;
+                          text-transform: uppercase;
+                          color: rgba(255, 255, 255, 0.4);
+                        "
+                        >portrait</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        margin-top: 14px;
+                        font:
+                          500 16px/1.25 &quot;Space Grotesk&quot;,
+                          sans-serif;
+                        color: #fff;
+                      "
+                    >
+                      {{ t.name }}
+                    </div>
+                    <div
+                      style="
+                        margin-top: 5px;
+                        font:
+                          400 13px/1.45 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.55);
+                      "
+                    >
+                      {{ t.role }}
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <section
+              style="
+                padding: clamp(48px, 6vw, 88px) clamp(20px, 5vw, 64px);
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(min(240px, 100%), 1fr)
+                );
+                gap: 28px;
+              "
+            >
+              <sc-for list="{{ aboutFacts }}" as="f" hint-placeholder-count="3">
+                <div
+                  style="
+                    border-top: 1px solid rgba(255, 255, 255, 0.15);
+                    padding-top: 20px;
+                  "
+                >
+                  <div
+                    style="
+                      font:
+                        500 10px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.14em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.42);
+                    "
+                  >
+                    {{ f.k }}
+                  </div>
+                  <div
+                    style="
+                      margin-top: 12px;
+                      font:
+                        400 15px/1.6 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: rgba(255, 255, 255, 0.78);
+                      text-wrap: pretty;
+                    "
+                  >
+                    {{ f.v }}
+                  </div>
+                </div>
+              </sc-for>
+            </section>
+          </div>
+        </sc-if>
+
+        <!-- ============ CONTACT ============ -->
+        <sc-if value="{{ isContact }}">
+          <section
+            style="
+              padding: clamp(48px, 6vw, 88px) clamp(20px, 5vw, 64px)
+                clamp(56px, 7vw, 96px);
+              display: grid;
+              grid-template-columns: repeat(
+                auto-fit,
+                minmax(min(320px, 100%), 1fr)
+              );
+              gap: clamp(32px, 5vw, 72px);
+              align-items: start;
+            "
+          >
+            <div>
+              <div
+                style="
+                  font:
+                    500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.45);
+                "
+              >
+                Contact
+              </div>
+              <h1
+                style="
+                  margin: 16px 0 0;
+                  max-width: 16ch;
+                  font:
+                    600 clamp(34px, 4.4vw, 58px)/1.03 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.035em;
+                  color: #fff;
+                "
+              >
+                Tell us what the process costs you today.
+              </h1>
+              <p
+                style="
+                  margin: 22px 0 0;
+                  max-width: 44ch;
+                  font:
+                    400 15.5px/1.66 &quot;IBM Plex Sans&quot;,
+                    sans-serif;
+                  color: rgba(255, 255, 255, 0.7);
+                  text-wrap: pretty;
+                "
+              >
+                You will get a reply from an engineer within one business day —
+                not a sales sequence. If we are not the right fit we will say so
+                in that first reply.
+              </p>
+
+              <div
+                style="
+                  margin-top: 40px;
+                  display: grid;
+                  gap: 1px;
+                  background: rgba(255, 255, 255, 0.12);
+                  border: 1px solid rgba(255, 255, 255, 0.12);
+                  border-radius: 10px;
+                  overflow: hidden;
+                "
+              >
+                <sc-for
+                  list="{{ contactRows }}"
+                  as="c"
+                  hint-placeholder-count="4"
+                >
+                  <div
+                    style="
+                      background: #0a0b0c;
+                      padding: 18px 20px;
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 10px;
+                      align-items: baseline;
+                    "
+                  >
+                    <span
+                      style="
+                        font:
+                          500 10px/1.4 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.13em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.42);
+                        min-width: 88px;
+                      "
+                      >{{ c.k }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          400 14.5px/1.5 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: #fff;
+                      "
+                      >{{ c.v }}</span
+                    >
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="margin-top: 32px">
+                <div
+                  style="
+                    font:
+                      500 10px/1 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.42);
+                    margin-bottom: 16px;
+                  "
+                >
+                  What happens next
+                </div>
+                <sc-for
+                  list="{{ nextSteps }}"
+                  as="n"
+                  hint-placeholder-count="3"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      gap: 14px;
+                      padding: 11px 0;
+                      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    "
+                  >
+                    <span
+                      style="
+                        font:
+                          500 11px/1.6 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        color: var(--acc, #e8a33d);
+                      "
+                      >{{ n.no }}</span
+                    >
+                    <span
+                      style="
+                        font:
+                          400 14px/1.55 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        color: rgba(255, 255, 255, 0.7);
+                      "
+                      >{{ n.label }}</span
+                    >
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div
+              style="
+                min-width: 0;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 14px;
+                background: #0e1011;
+                padding: clamp(24px, 3vw, 38px);
+              "
+            >
+              <div
+                style="
+                  font:
+                    600 19px/1.2 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  letter-spacing: -0.02em;
+                  color: #fff;
+                "
+              >
+                Project enquiry
+              </div>
+              <div
+                style="
+                  margin-top: 8px;
+                  font:
+                    400 13px/1.5 &quot;IBM Plex Sans&quot;,
+                    sans-serif;
+                  color: rgba(255, 255, 255, 0.5);
+                "
+              >
+                Five fields. Nothing optional is asked.
+              </div>
+              <div style="margin-top: 28px; display: grid; gap: 18px">
+                <sc-for list="{{ fields }}" as="f" hint-placeholder-count="4">
+                  <label style="display: block">
+                    <span
+                      style="
+                        display: block;
+                        font:
+                          500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                          monospace;
+                        letter-spacing: 0.13em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.5);
+                        margin-bottom: 9px;
+                      "
+                      >{{ f.label }}</span
+                    >
+                    <input
+                      placeholder="{{ f.ph }}"
+                      style="
+                        width: 100%;
+                        padding: 14px 15px;
+                        border-radius: 7px;
+                        border: 1px solid rgba(255, 255, 255, 0.16);
+                        background: #0a0b0c;
+                        color: #fff;
+                        font:
+                          400 14.5px/1.4 &quot;IBM Plex Sans&quot;,
+                          sans-serif;
+                        outline: none;
+                      "
+                      style-focus="border-color:var(--acc,#e8a33d)"
+                    />
+                  </label>
+                </sc-for>
+                <div>
+                  <span
+                    style="
+                      display: block;
+                      font:
+                        500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.13em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.5);
+                      margin-bottom: 11px;
+                    "
+                    >What do you need</span
+                  >
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+                    <sc-for
+                      list="{{ needChips }}"
+                      as="c"
+                      hint-placeholder-count="5"
+                    >
+                      <button
+                        onClick="{{ c.toggle }}"
+                        style="font:500 12px/1 'IBM Plex Mono',monospace;padding:10px 13px;border-radius:6px;cursor:pointer;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }}"
+                      >
+                        {{ c.label }}
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+                <label style="display: block">
+                  <span
+                    style="
+                      display: block;
+                      font:
+                        500 10.5px/1 &quot;IBM Plex Mono&quot;,
+                        monospace;
+                      letter-spacing: 0.13em;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.5);
+                      margin-bottom: 9px;
+                    "
+                    >The process that is costing you time</span
+                  >
+                  <textarea
+                    rows="4"
+                    placeholder="Two planners rebuild the same route board every morning in a spreadsheet…"
+                    style="
+                      width: 100%;
+                      padding: 14px 15px;
+                      border-radius: 7px;
+                      border: 1px solid rgba(255, 255, 255, 0.16);
+                      background: #0a0b0c;
+                      color: #fff;
+                      font:
+                        400 14.5px/1.55 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      outline: none;
+                      resize: vertical;
+                    "
+                    style-focus="border-color:var(--acc,#e8a33d)"
+                  ></textarea>
+                </label>
+                <button
+                  style="
+                    margin-top: 6px;
+                    padding: 16px 22px;
+                    border-radius: 8px;
+                    border: none;
+                    background: var(--acc, #e8a33d);
+                    color: #0a0b0c;
+                    font:
+                      600 14.5px/1 &quot;IBM Plex Sans&quot;,
+                      sans-serif;
+                    cursor: pointer;
+                  "
+                  style-hover="background:#fff"
+                >
+                  Send enquiry
+                </button>
+                <div
+                  style="
+                    font:
+                      400 11.5px/1.55 &quot;IBM Plex Mono&quot;,
+                      monospace;
+                    color: rgba(255, 255, 255, 0.38);
+                  "
+                >
+                  We sign your NDA before discovery. Nothing you send here is
+                  used in marketing.
+                </div>
+              </div>
+            </div>
+          </section>
+        </sc-if>
+
+        <!-- ============ SHARED CTA + FOOTER ============ -->
+        <section
+          style="
+            background: #f3f1ed;
+            padding: clamp(52px, 6.5vw, 96px) clamp(20px, 5vw, 64px);
+            display: grid;
+            grid-template-columns: repeat(
+              auto-fit,
+              minmax(min(300px, 100%), 1fr)
+            );
+            gap: 32px;
+            align-items: center;
+          "
+        >
+          <h2
+            style="
+              margin: 0;
+              max-width: 20ch;
+              font:
+                600 clamp(28px, 3.6vw, 48px)/1.04 &quot;Space Grotesk&quot;,
+                sans-serif;
+              letter-spacing: -0.035em;
+              color: #14161a;
+            "
+          >
+            There is a process quietly costing your team a day a week.
+          </h2>
+          <div style="justify-self: start">
+            <div
+              style="
+                font:
+                  400 15px/1.6 &quot;IBM Plex Sans&quot;,
+                  sans-serif;
+                color: #5b6066;
+                max-width: 38ch;
+              "
+            >
+              contact@boltertech.com · +92 334 707 0209 · replies within one
+              business day.
+            </div>
+            <a
+              onClick="{{ goContact }}"
+              style="
+                display: inline-block;
+                margin-top: 22px;
+                font:
+                  600 14.5px/1 &quot;IBM Plex Sans&quot;,
+                  sans-serif;
+                color: #f3f1ed;
+                background: #14161a;
+                padding: 16px 26px;
+                border-radius: 8px;
+                cursor: pointer;
+              "
+              style-hover="background:var(--acc,#e8a33d);color:#0a0b0c"
+              >Start a project →</a
+            >
+          </div>
+        </section>
+
+        <footer
+          style="
+            padding: clamp(44px, 5vw, 72px) clamp(20px, 5vw, 64px) 36px;
+            display: grid;
+            grid-template-columns: repeat(
+              auto-fit,
+              minmax(min(200px, 100%), 1fr)
+            );
+            gap: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.09);
+          "
+        >
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span
+                style="
+                  width: 22px;
+                  height: 22px;
+                  border-radius: 5px;
+                  background: var(--acc, #e8a33d);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font:
+                    700 11px/1 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  color: #0a0b0c;
+                "
+                >B</span
+              >
+              <span
+                style="
+                  font:
+                    600 14px/1 &quot;Space Grotesk&quot;,
+                    sans-serif;
+                  color: #fff;
+                "
+                >BOLTER Technologies</span
+              >
+            </div>
+            <p
+              style="
+                margin: 18px 0 0;
+                font:
+                  400 13px/1.65 &quot;IBM Plex Sans&quot;,
+                  sans-serif;
+                color: rgba(255, 255, 255, 0.5);
+              "
+            >
+              Bolter Technologies Private Limited<br />303, 3rd Floor, Mehran
+              Business Square<br />Plaza 3-H, Kunwar Block, Topcity-1<br />Islamabad,
+              Pakistan
+            </p>
+          </div>
+          <sc-for list="{{ footerCols }}" as="c" hint-placeholder-count="3">
+            <div>
+              <div
+                style="
+                  font:
+                    500 10px/1 &quot;IBM Plex Mono&quot;,
+                    monospace;
+                  letter-spacing: 0.14em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.4);
+                "
+              >
+                {{ c.head }}
+              </div>
+              <div
+                style="
+                  margin-top: 16px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 11px;
+                "
+              >
+                <sc-for list="{{ c.links }}" as="l" hint-placeholder-count="4">
+                  <a
+                    style="
+                      font:
+                        400 13.5px/1.4 &quot;IBM Plex Sans&quot;,
+                        sans-serif;
+                      color: rgba(255, 255, 255, 0.7);
+                      cursor: pointer;
+                    "
+                    >{{ l.label }}</a
+                  >
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div
+            style="
+              grid-column: 1/-1;
+              padding-top: 28px;
+              border-top: 1px solid rgba(255, 255, 255, 0.09);
+              display: flex;
+              flex-wrap: wrap;
+              gap: 16px;
+              font:
+                400 11.5px/1.5 &quot;IBM Plex Mono&quot;,
+                monospace;
+              color: rgba(255, 255, 255, 0.35);
+            "
+          >
+            <span>© 2026 Bolter Technologies. All rights reserved.</span>
+            <span style="margin-left: auto"
+              >Registered in Pakistan · Private Limited</span
+            >
+          </div>
+        </footer>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{"accent":{"editor":"color","default":"#e8a33d","tsType":"string","options":["#e8a33d","#3dc7e8","#c9e83d","#e8663d"],"section":"Theme"},"showTicker":{"editor":"boolean","default":true,"tsType":"boolean","section":"Layout"},"initialScreen":{"editor":"enum","options":["home","services","case","about","contact"],"default":"home","tsType":"string","section":"Layout"}}'
+    >
+      class Component extends DCLogic {
+        constructor(p) {
+          super(p);
+          this.state = { screen: p.initialScreen || "home", tab: 0, faq: 0, needs: { "AI / LLM": true, Automation: false, "Software build": false, "Data / analytics": false, "Not sure yet": false } };
+        }
+        componentDidMount() { this.applyAccent(); }
+        componentDidUpdate() { this.applyAccent(); }
+        applyAccent() {
+          const a = this.props.accent;
+          if (a) document.documentElement.style.setProperty("--acc", a);
+        }
+        go(s) { return () => { this.setState({ screen: s }); window.scrollTo(0, 0); }; }
+
+        renderVals() {
+          const acc = "var(--acc,#e8a33d)";
+          const sc = this.state.screen;
+          const mkTab = (labels, active, onPick) => labels.map((label, i) => ({
+            label, go: () => onPick(i),
+            bg: i === active ? "#f3f1ed" : "transparent",
+            fg: i === active ? "#0a0b0c" : "rgba(255,255,255,.66)",
+            border: i === active ? "#f3f1ed" : "rgba(255,255,255,.2)"
+          }));
+
+          const panels = [
+            {
+              sector: "Field logistics",
+              brief: "Two planners rebuilt a 40-vehicle route board by hand every morning. We shipped a solver plus an exception queue, and kept a manual override on every leg.",
+              stack: ["Python", "OR-Tools", "Postgres", "React"],
+              chartLabel: "Manual planning hours per week",
+              metrics: [
+                { value: "−73%", label: "Time spent on manual dispatch", pct: "73%" },
+                { value: "4.2×", label: "Jobs handled per planner per day", pct: "84%" },
+                { value: "11 wk", label: "Discovery to production handover", pct: "55%" }
+              ],
+              series: [96, 92, 88, 74, 66, 58, 47, 41, 34, 29, 27, 26]
+            },
+            {
+              sector: "Financial operations",
+              brief: "Supplier invoices arrived as PDFs, scans and email bodies. We built extraction with a confidence gate, so only low-confidence documents reach a human.",
+              stack: ["LLM extraction", "Eval harness", "Queue", "S3"],
+              chartLabel: "Invoices auto-cleared per week",
+              metrics: [
+                { value: "9,400", label: "Invoices processed in the first month", pct: "88%" },
+                { value: "98.6%", label: "Field-level extraction accuracy", pct: "98%" },
+                { value: "3 min", label: "Median time from inbox to ledger", pct: "34%" }
+              ],
+              series: [12, 21, 33, 44, 51, 60, 68, 74, 79, 84, 88, 91]
+            },
+            {
+              sector: "Subscription services",
+              brief: "Churn was being explained after the fact. We made the numbers trustworthy first, then modelled them, then put the score in the tool the CS team already used.",
+              stack: ["dbt", "Warehouse", "Gradient boosting", "Looker"],
+              chartLabel: "Accounts flagged before churn",
+              metrics: [
+                { value: "+18pt", label: "Lift in at-risk account recall", pct: "62%" },
+                { value: "31 d", label: "Median warning before churn event", pct: "48%" },
+                { value: "1 src", label: "Retention definitions, previously four", pct: "92%" }
+              ],
+              series: [22, 26, 31, 38, 45, 49, 56, 61, 67, 71, 76, 80]
+            }
+          ];
+          const p = panels[this.state.tab];
+
+          const faqData = [
+            { q: "Who owns the code and the intellectual property?", a: "You do, on final payment, in full — source, infrastructure definitions and documentation. We keep no licence over your systems and we do not reuse client code in other engagements." },
+            { q: "What happens after launch?", a: "Thirty days of included support after handover, covering defects and the questions your team will have in week one. After that, an optional monthly retainer for changes and monitoring, cancellable with 30 days' notice. No project ends with a silent handover." },
+            { q: "How do you scope and price a project?", a: "A discovery conversation, then a written scope with a fixed price per phase and the assumptions named. Changes go through a named change process so neither side is surprised. We do not publish hourly rates because we are not selling hours." },
+            { q: "Do you use AI to write our code, and will you tell us?", a: "Yes, and yes. We use AI assistance for scaffolding, tests and refactors. Every line is read and owned by a named engineer before it reaches your repository, no client data or proprietary code is sent to third-party models without your written approval, and we will list the tools we used on request." },
+            { q: "What timezone overlap do we actually get?", a: "We are in Islamabad, UTC+5 — a full working morning overlapping Europe and an afternoon overlapping the US East Coast. The daily overlap window goes in writing before the project starts." },
+            { q: "Will you sign an NDA or work under our contract?", a: "Yes to both. We sign client NDAs before discovery and are comfortable working under your master services agreement rather than insisting on our own paperwork." }
+          ];
+
+          const dark = { bg: "#0a0b0c", fg: "#fff", body: "rgba(255,255,255,.68)", muted: "rgba(255,255,255,.4)", chipBorder: "rgba(255,255,255,.14)", pillBg: "rgba(232,163,61,.16)", pillFg: acc };
+          const light = { bg: "#f3f1ed", fg: "#14161a", body: "#5b6066", muted: "#8a8478", chipBorder: "#dcd8d0", pillBg: "#14161a", pillFg: "#f3f1ed" };
+          const detail = [
+            { ...dark, no: "01", rank: "Lead practice", name: "AI", desc: "The model work: deciding what an LLM should and should not be allowed to decide, then building the prompting, retrieval and evaluation around it so the output is safe to act on.", stack: ["Retrieval", "Evals", "Guardrails", "Fine-tuning", "Agents"], items: [
+              { no: "a", title: "Decision boundary", desc: "A written list of what the model decides, what it drafts, and what a human must approve." },
+              { no: "b", title: "Retrieval layer", desc: "Your documents made answerable, with citations back to the source." },
+              { no: "c", title: "Evaluation harness", desc: "A test suite for model output, so a prompt change cannot silently regress." },
+              { no: "d", title: "Confidence gating", desc: "Low-confidence cases route to a person instead of guessing confidently." }
+            ] },
+            { ...light, no: "02", rank: "Supporting", name: "Automation", desc: "We find the process quietly costing hours a week and automate it end to end — not a chatbot bolted onto the side of it.", stack: ["Workflow", "Integrations", "Queues", "Solvers"], items: [
+              { no: "a", title: "Process map", desc: "How the work actually happens today, including the parts people stopped noticing." },
+              { no: "b", title: "End-to-end run", desc: "Trigger to outcome with no manual re-entry between steps." },
+              { no: "c", title: "Exception queue", desc: "The 8% the automation should not touch, routed rather than dropped." },
+              { no: "d", title: "Audit trail", desc: "Every automated action attributable, reversible and logged." }
+            ] },
+            { ...dark, no: "03", rank: "Supporting", name: "Software development", desc: "The engineering underneath. Web platforms, internal tools and the APIs that hold an automation together once it leaves the prototype stage.", stack: ["TypeScript", "React", "Node", "Postgres", "AWS"], items: [
+              { no: "a", title: "Internal tools", desc: "The operator screens your automation needs to be supervised." },
+              { no: "b", title: "API layer", desc: "Contracts and versioning so the next integration is not a rewrite." },
+              { no: "c", title: "Platform work", desc: "Auth, roles, billing and the parts nobody demos." },
+              { no: "d", title: "Handover", desc: "Documentation and access good enough that your team extends it without us." }
+            ] },
+            { ...light, no: "04", rank: "Supporting", name: "Data analytics", desc: "What makes the other three defensible. Getting the numbers trustworthy first, then modelling them, then putting them where a decision actually gets made.", stack: ["dbt", "Warehouse", "Modelling", "BI"], items: [
+              { no: "a", title: "Trust pass", desc: "One definition per metric, reconciled against the source system." },
+              { no: "b", title: "Modelling", desc: "Forecasts and scores with the error bars stated, not hidden." },
+              { no: "c", title: "Delivery", desc: "The number surfaced inside the tool the decision is made in." },
+              { no: "d", title: "Monitoring", desc: "Alerts when the data drifts, before a dashboard lies to someone." }
+            ] }
+          ];
+
+          return {
+            screens: mkTab(["Home", "Services", "Case study", "About", "Contact"], ["home", "services", "case", "about", "contact"].indexOf(sc), i => this.go(["home", "services", "case", "about", "contact"][i])()),
+            navLinks: [
+              { label: "Services", go: this.go("services"), fg: sc === "services" ? acc : "rgba(255,255,255,.78)" },
+              { label: "Work", go: this.go("case"), fg: sc === "case" ? acc : "rgba(255,255,255,.78)" },
+              { label: "About", go: this.go("about"), fg: sc === "about" ? acc : "rgba(255,255,255,.78)" },
+              { label: "Contact", go: this.go("contact"), fg: sc === "contact" ? acc : "rgba(255,255,255,.78)" }
+            ],
+            goHome: this.go("home"), goServices: this.go("services"), goCase: this.go("case"), goContact: this.go("contact"),
+            isHome: sc === "home", isServices: sc === "services", isCase: sc === "case", isAbout: sc === "about", isContact: sc === "contact",
+            showTicker: this.props.showTicker !== false,
+
+            facts: [{ k: "Est.", v: "2024" }, { k: "Base", v: "Islamabad, PK" }, { k: "Team", v: "5–10 engineers" }, { k: "Practice", v: "AI-led" }],
+            heroRows: [
+              { id: "W-01", title: "Dispatch routing engine", sub: "Field logistics · 40 vehicles", stat: "−73%" },
+              { id: "W-02", title: "Invoice extraction pipeline", sub: "Financial operations · NDA", stat: "9,400" },
+              { id: "W-03", title: "Retention forecasting model", sub: "Subscription services · NDA", stat: "+18pt" },
+              { id: "W-04", title: "Internal tools migration", sub: "Manufacturing · NDA", stat: "6 wk" }
+            ],
+            spark: [96, 92, 88, 81, 74, 66, 58, 52, 47, 41, 37, 34, 31, 29, 28, 27, 26, 26].map((h, i) => ({ h: h + "%", c: i > 12 ? acc : "rgba(255,255,255,.18)" })),
+            ticker: ["Retrieval-augmented systems", "Process automation", "Evaluation harnesses", "Internal tools", "Data modelling", "API platforms", "Agent workflows", "Warehouse migration"].concat(["Retrieval-augmented systems", "Process automation", "Evaluation harnesses", "Internal tools", "Data modelling", "API platforms", "Agent workflows", "Warehouse migration"]).map(label => ({ label })),
+
+            services: [
+              { rank: "Lead practice", no: "01", name: "AI", desc: "Choosing what a model should and should not decide, then building retrieval, prompting and evaluation around it so the output is safe to act on.", cta: "Explore AI →", go: this.go("services") },
+              { rank: "Supporting", no: "02", name: "Automation", desc: "The process quietly costing you hours a week, automated end to end — not a chatbot bolted onto the side of it.", cta: "Explore automation →", go: this.go("services") },
+              { rank: "Supporting", no: "03", name: "Software development", desc: "Web platforms, internal tools and the APIs that hold an automation together after the prototype stage.", cta: "Explore software →", go: this.go("services") },
+              { rank: "Supporting", no: "04", name: "Data analytics", desc: "Trustworthy numbers first, then models, then putting them where a decision actually gets made.", cta: "Explore data →", go: this.go("services") }
+            ],
+
+            tabs: mkTab(["Field logistics", "Financial operations", "Subscription services"], this.state.tab, i => this.setState({ tab: i })),
+            panel: {
+              sector: p.sector, brief: p.brief, chartLabel: p.chartLabel,
+              stack: p.stack.map(label => ({ label })),
+              metrics: p.metrics,
+              series: p.series.map((h, i) => ({ h: h + "%", c: i > 7 ? acc : "rgba(255,255,255,.2)" }))
+            },
+
+            work: [
+              { id: "W-01", title: "Dispatch routing engine", client: "Field logistics operator, 40 vehicles", tag: "Automation" },
+              { id: "W-02", title: "Invoice extraction pipeline", client: "Finance team, mid-market distributor", tag: "AI" },
+              { id: "W-03", title: "Retention forecasting model", client: "Subscription services business", tag: "Data" },
+              { id: "W-04", title: "Internal tools migration", client: "Manufacturing group, 3 sites", tag: "Software" }
+            ],
+            steps: [
+              { no: "01", name: "Discovery", desc: "We map the process before writing code — a couple of calls and a look at how the work actually happens today.", out: "Output · process map" },
+              { no: "02", name: "Written scope", desc: "A fixed scope and price per phase, in writing, with the assumptions named. If something is uncertain we say so.", out: "Output · fixed quote" },
+              { no: "03", name: "Build in the open", desc: "Working software early and often, not a status report. A fixed daily overlap window means same-day answers.", out: "Output · weekly build" },
+              { no: "04", name: "Handover and after", desc: "Documentation, access and thirty days of included support. Then an optional retainer, cancellable at 30 days.", out: "Output · 30-day support" }
+            ],
+            faqs: faqData.map((f, i) => ({ q: f.q, a: f.a, open: this.state.faq === i, sign: this.state.faq === i ? "–" : "+", toggle: () => this.setState({ faq: this.state.faq === i ? -1 : i }) })),
+
+            serviceDetail: detail.map(d => ({ ...d, stack: d.stack.map(label => ({ label })) })),
+            engagements: [
+              { kind: "Most common", name: "Fixed-scope build", desc: "A defined outcome, phased, priced per phase before anything starts. Best when the process is understood and the work is the work.", terms: "From 6 weeks · fixed price per phase" },
+              { kind: "Start here", name: "Discovery sprint", desc: "Two weeks to map the process, name the automation candidates and produce a costed plan. Credited against the build if you proceed.", terms: "2 weeks · fixed fee, credited" },
+              { kind: "After launch", name: "Retained engineering", desc: "A standing share of our week for changes, monitoring and the next increment, with a named lead who already knows the system.", terms: "Monthly · 30 days' notice" }
+            ],
+
+            caseStats: [{ v: "−73%", k: "Time on manual dispatch" }, { v: "4.2×", k: "Jobs per planner per day" }, { v: "11 wk", k: "Discovery to handover" }, { v: "0", k: "Rollbacks since launch" }],
+            caseNav: [{ label: "The situation" }, { label: "What we changed" }, { label: "How it was built" }, { label: "Where it stands" }],
+            caseBlocks: [
+              { h: "The situation", p: "Every morning two planners rebuilt the same route board in a spreadsheet: 40 vehicles, roughly 300 jobs, time windows, skills and vehicle constraints held mostly in their heads. It worked, and it consumed the first three hours of every day. When either planner was away, the board got worse and nobody could say why.", hasList: false },
+              { h: "What we changed", p: "We did not replace the planners. We replaced the part of their morning that a solver does better, and gave them a queue for everything it should not touch.", hasList: true, list: [{ label: "Constraints written down explicitly, then encoded — the first deliverable was a document, not code" }, { label: "A solver that produces a candidate board in under 40 seconds" }, { label: "An exception queue for jobs the solver flags rather than forces" }, { label: "A manual override on every leg, with the reason captured" }] },
+              { h: "How it was built", p: "Three phases, each scoped and priced in writing before it started. Phase one was the constraint model and a read-only comparison against yesterday's hand-built board — we ran shadow mode for eleven days before a single route was dispatched from the new system. Phase two added the planner interface and the override trail. Phase three covered handover: documentation, an access review and a week of paired work with their own developer.", hasList: false },
+              { h: "Where it stands", p: "The planners now start the day reviewing about a dozen flagged jobs instead of building 300 from scratch. Their internal developer has shipped two changes to the constraint set without us. We are on a light retainer for the solver itself, and the client can end it with thirty days' notice.", hasList: false }
+            ],
+
+            principles: [
+              { no: "01", name: "One named lead", desc: "The engineer in your discovery calls is the engineer at handover. No account manager relay, no silent substitution." },
+              { no: "02", name: "Fixed price per phase", desc: "In writing, with assumptions named. If something is uncertain we say so rather than padding the estimate quietly." },
+              { no: "03", name: "You own everything", desc: "Source, infrastructure and documentation transfer to you on final payment. We keep no licence and reuse no client code." },
+              { no: "04", name: "Thirty days after", desc: "Included support after handover, then an optional retainer. The commitment is written down, not implied." }
+            ],
+            team: [
+              { name: "Founder / engineering lead", role: "Name and bio to be supplied" },
+              { name: "Senior engineer · AI", role: "Retrieval, evals, model boundaries" },
+              { name: "Senior engineer · platform", role: "APIs, data, infrastructure" },
+              { name: "Engineer · product", role: "Internal tools and operator interfaces" }
+            ],
+            aboutFacts: [
+              { k: "Timezone", v: "Islamabad, UTC+5. A full morning overlapping Europe, an afternoon overlapping US East. The daily window is agreed in writing before kickoff." },
+              { k: "Paperwork", v: "We sign your NDA before discovery and work under your MSA rather than insisting on our own." },
+              { k: "AI disclosure", v: "We use AI assistance in our own engineering and will tell you exactly where. No client data reaches a third-party model without written approval." }
+            ],
+
+            contactRows: [
+              { k: "Email", v: "contact@boltertech.com" },
+              { k: "Phone", v: "+92 334 707 0209" },
+              { k: "Office", v: "303, Mehran Business Square, Topcity-1, Islamabad" },
+              { k: "Response", v: "One business day, from an engineer" }
+            ],
+            nextSteps: [
+              { no: "01", label: "A reply within one business day, saying whether we are a fit." },
+              { no: "02", label: "A 45-minute call about the process, not the technology." },
+              { no: "03", label: "A written scope with fixed pricing per phase." }
+            ],
+            fields: [
+              { label: "Name", ph: "Your name" },
+              { label: "Work email", ph: "you@company.com" },
+              { label: "Company", ph: "Company name" },
+              { label: "Rough budget range", ph: "Optional, but it saves us both a call" }
+            ],
+            needChips: Object.keys(this.state.needs).map(label => ({
+              label,
+              toggle: () => this.setState(s => ({ needs: { ...s.needs, [label]: !s.needs[label] } })),
+              bg: this.state.needs[label] ? "rgba(232,163,61,.16)" : "transparent",
+              fg: this.state.needs[label] ? acc : "rgba(255,255,255,.6)",
+              border: this.state.needs[label] ? acc : "rgba(255,255,255,.18)"
+            })),
+
+            footerCols: [
+              { head: "Practice", links: [{ label: "AI" }, { label: "Automation" }, { label: "Software development" }, { label: "Data analytics" }] },
+              { head: "Company", links: [{ label: "About" }, { label: "Work" }, { label: "Contact" }, { label: "Careers" }] },
+              { head: "Legal", links: [{ label: "Privacy" }, { label: "Terms" }, { label: "Security" }] }
+            ]
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

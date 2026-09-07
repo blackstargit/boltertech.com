@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
+import { ctaClasses } from "@/components/primitives/Cta";
 import Script from "next/script";
 
 /**
@@ -13,6 +14,52 @@ import Script from "next/script";
 
 const CONSENT_KEY = "analytics-consent";
 type Consent = "pending" | "unset" | "granted" | "denied";
+
+/**
+ * localStorage is an external store, so React reads it through the API
+ * built for that rather than through an effect that immediately calls
+ * setState — which is a cascading render on every mount, and what
+ * react-hooks/set-state-in-effect is pointing at.
+ *
+ * The `storage` event only fires in *other* tabs, so writes from this one
+ * notify the local listeners directly. That is also what makes the choice
+ * take effect in every open tab at once.
+ */
+const listeners = new Set<() => void>();
+
+function subscribe(onChange: () => void) {
+  listeners.add(onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    listeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function readConsent(): Consent {
+  try {
+    const stored = localStorage.getItem(CONSENT_KEY);
+    return stored === "granted" || stored === "denied" ? stored : "unset";
+  } catch {
+    // Private mode, or site data blocked. Treat as no answer given.
+    return "unset";
+  }
+}
+
+/** No localStorage on the server. "pending" renders nothing, so the banner
+ *  never appears in the HTML before the real answer is known. */
+function serverConsent(): Consent {
+  return "pending";
+}
+
+function writeConsent(value: "granted" | "denied") {
+  try {
+    localStorage.setItem(CONSENT_KEY, value);
+  } catch {
+    // Nothing to persist to; the choice still applies for this page view.
+  }
+  for (const onChange of listeners) onChange();
+}
 
 type Props = {
   measurementId: string;
@@ -26,17 +73,11 @@ type Props = {
 };
 
 export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
-  const [consent, setConsent] = useState<Consent>("pending");
-
-  useEffect(() => {
-    const stored = localStorage.getItem(CONSENT_KEY);
-    setConsent(stored === "granted" || stored === "denied" ? stored : "unset");
-  }, []);
-
-  function choose(value: "granted" | "denied") {
-    localStorage.setItem(CONSENT_KEY, value);
-    setConsent(value);
-  }
+  const consent = useSyncExternalStore(
+    subscribe,
+    readConsent,
+    serverConsent,
+  );
 
   if (consent === "granted") {
     return (
@@ -58,25 +99,31 @@ export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
   if (consent !== "unset") return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 flex flex-wrap items-center justify-between gap-3 border-t border-rule bg-sheet px-gutter py-4">
+    <div
+      data-theme="dark"
+      className="fixed inset-x-0 bottom-0 z-50 flex flex-wrap items-center justify-between gap-4 border-t border-rule bg-sheet px-gutter py-4"
+    >
       <p className="text-small text-ink-muted">
         {messages.message}{" "}
-        <Link href={privacyHref} className="text-accent hover:text-ink">
+        <Link
+          href={privacyHref}
+          className="text-accent underline-offset-2 hover:underline"
+        >
           {messages.privacyLink}
         </Link>
       </p>
       <div className="flex gap-3">
         <button
           type="button"
-          onClick={() => choose("denied")}
-          className="border border-rule px-4 py-2 font-data text-micro tracking-[0.08em] text-ink-muted uppercase transition-colors hover:text-ink"
+          onClick={() => writeConsent("denied")}
+          className={`${ctaClasses("outline")} px-5 py-2.5`}
         >
           {messages.decline}
         </button>
         <button
           type="button"
-          onClick={() => choose("granted")}
-          className="border border-ink bg-ink px-4 py-2 font-data text-micro tracking-[0.08em] text-ink-invert uppercase transition-colors hover:border-accent hover:bg-accent"
+          onClick={() => writeConsent("granted")}
+          className={`${ctaClasses("solid")} px-5 py-2.5`}
         >
           {messages.accept}
         </button>
