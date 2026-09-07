@@ -1,23 +1,29 @@
 [
   {
-    "id": "ai-automation",
-    "name": "AI automation",
+    "id": "ai",
+    "name": "AI",
     "lead": true,
+    "summary": "The model work: choosing what an LLM should and shouldn't decide, then building the prompting, retrieval, and evaluation around it so the output is safe to act on.",
+    "includes": [
+      "Model and prompt selection for the actual task, not the demo",
+      "LLM-backed decision support with human review built in",
+      "Retrieval and document understanding pipelines",
+      "Evaluation and monitoring for what ships"
+    ],
+    "stack": ["Python", "TypeScript", "Claude", "LangGraph", "Postgres"]
+  },
+  {
+    "id": "automation",
+    "name": "Automation",
+    "lead": false,
     "summary": "We find the process that is quietly costing you hours a week, and we automate it end to end - not a chatbot bolted onto the side of it.",
     "includes": [
       "Process mapping before any code is written",
-      "Document and data extraction pipelines",
-      "LLM-backed decision support with human review built in",
-      "Integration into the tools your team already uses"
+      "Workflow orchestration and scheduled jobs",
+      "Integration into the tools your team already uses",
+      "Handover documentation, so it runs without us"
     ],
-    "stack": [
-      "Python",
-      "TypeScript",
-      "Claude",
-      "LangGraph",
-      "Postgres",
-      "Temporal"
-    ]
+    "stack": ["Python", "TypeScript", "Temporal", "Postgres"]
   },
   {
     "id": "software",
@@ -36,7 +42,7 @@
     "id": "data",
     "name": "Data analytics",
     "lead": false,
-    "summary": "What makes the other two defensible. Getting the numbers trustworthy first, then modelling them, then putting them where a decision actually gets made.",
+    "summary": "What makes the other three defensible. Getting the numbers trustworthy first, then modelling them, then putting them where a decision actually gets made.",
     "includes": [
       "Data pipelines and warehouse modelling",
       "Forecasting and classification models",

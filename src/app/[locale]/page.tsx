@@ -77,8 +77,8 @@ export default async function HomePage({
         </div>
       </TitleBlock>
 
-      {/* ── 02 · One practice, three depths ───────────────────────────
-          Presented as one offer rather than three storefronts. This is
+      {/* ── 02 · One practice, four depths ────────────────────────────
+          Presented as one offer rather than four storefronts. This is
           where "we do everything" gets defused instead of confirmed. */}
       <Section labelledBy="offer">
         <SectionHead
@@ -86,7 +86,7 @@ export default async function HomePage({
           title={m.home.offerHeading}
           note={m.services.heading}
         />
-        <div className="grid gap-px border border-rule bg-rule lg:grid-cols-3">
+        <div className="grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4">
           {serviceLines.map((s) => (
             <Link
               key={s.id}

@@ -81,8 +81,8 @@ export default async function ServicesPage({
         </p>
       </TitleBlock>
 
-      {/* One page, three depths. Each line is a section rather than a
-          separate page, so the site never claims to be three businesses. */}
+      {/* One page, four depths. Each line is a section rather than a
+          separate page, so the site never claims to be four businesses. */}
       {ordered.map((service, i) => (
         <Section
           key={service.id}

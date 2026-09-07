@@ -71,7 +71,8 @@ export function ContactForm({
   }
 
   const projectTypes = [
-    { value: "ai-automation", label: m.categories["ai-automation"] },
+    { value: "ai", label: m.categories.ai },
+    { value: "automation", label: m.categories.automation },
     { value: "software", label: m.categories.software },
     { value: "data", label: m.categories.data },
     { value: "not-sure", label: "Not sure yet" },
@@ -147,12 +148,7 @@ export function ContactForm({
         </Field>
       </div>
 
-      <Field
-        id="message"
-        label={m.contact.messageLabel}
-        error={errors.message}
-        required
-      >
+      <Field id="message" label={m.contact.messageLabel} error={errors.message}>
         <textarea
           id="message"
           name="message"

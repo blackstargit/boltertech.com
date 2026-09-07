@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
         <p><strong>Company:</strong> ${escapeHtml(data.company || "—")}</p>
         <p><strong>Type:</strong> ${escapeHtml(data.projectType)}</p>
         <hr />
-        <p style="white-space:pre-wrap">${escapeHtml(data.message)}</p>
+        <p style="white-space:pre-wrap">${escapeHtml(data.message) || "<em>No message</em>"}</p>
       `,
     });
 

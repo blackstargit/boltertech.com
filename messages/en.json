@@ -35,7 +35,7 @@
     "metaTitle": "Bolter Technologies - AI automation and software engineering",
     "metaDescription": "We find the process that is quietly costing your team hours a week, automate it end to end, and stay on the hook for it. Islamabad-based software and AI engineering.",
     "heroSub": "We start with the process that is costing you time, not the technology. Then we automate it, ship it, and stay on the hook for it.",
-    "offerHeading": "One practice, three depths",
+    "offerHeading": "One practice, four depths",
     "workHeading": "Selected work",
     "outcomesHeading": "Outcomes",
     "processHeading": "How we work",
@@ -43,7 +43,7 @@
   },
   "services": {
     "metaTitle": "Services - Bolter Technologies",
-    "metaDescription": "AI automation, software development, and data analytics - one practice, delivered by one team.",
+    "metaDescription": "AI, automation, software development, and data analytics - one practice, delivered by one team.",
     "heading": "What we do",
     "includesLabel": "What it includes",
     "stackLabel": "Typically built with",
@@ -52,7 +52,7 @@
   },
   "work": {
     "metaTitle": "Work - Bolter Technologies",
-    "metaDescription": "Case studies from our AI automation, software, and data engagements.",
+    "metaDescription": "Case studies from our AI, automation, software, and data engagements.",
     "heading": "Work",
     "filterAll": "All",
     "empty": "No projects in this category yet.",
@@ -80,10 +80,13 @@
     "sending": "Sending",
     "success": "Thanks - we have your message and will reply",
     "error": "That did not send. Email us directly at",
-    "required": "Required"
+    "required": "Required",
+    "copyAddress": "Copy address",
+    "addressCopied": "Address copied"
   },
   "categories": {
-    "ai-automation": "AI automation",
+    "ai": "AI",
+    "automation": "Automation",
     "software": "Software",
     "data": "Data analytics"
   },

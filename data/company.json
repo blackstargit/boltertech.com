@@ -3,7 +3,7 @@
   "name": "Bolter Technologies",
   "shortName": "Bolter",
   "tagline": "We build software that works, and we stand behind it.",
-  "description": "Bolter Technologies is a software and technology company built around a simple idea: technology should make life easier for everyone. We work across software development, AI automation, and data analytics, helping businesses turn ideas, inefficient processes, and complex data into practical systems that actually work.",
+  "description": "Bolter Technologies is a software and technology company built around a simple idea: technology should make life easier for everyone. We work across AI, automation, software development, and data analytics, helping businesses turn ideas, inefficient processes, and complex data into practical systems that actually work.",
   "founded": 2024,
   "teamSize": "5-10",
   "companyType": "Private Limited",
@@ -19,7 +19,9 @@
     "region": "Islamabad Capital Territory",
     "postalCode": "",
     "country": "PK",
-    "countryName": "Pakistan"
+    "countryName": "Pakistan",
+    "lat": 33.5763317,
+    "lng": 72.8692628
   },
   "social": {
     "linkedin": "",

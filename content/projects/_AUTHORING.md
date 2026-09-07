@@ -22,10 +22,12 @@ its whole section disappears — no empty heading, no orphaned label, no
 | `cover`       | No cover image                                                      |
 | `duration`    | That field is dropped from the title block                          |
 
-The three files currently here are deliberately different shapes so you
-can see each case: `dispatch-routing` is anonymous with metrics,
-`invoice-extraction` is named with a demo link and a testimonial, and
-`retention-forecasting` has none of the optional fields at all.
+The files currently here are deliberately different shapes so you can see
+each case: `dispatch-routing` is anonymous with metrics,
+`invoice-extraction` is named with a demo link and a testimonial,
+`retention-forecasting` has none of the optional fields at all, and
+`internal-tools-migration` exists to give the `software` category a
+project to show (it's the only one of the four).
 
 ## Frontmatter reference
 
@@ -33,7 +35,7 @@ can see each case: `dispatch-routing` is anonymous with metrics,
 title: "Dispatch routing engine" # required
 client: "" # "" = anonymous, see above
 clientSector: "Logistics" # required, used when client is empty
-category: "ai-automation" # ai-automation | software | data
+category: "ai" # ai | automation | software | data
 summary: "One sentence for the index card." # required
 stack: ["Python", "FastAPI"]
 duration: "6 weeks"

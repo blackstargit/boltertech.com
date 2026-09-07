@@ -4,17 +4,14 @@ import { site } from "@/lib/site";
 import { localePath, type Locale } from "@/lib/i18n";
 
 /**
- * The mark always sits on a dark plate.
+ * The mark is used as-is, on the page ground.
  *
- * This is not a stylistic choice. The mark's strokes run from mid-cyan to
- * near-white because it was drawn to glow on black; on a light ground the
- * bright interior of every stroke lands within a few percent of the page
- * and the logo visually dissolves. The plate is what makes it legible,
- * and it reads as the stamp on a drawing set.
+ * public/logo-mark.png is transparent; the dark plate that used to sit
+ * behind it was removed on request.
  *
  * When public/logo-flat.svg is replaced with a real flat single-colour
  * mark, that file is what should be used for the favicon and for any
- * context that cannot carry a plate (print, 16px, LinkedIn's square).
+ * context that needs one solid colour (print, 16px, LinkedIn's square).
  */
 export function LogoLock({
   locale,
@@ -40,17 +37,15 @@ export function LogoLock({
        */
       aria-label={showWordmark ? undefined : site.name}
     >
-      <span className="grid place-items-center border border-rule bg-plate p-2">
-        <Image
-          src="/logo-mark.png"
-          alt=""
-          width={size}
-          height={size}
-          priority
-          className="block h-auto"
-          style={{ width: size }}
-        />
-      </span>
+      <Image
+        src="/logo-mark.png"
+        alt=""
+        width={size}
+        height={size}
+        priority
+        className="block h-auto"
+        style={{ width: size + 16 }}
+      />
       {showWordmark ? (
         <span className="font-display text-base font-bold tracking-[0.16em]">
           {site.shortName.toUpperCase()}

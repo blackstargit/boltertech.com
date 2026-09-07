@@ -9,7 +9,7 @@ import { z } from "zod";
  * edited by people who are not reading component code.
  */
 
-export const categories = ["ai-automation", "software", "data"] as const;
+export const categories = ["ai", "automation", "software", "data"] as const;
 export type Category = (typeof categories)[number];
 
 /** A project can carry any number of outbound links: a live demo on a

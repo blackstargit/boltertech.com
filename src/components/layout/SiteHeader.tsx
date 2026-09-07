@@ -25,7 +25,7 @@ export function SiteHeader({
   ];
 
   return (
-    <header className="border-b border-rule bg-paper">
+    <header className="sticky top-0 z-30 border-b border-rule bg-paper">
       <div className="mx-auto flex max-w-sheet flex-wrap items-center gap-4 px-gutter py-4">
         <LogoLock locale={locale} size={26} />
         <span className="flex-1" />

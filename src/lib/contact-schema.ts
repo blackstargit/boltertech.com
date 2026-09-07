@@ -13,9 +13,9 @@ export const contactSchema = z.object({
   email: z.string().trim().email("Enter a valid email address").max(200),
   company: z.string().trim().max(160).optional().default(""),
   projectType: z
-    .enum(["ai-automation", "software", "data", "not-sure"])
+    .enum(["ai", "automation", "software", "data", "not-sure"])
     .default("not-sure"),
-  message: z.string().trim().min(10, "Tell us a little more").max(5000),
+  message: z.string().trim().max(5000).optional().default(""),
   /**
    * Honeypot. Hidden from people, irresistible to naive bots.
    *

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
-import { site } from "@/lib/site";
+import { site, officeMapEmbedUrl } from "@/lib/site";
 import { TitleBlock } from "@/components/primitives/TitleBlock";
 import { Label, DimensionRule } from "@/components/primitives/drafting";
 import { StoreProvider } from "@/store/Provider";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { OfficeMap } from "@/components/contact/OfficeMap";
 
 export async function generateMetadata({
   params,
@@ -33,6 +34,11 @@ export default async function ContactPage({
   const { locale } = await params;
   const m = await getMessages(locale as Locale);
   const { address } = site;
+  const addressText = [
+    address.line1,
+    address.line2,
+    `${address.city}, ${address.countryName}`,
+  ].join(", ");
 
   return (
     <>
@@ -90,6 +96,13 @@ export default async function ContactPage({
               {address.city}, {address.countryName}
             </address>
           </div>
+
+          <OfficeMap
+            address={addressText}
+            embedUrl={officeMapEmbedUrl}
+            copyLabel={m.contact.copyAddress}
+            copiedLabel={m.contact.addressCopied}
+          />
         </aside>
       </div>
     </>

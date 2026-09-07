@@ -46,7 +46,7 @@ ${site.description}
 
 ## Services
 
-We run one practice with three depths rather than three separate offerings:
+We run one practice with ${serviceLines.length} depths rather than ${serviceLines.length} separate offerings:
 
 ${serviceLines.map((s) => `- **${s.name}**${s.lead ? " (lead)" : ""}: ${s.summary}`).join("\n")}
 

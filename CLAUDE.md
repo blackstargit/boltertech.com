@@ -209,15 +209,15 @@ it. This was a real bug — do not "tidy" the schema.
 Reasoned choices with stated trade-offs. If a change would reverse one, say so
 before doing it.
 
-| Decision                          | Why                                                                                                                                                                                        |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **One service page**, not three   | Three co-equal pages read as "we do everything" for a 5–10 person firm. The three lines are depths of one practice, AI automation leading.                                                 |
-| **No pricing anywhere**           | The $15/hr and $200 minimum live on Upwork/Clutch where buyers expect a rate card. Publishing them contradicts the brand.                                                                  |
-| **No blog at launch**             | An abandoned blog with three old posts damages credibility more than no blog. Infrastructure is ready when there is a real commitment.                                                     |
-| **Cookieless analytics** (Vercel) | Chosen specifically to avoid a consent banner and a cookie policy document. Adding GA4 reintroduces both.                                                                                  |
-| **Light theme at launch**         | Dark tokens defined and ready; nothing enables them yet.                                                                                                                                   |
-| **Phone and address published**   | Confirmed wanted. Real contact details are a legitimacy signal directory reviewers check.                                                                                                  |
-| **Logo sits on a dark plate**     | The mark is a glow drawn for black grounds; on white its strokes land within a few percent of the background and dissolve. `public/logo-flat.svg` is a placeholder for the real flat mark. |
+| Decision                                          | Why                                                                                                                                                                                                                                                                  |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **One service page**, not separate pages per line | Co-equal pages read as "we do everything" for a 5–10 person firm. The four lines (AI, Automation, Software development, Data analytics) are depths of one practice, AI leading. Split from AI automation into AI + Automation 2026-09-07 on request.                 |
+| **No pricing anywhere**                           | The $15/hr and $200 minimum live on Upwork/Clutch where buyers expect a rate card. Publishing them contradicts the brand.                                                                                                                                            |
+| **No blog at launch**                             | An abandoned blog with three old posts damages credibility more than no blog. Infrastructure is ready when there is a real commitment.                                                                                                                               |
+| **Cookieless analytics** (Vercel)                 | Chosen specifically to avoid a consent banner and a cookie policy document. Adding GA4 reintroduces both.                                                                                                                                                            |
+| **Light theme at launch**                         | Dark tokens defined and ready; nothing enables them yet.                                                                                                                                                                                                             |
+| **Phone and address published**                   | Confirmed wanted. Real contact details are a legitimacy signal directory reviewers check.                                                                                                                                                                            |
+| **Logo sits on the page ground**                  | Reversed 2026-09-07 on request: the dark plate behind the header mark is gone. `public/logo-mark.png` is transparent and used as-is. Watch the near-white stroke interiors on light backgrounds; `public/logo-flat.svg` is still a placeholder for a real flat mark. |
 
 ---
 
@@ -269,7 +269,7 @@ field and check the build fails naming the file — then restore it.
   the shareholders' agreement. The only hard blocker.
 - **`RESEND_API_KEY`** in Vercel, plus three DNS records in Cloudflare to
   verify the sending domain.
-- **26 `PLACEHOLDER` markers** across `data/` and `content/` — founders, three
-  FAQ answers, the process handover step, and three seeded case studies.
+- **30 `PLACEHOLDER` markers** across `data/` and `content/` — founders, three
+  FAQ answers, the process handover step, and four seeded case studies.
   `grep -r PLACEHOLDER data content public` finds them all.
 - Whether the legal drafts get a lawyer's review before launch.

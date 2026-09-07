@@ -13,7 +13,7 @@ Edit a file, commit, push. Vercel rebuilds and the site updates.
 | ----------------------------------------------------- | --------------------------------------------------------------- |
 | Phone, email, address, tagline, company description   | `data/company.json`                                             |
 | Founder names, roles, bios, photos, LinkedIn links    | `data/founders.json`                                            |
-| The three service descriptions and their tech lists   | `data/services.json`                                            |
+| The four service descriptions and their tech lists    | `data/services.json`                                            |
 | FAQ questions and answers                             | `data/faqs.json`                                                |
 | The four "How we work" steps                          | `data/process.json`                                             |
 | Case studies                                          | `content/projects/*.mdx` — see `content/projects/_AUTHORING.md` |
@@ -59,7 +59,7 @@ file and the field:
 
 ```
 Invalid frontmatter in content/projects/dispatch-routing.mdx
-  · category: Invalid option: expected one of "ai-automation"|"software"|"data"
+  · category: Invalid option: expected one of "ai"|"automation"|"software"|"data"
 ```
 
 Fix the named field and push again.
@@ -78,7 +78,7 @@ Search the repo for `PLACEHOLDER` to find everything at once.
       The last one matters most; you sell AI automation, so you will be asked.
 - [ ] **`data/process.json`** — the "Handover and after" step needs a real
       support commitment.
-- [ ] **`content/projects/*.mdx`** — three seeded projects, all placeholder
+- [ ] **`content/projects/*.mdx`** — four seeded projects, all placeholder
       copy. They are deliberately different shapes so you can see how each
       optional field renders.
 - [ ] **`public/logo-flat.svg`** — placeholder hexagon. Replace with the real
