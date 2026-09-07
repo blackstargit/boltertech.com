@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
-import { site, officeMapEmbedUrl } from "@/lib/site";
+import { site, officeMapEmbedUrl, googleMapsUrl } from "@/lib/site";
 import { TitleBlock } from "@/components/primitives/TitleBlock";
 import { Label, DimensionRule } from "@/components/primitives/drafting";
 import { StoreProvider } from "@/store/Provider";
@@ -102,6 +102,8 @@ export default async function ContactPage({
             embedUrl={officeMapEmbedUrl}
             copyLabel={m.contact.copyAddress}
             copiedLabel={m.contact.addressCopied}
+            googleMapsUrl={googleMapsUrl}
+            googleMapsLabel={m.contact.openInGoogleMaps}
           />
         </aside>
       </div>

@@ -82,7 +82,8 @@
     "error": "That did not send. Email us directly at",
     "required": "Required",
     "copyAddress": "Copy address",
-    "addressCopied": "Address copied"
+    "addressCopied": "Address copied",
+    "openInGoogleMaps": "Open in Google Maps"
   },
   "categories": {
     "ai": "AI",

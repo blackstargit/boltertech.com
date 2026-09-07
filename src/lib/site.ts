@@ -25,15 +25,25 @@ export type Faq = (typeof faqs)[number];
  * OpenStreetMap's own embed widget, not Google Maps: no API key to manage
  * and no cookies, so it doesn't reopen the "cookieless analytics" question
  * (no consent banner, no cookie policy). `address.lat`/`lng` in
- * company.json pin the Top City-1 area rather than the exact plaza — there
- * is no rooftop-accurate location for the building in open map data. The
- * printed, copyable address text next to the map is exact regardless.
+ * company.json is the Mehran Business Square pin from Google's own place
+ * data (resolved from the office's Google Maps share link), not a guess.
+ * The printed, copyable address text next to the map is exact regardless.
  */
 const MAP_SPAN = 0.008; // ~800m across, enough to show the surrounding block
 const { lat, lng } = company.address;
 export const officeMapEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(
   [lng - MAP_SPAN, lat - MAP_SPAN, lng + MAP_SPAN, lat + MAP_SPAN].join(","),
 )}&layer=mapnik&marker=${lat}%2C${lng}`;
+
+/**
+ * "Open in Google Maps" beside the embed above. The office's own Google
+ * Maps share link, not a reconstructed search query — it's the verified
+ * Mehran Business Square place, not whatever Google's geocoder makes of
+ * the address text. A plain outbound link, not an embed, so it sets no
+ * cookies of its own and doesn't touch the cookieless-analytics decision
+ * the way an inline Google iframe would.
+ */
+export const googleMapsUrl = "https://maps.app.goo.gl/Hn2xWVfHc56vTKj88";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://boltertech.com";
