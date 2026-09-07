@@ -43,7 +43,7 @@ export const officeMapEmbedUrl = `https://www.openstreetmap.org/export/embed.htm
  * cookies of its own and doesn't touch the cookieless-analytics decision
  * the way an inline Google iframe would.
  */
-export const googleMapsUrl = "https://maps.app.goo.gl/Hn2xWVfHc56vTKj88";
+export const googleMapsUrl = company.address.googleMapsUrl;
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://boltertech.com";

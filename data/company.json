@@ -21,7 +21,8 @@
     "country": "PK",
     "countryName": "Pakistan",
     "lat": 33.5827914,
-    "lng": 72.8612441
+    "lng": 72.8612441,
+    "googleMapsUrl": "https://maps.app.goo.gl/Hn2xWVfHc56vTKj88"
   },
   "social": {
     "linkedin": "",
