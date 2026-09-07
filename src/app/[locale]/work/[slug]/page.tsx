@@ -18,6 +18,8 @@ import { Prose } from "@/components/primitives/Prose";
 import { Cta } from "@/components/primitives/Cta";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Label, Arrow } from "@/components/primitives/drafting";
+import { Placeholder } from "@/components/primitives/Placeholder";
+import { SHOW_PLACEHOLDERS } from "@/lib/placeholders";
 
 /** Every project, in every locale, prerendered. */
 export function generateStaticParams() {
@@ -78,6 +80,22 @@ export default async function CaseStudyPage({
         value: project.clientSector,
         note: m.common.clientWithheld,
       };
+
+  /**
+   * Pre-launch, a case study with no testimonial shows the shape one will
+   * take rather than closing straight into the next-project link. Marked
+   * so it is never mistaken for a quote we have permission to publish.
+   */
+  const testimonial = project.testimonial
+    ? { ...project.testimonial, isPlaceholder: false }
+    : SHOW_PLACEHOLDERS
+      ? {
+          quote: m.placeholders.testimonialQuote,
+          author: m.placeholders.testimonialAuthor,
+          role: m.placeholders.testimonialRole,
+          isPlaceholder: true,
+        }
+      : null;
 
   return (
     <article>
@@ -170,7 +188,14 @@ export default async function CaseStudyPage({
             sizes="(min-width: 1024px) 1200px, 100vw"
             className="mt-10 aspect-[16/9] w-full rounded-md border border-rule object-cover"
           />
-        ) : null}
+        ) : (
+          <Placeholder
+            className="mt-10 aspect-[16/9] content-center"
+            notice={m.placeholders.notice}
+            label={m.placeholders.cover}
+            hint={m.placeholders.coverHint}
+          />
+        )}
       </Band>
 
       {project.metrics.length > 0 ? (
@@ -182,6 +207,10 @@ export default async function CaseStudyPage({
             label={project.seriesLabel || undefined}
             caption={project.duration || undefined}
             height="h-[180px]"
+            placeholder={{
+              notice: m.placeholders.notice,
+              label: m.placeholders.chart,
+            }}
           />
         </Band>
       ) : null}
@@ -190,20 +219,32 @@ export default async function CaseStudyPage({
         <Prose source={project.body} />
       </Band>
 
-      {project.testimonial ? (
+      {/* A real testimonial, or — pre-launch only — the shape one will
+          take. The placeholder is dashed and muted rather than
+          accent-bordered, so it cannot be read as a quote we actually
+          have permission to publish. */}
+      {testimonial ? (
         <Band labelledBy="testimonial" className="border-t border-rule">
           <SectionHead id="testimonial" title={m.work.testimonialHeading} />
-          <figure className="rounded-e-md border-s-2 border-accent bg-sheet px-8 py-7">
+          <figure
+            className={
+              testimonial.isPlaceholder
+                ? "hatch rounded-e-md border-s-2 border-dashed border-rule px-8 py-7"
+                : "rounded-e-md border-s-2 border-accent bg-sheet px-8 py-7"
+            }
+          >
+            {testimonial.isPlaceholder ? (
+              <span className="mb-4 block font-data text-label font-medium tracking-[0.16em] text-ink-faint uppercase">
+                [ {m.placeholders.notice} &middot; {m.placeholders.testimonial}{" "}
+                ]
+              </span>
+            ) : null}
             <blockquote className="max-w-prose font-display text-h3 leading-snug font-normal text-pretty text-ink">
-              &ldquo;{project.testimonial.quote}&rdquo;
+              &ldquo;{testimonial.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-6 grid gap-1.5">
-              <span className="text-small text-ink">
-                {project.testimonial.author}
-              </span>
-              {project.testimonial.role ? (
-                <Label>{project.testimonial.role}</Label>
-              ) : null}
+              <span className="text-small text-ink">{testimonial.author}</span>
+              {testimonial.role ? <Label>{testimonial.role}</Label> : null}
             </figcaption>
           </figure>
         </Band>

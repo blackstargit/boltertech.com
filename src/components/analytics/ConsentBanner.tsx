@@ -73,11 +73,7 @@ type Props = {
 };
 
 export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
-  const consent = useSyncExternalStore(
-    subscribe,
-    readConsent,
-    serverConsent,
-  );
+  const consent = useSyncExternalStore(subscribe, readConsent, serverConsent);
 
   if (consent === "granted") {
     return (

@@ -136,11 +136,15 @@ export default async function HomePage({
                 </Link>
               ))}
 
-              {/* Absent until a project carries a series. */}
+              {/* A wireframe until a project carries a real series. */}
               <SeriesChart
                 series={charted?.series}
                 label={charted?.seriesLabel || undefined}
                 height="h-[104px]"
+                placeholder={{
+                  notice: m.placeholders.notice,
+                  label: m.placeholders.chart,
+                }}
               />
             </div>
           </aside>

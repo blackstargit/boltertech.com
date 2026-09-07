@@ -78,11 +78,15 @@ export function OutcomeTabs({
 
           <div className="grid content-start gap-9 rounded-md border border-rule bg-sheet p-6 sm:p-7">
             <MetricRow metrics={p.metrics} />
-            {/* Absent unless the case study actually carries a series. */}
+            {/* A wireframe unless the case study carries a real series. */}
             <SeriesChart
               series={p.series}
               label={p.seriesLabel || undefined}
               caption={p.duration || undefined}
+              placeholder={{
+                notice: messages.placeholders.notice,
+                label: messages.placeholders.chart,
+              }}
             />
           </div>
         </article>

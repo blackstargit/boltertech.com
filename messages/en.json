@@ -104,6 +104,19 @@
     "practice": "Practice",
     "replies": "Replies"
   },
+  "placeholders": {
+    "notice": "Placeholder",
+    "cover": "Cover image",
+    "coverHint": "1600x900 screenshot or architecture diagram. Drop the file into public/work/<slug>/ and set `cover:` in the frontmatter.",
+    "chart": "Outcome chart",
+    "chartHint": "Add `series: [...]` to the case study frontmatter - twelve numbers, 0-100, oldest first.",
+    "testimonial": "Client testimonial",
+    "testimonialQuote": "A real client quote goes here, kept short. Two sentences beats a paragraph, and a specific complaint that you fixed beats generic praise. This block is not rendered at all once placeholders are switched off and no testimonial has been added.",
+    "testimonialAuthor": "Client name",
+    "testimonialRole": "Their role",
+    "portrait": "Portrait",
+    "portraitHint": "Headshot, 4:5, plain background."
+  },
   "analytics": {
     "message": "We use cookies to understand how visitors use this site.",
     "privacyLink": "Privacy Policy",

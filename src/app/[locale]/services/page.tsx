@@ -99,7 +99,9 @@ export default async function ServicesPage({
                 id={`${service.id}-h`}
                 className="mb-0"
                 eyebrow={`${String(i + 1).padStart(2, "0")} · ${
-                  service.lead ? m.services.leadLabel : m.services.supportingLabel
+                  service.lead
+                    ? m.services.leadLabel
+                    : m.services.supportingLabel
                 }`}
                 title={service.name}
               />

@@ -178,6 +178,21 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   Placeholder hatch.
+
+   Drawn from the two ground tokens, so it re-resolves in either band
+   without a second rule. Pre-launch scaffolding — see
+   src/lib/placeholders.ts for how it is switched off.
+   ═══════════════════════════════════════════════════════════════════ */
+.hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--sheet) 0 10px,
+    var(--paper) 10px 20px
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    Tabset — tab panels with no JavaScript.
 
    Markup contract (see OutcomeTabs.tsx):

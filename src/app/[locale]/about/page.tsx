@@ -12,6 +12,7 @@ import { ProcessGrid } from "@/components/sections/ProcessGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Label } from "@/components/primitives/drafting";
+import { Placeholder } from "@/components/primitives/Placeholder";
 
 export async function generateMetadata({
   params,
@@ -84,7 +85,15 @@ export default async function AboutPage({
               key={person.id}
               className="grid content-start gap-4 bg-sheet p-7"
             >
-              <FounderPortrait name={person.name} photo={person.photo} />
+              <FounderPortrait
+                name={person.name}
+                photo={person.photo}
+                placeholder={{
+                  notice: m.placeholders.notice,
+                  label: m.placeholders.portrait,
+                  hint: m.placeholders.portraitHint,
+                }}
+              />
               <div className="grid gap-2">
                 <h3 className="text-h4">{person.name}</h3>
                 <Label>{person.role}</Label>
@@ -118,13 +127,23 @@ export default async function AboutPage({
 }
 
 /**
- * Founder portrait.
+ * Founder portrait, in three states.
  *
- * With no photo yet, falls back to initials on the same dark plate the
- * logo uses — so an unfilled profile reads as deliberate rather than
- * broken, and the grid keeps its rhythm while headshots are being taken.
+ * A real photo; or, for a real person whose headshot has not been taken
+ * yet, their initials on the same dark plate the logo uses — an unfilled
+ * profile that reads as deliberate rather than broken. A founder whose
+ * *name* is still a placeholder gets the hatched frame instead, because
+ * initials derived from "Founder One" carry no information at all.
  */
-function FounderPortrait({ name, photo }: { name: string; photo: string }) {
+function FounderPortrait({
+  name,
+  photo,
+  placeholder,
+}: {
+  name: string;
+  photo: string;
+  placeholder: { notice: string; label: string; hint: string };
+}) {
   if (photo) {
     return (
       <Image
@@ -137,8 +156,19 @@ function FounderPortrait({ name, photo }: { name: string; photo: string }) {
     );
   }
 
+  const unnamed = /PLACEHOLDER/i.test(name);
+  if (unnamed) {
+    return (
+      <Placeholder
+        className="aspect-[4/5] content-center p-4"
+        notice={placeholder.notice}
+        label={placeholder.label}
+        hint={placeholder.hint}
+      />
+    );
+  }
+
   const initials = name
-    .replace(/PLACEHOLDER\s*-\s*/i, "")
     .split(/\s+/)
     .slice(0, 2)
     .map((w) => w[0])
