@@ -26,17 +26,6 @@ type Props = {
   labelledBy?: string;
   /** No vertical padding at all — for a band that owns its own spacing. */
   flush?: boolean;
-  /**
-   * Drop the padding below the content, for a band that runs straight
-   * into the next one.
-   *
-   * A prop rather than a `pb-0` passed through `className`: Tailwind
-   * orders utilities by value, not by their position in the class
-   * string, so whether an override wins is an accident of which number
-   * happens to sort later. `pb-0` beating `py-section` today is luck,
-   * not a rule to build on.
-   */
-  joinNext?: boolean;
   className?: string;
 };
 
@@ -46,10 +35,9 @@ export function Band({
   id,
   labelledBy,
   flush = false,
-  joinNext = false,
   className = "",
 }: Props) {
-  const pad = flush ? "" : joinNext ? "pt-section pb-0" : "py-section";
+  const pad = flush ? "" : "py-section";
   return (
     <section
       id={id}

@@ -287,7 +287,7 @@ export default async function CaseStudyPage({
           accent-bordered, so it cannot be read as a quote we actually
           have permission to publish. */}
       {testimonial ? (
-        <Band labelledBy="testimonial" className="border-t border-rule">
+        <Band tone="light" labelledBy="testimonial">
           <SectionHead id="testimonial" title={m.work.testimonialHeading} />
           <figure
             className={
@@ -314,7 +314,7 @@ export default async function CaseStudyPage({
       ) : null}
 
       {next ? (
-        <Band tone="light">
+        <Band>
           <Link
             href={localePath(l, `/work/${next.slug}`)}
             className="group flex flex-wrap items-center gap-4 rounded-md border border-rule bg-sheet p-7 transition-colors hover:border-ink"

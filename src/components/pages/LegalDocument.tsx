@@ -46,7 +46,7 @@ export async function LegalDocument({
 
   return (
     <article>
-      <Band joinNext>
+      <Band>
         <PageHero title={doc.title} lede={doc.summary || undefined}>
           <FieldRow
             className="mt-3 max-w-xs"
@@ -54,7 +54,7 @@ export async function LegalDocument({
           />
         </PageHero>
       </Band>
-      <Band>
+      <Band tone="light">
         <Prose source={doc.body} />
       </Band>
     </article>

@@ -82,60 +82,71 @@ export default async function ServicesPage({
         </PageHero>
       </Band>
 
-      {/* One page, four depths. Each line is a section rather than a
-          separate page, so the site never claims to be four businesses.
-          The bands alternate so the four read as distinct depths rather
-          than as one long scroll of identical blocks. */}
-      {ordered.map((service, i) => (
-        <Band
-          key={service.id}
-          id={service.id}
-          tone={i % 2 === 0 ? "dark" : "light"}
-          labelledBy={`${service.id}-h`}
-        >
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
-            <div className="grid content-start gap-6">
-              <SectionHead
-                id={`${service.id}-h`}
-                spacing="none"
-                eyebrow={`${String(i + 1).padStart(2, "0")} · ${
-                  service.lead
-                    ? m.services.leadLabel
-                    : m.services.supportingLabel
-                }`}
-                title={service.name}
-              />
-              <p className="max-w-[46ch] text-lede text-pretty text-ink-muted">
-                {service.summary}
-              </p>
-              <div className="grid gap-3">
-                <Label>{m.services.stackLabel}</Label>
-                <ChipRow items={service.stack} />
+      {/* One practice, four depths — and one section, four blocks.
+          These used to be four full-bleed bands, which read as four
+          separate businesses and put a section break between the page
+          heading and the lead practice. Stacked inside a single band with
+          a rule between them, they read as depths of one offer, which is
+          what the page is for. It also removes three section gaps' worth
+          of empty space. */}
+      <Band tone="light" labelledBy="practice">
+        <SectionHead
+          id="practice"
+          eyebrow={m.services.heading}
+          title={m.home.offerHeading}
+        />
+        <div className="grid gap-12">
+          {ordered.map((service, i) => (
+            <section
+              key={service.id}
+              id={service.id}
+              aria-labelledby={`${service.id}-h`}
+              className="grid scroll-mt-28 gap-8 border-t border-rule pt-9 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start"
+            >
+              <div className="grid content-start gap-5">
+                <div className="flex items-baseline gap-3">
+                  <Label tone="accent">{String(i + 1).padStart(2, "0")}</Label>
+                  <Label>
+                    {service.lead
+                      ? m.services.leadLabel
+                      : m.services.supportingLabel}
+                  </Label>
+                </div>
+                <h3 id={`${service.id}-h`} className="text-h3">
+                  {service.name}
+                </h3>
+                <p className="max-w-[46ch] text-pretty text-ink-muted">
+                  {service.summary}
+                </p>
+                <div className="mt-1 grid gap-2.5">
+                  <Label>{m.services.stackLabel}</Label>
+                  <ChipRow items={service.stack} />
+                </div>
               </div>
-            </div>
 
-            {/* Lettered rather than numbered: these are facets of one
-                offer, not an ordered sequence like the process steps. */}
-            <ul className="grid gap-px overflow-hidden rounded-md border border-rule bg-rule">
-              {service.includes.map((item, j) => (
-                <li key={item} className="flex gap-4 bg-paper p-5 sm:p-6">
-                  <span className="font-data text-micro font-medium text-accent">
-                    {String.fromCharCode(97 + j)}
-                  </span>
-                  <span className="text-small text-pretty text-ink-muted">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Band>
-      ))}
+              {/* Lettered rather than numbered: these are facets of one
+                  offer, not an ordered sequence like the process steps. */}
+              <ul className="grid gap-px overflow-hidden rounded-md border border-rule bg-rule">
+                {service.includes.map((item, j) => (
+                  <li key={item} className="flex gap-4 bg-sheet p-5">
+                    <span className="font-data text-micro font-medium text-accent">
+                      {String.fromCharCode(97 + j)}
+                    </span>
+                    <span className="text-small text-pretty text-ink-muted">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </Band>
 
       {/* How a client can buy. Three shapes rather than a price list —
           the no-pricing decision means this section carries the "what
           does working with you actually look like" question on its own. */}
-      <Band tone="light" labelledBy="engage">
+      <Band labelledBy="engage">
         <SectionHead id="engage" title={m.services.engagementHeading} />
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-5">
           {engagementModels.map((e) => (
@@ -159,12 +170,12 @@ export default async function ServicesPage({
         </div>
       </Band>
 
-      <Band labelledBy="process">
+      <Band tone="light" labelledBy="process">
         <SectionHead id="process" title={m.home.processHeading} />
         <ProcessGrid />
       </Band>
 
-      <Band labelledBy="faq" className="border-t border-rule">
+      <Band labelledBy="faq">
         <SectionHead id="faq" title={m.home.faqHeading} />
         <FaqList />
       </Band>

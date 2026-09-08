@@ -9,10 +9,10 @@ import { SHOW_PLACEHOLDERS } from "@/lib/placeholders";
  * a company website to quietly invent, and real client numbers are the
  * one thing here nobody should ever be able to fabricate by accident.
  *
- * Pre-launch, an absent slot instead draws a dashed monochrome wireframe
- * so the layout can be judged before the data exists. Wireframes never
- * take the accent colour, which belongs to measured figures alone. See
- * src/lib/placeholders.ts.
+ * Pre-launch, an absent slot instead draws the device at full strength so
+ * the layout can be judged before the data exists, marked by a caption
+ * rather than by being drawn faintly — a placeholder nobody can see is
+ * not a placeholder, it is a bug. See src/lib/placeholders.ts.
  */
 
 export type Metric = {
@@ -39,11 +39,12 @@ export function MetricTile({ value, label, bar }: Metric) {
           />
         </span>
       ) : SHOW_PLACEHOLDERS ? (
-        /* An empty dashed track, so the device is visible before anyone
-           has decided what proportion this figure is of. */
+        /* The empty track, so the device is visible before anyone has
+           decided what proportion this figure is of. Solid, not dashed:
+           a dashed --rule outline measures 1.16:1 on the panel. */
         <span
           aria-hidden="true"
-          className="mt-1 block h-[5px] rounded-xs border border-dashed border-rule"
+          className="mt-1 block h-[5px] rounded-xs bg-rule"
         />
       ) : null}
     </div>
@@ -71,16 +72,18 @@ export function MetricRow({
   );
 }
 
-/** The footprint a real series will occupy. Drawn as an outline only. */
+/** The shape a real series will occupy, drawn solid and captioned. */
 const PLACEHOLDER_SERIES = [88, 81, 84, 72, 66, 68, 57, 49, 44, 39, 36, 34];
 
 /**
  * Bar chart for a project's `series`. Columns past the midpoint take the
  * accent, so the eye reads the direction of travel without needing a key.
  *
- * With no series: a captioned wireframe if `placeholder` is supplied and
- * placeholders are on, otherwise null. Either way the caller does not
- * have to guard.
+ * With no series: the same chart drawn from PLACEHOLDER_SERIES, captioned
+ * `[ Placeholder ]`, if placeholders are on — otherwise null. It is drawn
+ * solid rather than as an outline because an outline in --rule sits at
+ * 1.29:1 on the panel, which is not a faint chart, it is an invisible one.
+ * The caption is what marks it, not the absence of colour.
  */
 
 export function SeriesChart({
@@ -124,13 +127,7 @@ export function SeriesChart({
         {data.map((value, i) => (
           <span
             key={i}
-            className={`block flex-1 rounded-t-xs ${
-              isPlaceholder
-                ? "border border-b-0 border-dashed border-rule"
-                : i > turn
-                  ? "bg-accent"
-                  : "bg-rule"
-            }`}
+            className={`block flex-1 rounded-t-xs ${i > turn ? "bg-accent" : "bg-rule"}`}
             style={{ blockSize: `${Math.max(value, 2)}%` }}
           />
         ))}

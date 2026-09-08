@@ -61,7 +61,7 @@ export default async function HomePage({
           facts strip answers "are these people real" before a visitor
           reads a word of marketing copy, which is what directory
           referrals and cold outbound clicks are actually checking. */}
-      <Band joinNext>
+      <Band>
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <PageHero
             title={site.tagline}
@@ -218,10 +218,8 @@ export default async function HomePage({
 
       {/* ── 05 · Selected work ────────────────────────────────────────
           Above process because the portfolio is the stated centrepiece
-          and these rows are the highest-intent click on the page.
-          Seamed with a rule: two dark bands in a row would otherwise
-          merge into one undifferentiated field. */}
-      <Band labelledBy="work" className="border-t border-rule">
+          and these rows are the highest-intent click on the page. */}
+      <Band tone="light" labelledBy="work">
         <SectionHead
           id="work"
           title={m.home.workHeading}
@@ -240,7 +238,7 @@ export default async function HomePage({
       {/* ── 06 · How we work ──────────────────────────────────────────
           Numbered because this genuinely is a sequence. Carries real
           weight while the portfolio is still filling in. */}
-      <Band tone="light" labelledBy="process">
+      <Band labelledBy="process">
         <SectionHead id="process" title={m.home.processHeading} />
         <ProcessGrid />
       </Band>
@@ -248,7 +246,7 @@ export default async function HomePage({
       {/* ── 07 · FAQ ──────────────────────────────────────────────────
           Native <details>, so it works without JavaScript and costs
           nothing in INP. FAQPage JSON-LD is emitted on /services. */}
-      <Band labelledBy="faq">
+      <Band tone="light" labelledBy="faq">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
           <h2 id="faq" className="max-w-[16ch] text-h2">
             {m.home.faqHeading}
@@ -257,8 +255,10 @@ export default async function HomePage({
         </div>
       </Band>
 
-      {/* ── 08 · Contact band ─────────────────────────────────────────── */}
-      <CtaBand locale={l} messages={m} />
+      {/* ── 08 · Contact band ───────────────────────────────────────────
+          Dark so the alternation is unbroken, and so the amber button is
+          the last and brightest thing on the page. */}
+      <CtaBand locale={l} messages={m} tone="dark" />
     </>
   );
 }

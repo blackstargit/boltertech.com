@@ -15,13 +15,16 @@ export function CtaBand({
   locale,
   messages,
   showContactDetails = true,
+  tone = "light",
 }: {
   locale: Locale;
   messages: Messages;
   showContactDetails?: boolean;
+  /** Set by the page so the strict dark/bone alternation is unbroken. */
+  tone?: "dark" | "light";
 }) {
   return (
-    <Band tone="light">
+    <Band tone={tone}>
       <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
         <h2 className="max-w-[20ch] text-h2">{messages.contact.heading}</h2>
         <div className="grid gap-6 lg:justify-items-start">

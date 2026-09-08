@@ -63,7 +63,9 @@
     "problemHeading": "The problem",
     "outcomeHeading": "Outcome",
     "testimonialHeading": "What the client said",
-    "onThisPage": "On this page"
+    "onThisPage": "On this page",
+    "countLabel": "Projects",
+    "sectorsLabel": "Sectors delivered into"
   },
   "about": {
     "metaTitle": "About - Bolter Technologies",

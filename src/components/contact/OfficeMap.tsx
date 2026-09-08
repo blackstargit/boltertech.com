@@ -38,8 +38,8 @@ export function OfficeMap({
   }
 
   return (
-    <div className="grid gap-2">
-      <div className="aspect-square w-full overflow-hidden border border-rule">
+    <div className="grid justify-items-start gap-2.5">
+      <div className="aspect-[4/3] w-full max-w-sm overflow-hidden rounded-md border border-rule">
         <iframe
           src={embedUrl}
           title="Office location"
@@ -51,7 +51,7 @@ export function OfficeMap({
         <button
           type="button"
           onClick={copyAddress}
-          className="font-data text-label tracking-[0.07em] text-ink-muted uppercase underline underline-offset-4 transition-colors hover:text-accent"
+          className="font-data text-label font-medium tracking-[0.16em] text-ink-faint uppercase underline underline-offset-4 transition-colors hover:text-accent"
         >
           {copied ? copiedLabel : copyLabel}
         </button>
@@ -62,7 +62,7 @@ export function OfficeMap({
           href={googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-data text-label tracking-[0.07em] text-ink-muted uppercase underline underline-offset-4 transition-colors hover:text-accent"
+          className="font-data text-label font-medium tracking-[0.16em] text-ink-faint uppercase underline underline-offset-4 transition-colors hover:text-accent"
         >
           {googleMapsLabel}
         </a>

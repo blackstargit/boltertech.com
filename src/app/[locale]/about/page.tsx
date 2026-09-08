@@ -143,13 +143,12 @@ export default async function AboutPage({
         </div>
       </Band>
 
-      {/* Seamed: two dark bands in a row would merge into one field. */}
-      <Band labelledBy="process" className="border-t border-rule">
+      <Band tone="light" labelledBy="process">
         <SectionHead id="process" title={m.about.processHeading} />
         <ProcessGrid />
       </Band>
 
-      <CtaBand locale={l} messages={m} showContactDetails={false} />
+      <CtaBand locale={l} messages={m} showContactDetails={false} tone="dark" />
     </>
   );
 }
