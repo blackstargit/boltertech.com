@@ -1,8 +1,28 @@
 [
   {
+    "id": "software",
+    "name": "Software development",
+    "lead": true,
+    "summary": "The engineering underneath. Web platforms, internal tools, and the APIs that hold an automation together once it leaves the prototype stage.",
+    "includes": [
+      "Web platforms and internal tools",
+      "API design and third-party integration",
+      "Migration off spreadsheets and manual workflows",
+      "Deployment, monitoring, and the handover documentation"
+    ],
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "Postgres",
+      "AWS"
+    ]
+  },
+  {
     "id": "ai",
     "name": "AI",
-    "lead": true,
+    "lead": false,
     "summary": "The model work: choosing what an LLM should and shouldn't decide, then building the prompting, retrieval, and evaluation around it so the output is safe to act on.",
     "includes": [
       "Model and prompt selection for the actual task, not the demo",
@@ -10,7 +30,13 @@
       "Retrieval and document understanding pipelines",
       "Evaluation and monitoring for what ships"
     ],
-    "stack": ["Python", "TypeScript", "Claude", "LangGraph", "Postgres"]
+    "stack": [
+      "Python",
+      "TypeScript",
+      "Claude",
+      "LangGraph",
+      "Postgres"
+    ]
   },
   {
     "id": "automation",
@@ -23,20 +49,12 @@
       "Integration into the tools your team already uses",
       "Handover documentation, so it runs without us"
     ],
-    "stack": ["Python", "TypeScript", "Temporal", "Postgres"]
-  },
-  {
-    "id": "software",
-    "name": "Software development",
-    "lead": false,
-    "summary": "The engineering underneath. Web platforms, internal tools, and the APIs that hold an automation together once it leaves the prototype stage.",
-    "includes": [
-      "Web platforms and internal tools",
-      "API design and third-party integration",
-      "Migration off spreadsheets and manual workflows",
-      "Deployment, monitoring, and the handover documentation"
-    ],
-    "stack": ["Next.js", "React", "TypeScript", "FastAPI", "Postgres", "AWS"]
+    "stack": [
+      "Python",
+      "TypeScript",
+      "Temporal",
+      "Postgres"
+    ]
   },
   {
     "id": "data",
@@ -49,6 +67,12 @@
       "Dashboards people actually open",
       "Measurement design, so the automation can prove it worked"
     ],
-    "stack": ["Python", "dbt", "DuckDB", "Postgres", "Metabase"]
+    "stack": [
+      "Python",
+      "dbt",
+      "DuckDB",
+      "Postgres",
+      "Metabase"
+    ]
   }
 ]

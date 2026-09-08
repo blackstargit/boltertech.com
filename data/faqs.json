@@ -5,7 +5,7 @@
   },
   {
     "q": "What timezone overlap do we actually get?",
-    "a": "We are in Islamabad (UTC+5). That is a full working morning overlapping Europe and an afternoon overlapping the US East Coast. We commit to a fixed daily overlap window in writing before a project starts rather than leaving it to chance."
+    "a": "We operate in UTC+5. That is a full working morning overlapping Europe and an afternoon overlapping the US East Coast. We commit to a fixed daily overlap window in writing before a project starts rather than leaving it to chance."
   },
   {
     "q": "What happens after launch?",

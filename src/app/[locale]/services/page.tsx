@@ -74,9 +74,8 @@ export default async function ServicesPage({
               { label: m.fields.practice, value: lead.name },
               {
                 label: m.services.supportingLabel,
-                value: `${ordered.length - 1} lines`,
+                value: `${ordered.length} Fields of Work`,
               },
-              { label: m.fields.base, value: site.address.city },
             ]}
           />
         </PageHero>

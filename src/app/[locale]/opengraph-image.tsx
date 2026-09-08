@@ -13,8 +13,7 @@ export default function OpengraphImage() {
     title: site.tagline,
     fields: [
       { label: "Est.", value: String(site.founded) },
-      { label: "Base", value: site.address.city },
-      { label: "Team", value: `${site.teamSize} engineers` },
+      { label: "Practice", value: lead.name },
     ],
   });
 }

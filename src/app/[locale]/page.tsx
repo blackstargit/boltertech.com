@@ -72,8 +72,7 @@ export default async function HomePage({
               <div className="flex items-center gap-2.5">
                 <PulseDot />
                 <Label>
-                  {lead.name} &middot; {site.address.city} &middot;{" "}
-                  {m.fields.established} {site.founded}
+                  {lead.name} &middot; {m.fields.established} {site.founded}
                 </Label>
               </div>
             }
@@ -91,11 +90,6 @@ export default async function HomePage({
               className="mt-5"
               fields={[
                 { label: m.fields.established, value: String(site.founded) },
-                {
-                  label: m.fields.base,
-                  value: `${site.address.city}, ${site.address.country}`,
-                },
-                { label: m.fields.team, value: `${site.teamSize} engineers` },
                 { label: m.fields.practice, value: lead.name },
               ]}
             />

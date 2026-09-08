@@ -32,8 +32,8 @@
     "updated": "Last updated"
   },
   "home": {
-    "metaTitle": "Bolter Technologies - AI automation and software engineering",
-    "metaDescription": "We find the process that is quietly costing your team hours a week, automate it end to end, and stay on the hook for it. Islamabad-based software and AI engineering.",
+    "metaTitle": "Bolter Technologies - Software development and AI automation",
+    "metaDescription": "We find the process that is quietly costing your team hours a week, automate it end to end, and stay on the hook for it. Software and AI automation engineering.",
     "heroSub": "We start with the process that is costing you time, not the technology. Then we automate it, ship it, and stay on the hook for it.",
     "offerHeading": "One practice, four depths",
     "workHeading": "Selected work",
@@ -45,7 +45,7 @@
   },
   "services": {
     "metaTitle": "Services - Bolter Technologies",
-    "metaDescription": "AI, automation, software development, and data analytics - one practice, delivered by one team.",
+    "metaDescription": "Software development, AI automation, and data analytics - one practice, delivered by one team.",
     "heading": "What we do",
     "includesLabel": "What it includes",
     "stackLabel": "Typically built with",
@@ -94,7 +94,7 @@
     "openInGoogleMaps": "Open in Google Maps"
   },
   "categories": {
-    "ai": "AI",
+    "ai": "AI automation",
     "automation": "Automation",
     "software": "Software",
     "data": "Data analytics"
