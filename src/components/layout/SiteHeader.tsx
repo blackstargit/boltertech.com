@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoLock } from "./LogoLock";
+import { MobileMenu } from "./MobileMenu";
 import { Cta } from "@/components/primitives/Cta";
 import { localePath, type Locale, type Messages } from "@/lib/i18n";
 
@@ -11,10 +12,14 @@ import { localePath, type Locale, type Messages } from "@/lib/i18n";
  * locales.ts carries more than one entry — nothing here needs to change
  * for that to work, since every href already goes through localePath.
  *
- * The narrow-viewport menu is a native <details>, so it opens and closes
- * with no client JavaScript, no hydration, and correct keyboard and
- * screen-reader behaviour for free. Previously the nav simply flex-wrapped
- * under the logo, which was the weakest thing on the site on a phone.
+ * The narrow-viewport menu is a native <details> wrapped in a small client
+ * component (see MobileMenu) that adds outside-click, Escape and
+ * close-on-navigate. The open/close itself is still the browser's.
+ *
+ * Breakpoints differ on purpose: the nav links collapse into the menu at
+ * 768px, but the "Start a project" button survives down to 540px, because
+ * it is the page's primary action and there is room for it long after four
+ * nav links stop fitting. Below 540px it lives only inside the menu.
  */
 export function SiteHeader({
   locale,
@@ -55,26 +60,24 @@ export function SiteHeader({
           </ul>
         </nav>
 
-        <Cta
-          href={localePath(locale, "/contact")}
-          arrow={false}
-          size="compact"
-          className="hidden md:inline-flex"
-        >
-          {messages.common.startProject}
-        </Cta>
+        {/* Wrapped, not styled directly: `ctaClasses` bakes in
+            `inline-flex`, and Tailwind orders display utilities by value
+            rather than by class-string position — `.inline-flex` sits
+            after `.hidden` in the sheet, so a `hidden` passed to the Cta
+            silently loses and the button showed at every width. A plain
+            div has no competing display utility, so it hides properly. */}
+        <div className="hidden min-[540px]:block">
+          <Cta
+            href={localePath(locale, "/contact")}
+            arrow={false}
+            size="compact"
+          >
+            {messages.common.startProject}
+          </Cta>
+        </div>
 
         {/* Narrow viewports: the same nav in a disclosure. */}
-        <details className="group relative md:hidden">
-          <summary className="flex cursor-pointer list-none items-center gap-2 rounded-sm border border-rule px-3.5 py-2 font-data text-micro font-medium text-ink uppercase marker:content-[''] [&::-webkit-details-marker]:hidden">
-            {messages.nav.menu}
-            <span
-              aria-hidden="true"
-              className="text-accent transition-transform group-open:rotate-45"
-            >
-              +
-            </span>
-          </summary>
+        <MobileMenu label={messages.nav.menu} className="md:hidden">
           <nav
             aria-label="Main"
             className="absolute end-0 z-40 mt-3 w-56 rounded-md border border-rule bg-sheet p-2 shadow-lg shadow-black/20"
@@ -90,6 +93,8 @@ export function SiteHeader({
                   </Link>
                 </li>
               ))}
+              {/* Below 540px this is the only "Start a project" on screen,
+                  which is why the menu carries its own copy of it. */}
               <li className="mt-2 border-t border-rule pt-2">
                 <Link
                   href={localePath(locale, "/contact")}
@@ -100,7 +105,7 @@ export function SiteHeader({
               </li>
             </ul>
           </nav>
-        </details>
+        </MobileMenu>
       </div>
     </header>
   );
