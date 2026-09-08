@@ -74,7 +74,7 @@ export default async function ServicesPage({
               { label: m.fields.practice, value: lead.name },
               {
                 label: m.services.supportingLabel,
-                value: `${ordered.length} Fields of Work`,
+                value: `${ordered.length - 1} Fields of Work`,
               },
             ]}
           />
