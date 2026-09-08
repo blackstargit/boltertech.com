@@ -37,7 +37,11 @@
      band below carries the bright value. Same hue, two grounds. */
   --accent: #8f5d0a; /* 5.6:1 on paper */
   --accent-soft: #f0e2c8;
-  --on-accent: #0a0b0c; /* text sitting on an --accent fill */
+  /* White, not the near-black the dark band uses: this amber is dark
+     enough that black text on it measures 3.5:1. The two bands invert
+     each other here — bright amber wants dark text, dark amber wants
+     light. 5.6:1. */
+  --on-accent: #ffffff;
 
   --metric: var(--accent);
   --positive: #1b5e35;
@@ -178,6 +182,26 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   Theme scope — the rule that makes nested bands work.
+
+   `color` inherits as a COMPUTED value, not as the var() that produced
+   it. `body { color: var(--ink) }` resolves once, at the body, and every
+   descendant inherits that literal colour no matter what --ink means
+   further down the tree. So a light band nested inside the dark page
+   painted dark-theme ink (#ffffff) onto bone paper (#f3f1ed) — a 1.12:1
+   contrast ratio — for every element that did not carry an explicit
+   text-* utility, which is most headings and all body copy.
+
+   Re-declaring the inherited properties on each theme scope makes them
+   resolve against that scope's own tokens. This is unlayered, so it wins
+   over the @layer base body rule.
+   ═══════════════════════════════════════════════════════════════════ */
+[data-theme] {
+  color: var(--ink);
+  accent-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    Placeholder hatch.
 
    Drawn from the two ground tokens, so it re-resolves in either band
@@ -301,30 +325,12 @@
   }
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-}
-
 .ticker-track {
   animation: ticker-slide 42s linear infinite;
 }
 
 .pulse-dot {
   animation: soft-pulse 2.4s ease-in-out infinite;
-}
-
-/* Scroll-driven entrance. Guarded: without a timeline, `both` fill
-   would leave every below-fold element stuck at opacity:0 forever in
-   a browser that lacks scroll-driven animation. No guard, no reveal. */
-@supports (animation-timeline: view()) {
-  .reveal {
-    animation: rise 0.55s ease both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 22%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

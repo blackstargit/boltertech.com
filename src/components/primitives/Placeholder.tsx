@@ -18,6 +18,9 @@ export function Placeholder({
   notice,
   hint,
   children,
+  /** Tighter padding for a small frame. A prop, not a `className`
+   *  override — a smaller padding utility loses to the base one. */
+  pad = "default",
   className = "",
 }: {
   /** What is missing, e.g. "Cover image". */
@@ -28,6 +31,7 @@ export function Placeholder({
   hint?: string;
   /** Optional wireframe drawn behind the caption. */
   children?: ReactNode;
+  pad?: "default" | "tight";
   className?: string;
 }) {
   if (!SHOW_PLACEHOLDERS) return null;
@@ -35,7 +39,7 @@ export function Placeholder({
   return (
     <div
       role="note"
-      className={`hatch relative grid place-items-center gap-2.5 rounded-md border border-dashed border-rule p-7 text-center ${className}`}
+      className={`hatch relative grid place-items-center gap-2.5 rounded-md border border-dashed border-rule text-center ${pad === "tight" ? "p-4" : "p-7"} ${className}`}
     >
       {children}
       <span className="font-data text-label font-medium tracking-[0.16em] text-ink-faint uppercase">

@@ -124,7 +124,7 @@ function FilterButton({
       }`}
     >
       {children}
-      <span className="ms-2 opacity-60">{count}</span>
+      <span className="ms-2 tabular-nums">{count}</span>
     </button>
   );
 }

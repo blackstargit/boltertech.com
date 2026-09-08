@@ -61,7 +61,7 @@ export default async function HomePage({
           facts strip answers "are these people real" before a visitor
           reads a word of marketing copy, which is what directory
           referrals and cold outbound clicks are actually checking. */}
-      <Band className="pb-0">
+      <Band joinNext>
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <PageHero
             title={site.tagline}
@@ -129,7 +129,7 @@ export default async function HomePage({
                     </span>
                   </span>
                   {p.metrics[0] ? (
-                    <b className="font-display text-h4 font-semibold text-accent tabular-nums">
+                    <b className="shrink-0 font-display text-h4 font-semibold text-accent tabular-nums">
                       {p.metrics[0].value}
                     </b>
                   ) : null}
@@ -184,7 +184,9 @@ export default async function HomePage({
                 <Label className="group-hover:text-ink-invert">
                   {s.lead ? m.services.leadLabel : m.services.supportingLabel}
                 </Label>
-                <Label className="opacity-60">
+                {/* No opacity here: --ink-faint is already the contrast
+                    floor, and dimming it further put this at 2.42:1. */}
+                <Label className="group-hover:text-ink-invert">
                   {String(i + 1).padStart(2, "0")}
                 </Label>
               </div>

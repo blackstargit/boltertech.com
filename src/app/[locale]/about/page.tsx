@@ -188,7 +188,8 @@ function FounderPortrait({
   if (unnamed) {
     return (
       <Placeholder
-        className="aspect-[4/5] content-center p-4"
+        pad="tight"
+        className="aspect-[4/5] content-center"
         notice={placeholder.notice}
         label={placeholder.label}
         hint={placeholder.hint}

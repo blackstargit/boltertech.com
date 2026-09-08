@@ -103,7 +103,7 @@ export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
         {messages.message}{" "}
         <Link
           href={privacyHref}
-          className="text-accent underline-offset-2 hover:underline"
+          className="text-accent underline underline-offset-2 hover:text-ink"
         >
           {messages.privacyLink}
         </Link>
@@ -112,14 +112,14 @@ export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
         <button
           type="button"
           onClick={() => writeConsent("denied")}
-          className={`${ctaClasses("outline")} px-5 py-2.5`}
+          className={ctaClasses("outline", "compact")}
         >
           {messages.decline}
         </button>
         <button
           type="button"
           onClick={() => writeConsent("granted")}
-          className={`${ctaClasses("solid")} px-5 py-2.5`}
+          className={ctaClasses("solid", "compact")}
         >
           {messages.accept}
         </button>

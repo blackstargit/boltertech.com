@@ -125,12 +125,19 @@ Use `bg-sheet`, `text-ink`, `border-rule`, `font-display`, `text-lede`.
 utilities. `--text-metric` and `--color-metric` would collide, which is why the
 font-size token is `--text-figure`. Check for collisions when adding tokens.
 
-### Theme
+### Theme — bands are theme scopes
 
-Light is the launch theme. **The complete dark palette is already defined**
-under `[data-theme="dark"]` in `globals.css`. Shipping dark mode means setting
-that attribute on `<html>` in the layout plus a toggle component — no component
-changes. Nothing currently sets it.
+`<html>` carries `data-theme="dark"`; any section can carry
+`data-theme="light"` to flip the ground beneath it. Both token blocks in
+`globals.css` are complete and both are live. The `Band` primitive sets the
+attribute, so a page alternates dark and bone by passing `tone`.
+
+**Colour is inherited as a computed value, not as the `var()` that produced
+it.** `body { color: var(--ink) }` resolves once and every descendant
+inherits that literal colour, whatever `--ink` means further down the tree.
+That is why `globals.css` re-declares `color` on `[data-theme]` — without it
+a light band paints dark-theme ink on bone paper at 1.12:1. If you add an
+inherited colour property (`caret-color`, say), declare it there too.
 
 ### RTL is on the roadmap (Urdu, Arabic)
 
@@ -154,15 +161,26 @@ handled globally in `globals.css`.
 
 ### Components
 
-- `src/components/primitives/` — the drafting devices (`TitleBlock`, `Field`,
-  `DimensionRule`, `NodeTrace`, `Bracketed`, `MetricTile`, `SectionHead`,
-  `Cta`, `Label`, `Arrow`). Pages are composed from these; new pages should
-  need no new CSS.
+- `src/components/primitives/` — `Band` (the only structural container),
+  `PageHero`, `Field`/`FieldRow`, `SectionHead`, `Cta`, `Chip`/`ChipRow`,
+  `MetricTile`/`MetricRow`/`SeriesChart`, `Placeholder`, `Label`, `PulseDot`,
+  `Arrow`, `Prose`. Pages are composed from these; new pages should need no
+  new CSS. (`TitleBlock`, `DimensionRule`, `NodeTrace` and `Bracketed` were
+  the pre-redesign drafting devices and are gone.)
+
 - `src/components/sections/` — reusable page sections (`FaqList`,
-  `ProcessGrid`). If a block appears on a second page, extract it here.
+  `ProcessGrid`, `OutcomeTabs`, `WorkTable`, `CtaBand`, `Ticker`). If a block
+  appears on a second page, extract it here.
 - **Not everything is a card.** Border, fill and shadow each say "separate
-  object". `Bracketed` (corner crop marks) exists so blocks can be separated
-  without stamping a bordered box on everything.
+  object". Prefer a band change or a hairline grid (`gap-px` over a
+  rule-coloured ground) to stamping a bordered box on everything.
+
+**Spacing and size are props, never `className` overrides.** Tailwind orders
+utilities by value, not by their position in the class string, so a `px-5`
+passed in as an override loses to a `px-6` baked into the component and
+silently does nothing — no error, no warning. `Cta` takes `size`,
+`SectionHead` takes `spacing`, `Band` takes `flush`/`joinNext`, `Placeholder`
+takes `pad`. Add a prop rather than passing a smaller utility and hoping.
 
 ### Optional fields are absent-by-default
 
@@ -215,7 +233,7 @@ before doing it.
 | **No pricing anywhere**                           | The $15/hr and $200 minimum live on Upwork/Clutch where buyers expect a rate card. Publishing them contradicts the brand.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **No blog at launch**                             | An abandoned blog with three old posts damages credibility more than no blog. Infrastructure is ready when there is a real commitment.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | **GA4 added, gated behind consent** (2026-09-07)  | Reversed on request. Vercel Analytics stays for baseline cookieless numbers; GA4's `gtag.js` only loads after `ConsentBanner` (`src/components/analytics/ConsentBanner.tsx`) gets an accept, tracked in `localStorage`, not a cookie, so declining sets nothing. `content/legal/en/privacy.mdx` documents this. Measurement ID is `NEXT_PUBLIC_GA_MEASUREMENT_ID` — unset in preview/local keeps that traffic out of GA. **Verified live in production 2026-09-07**: `NEXT_PUBLIC_GA_MEASUREMENT_ID` set in Vercel, accept flow confirmed sending real hits (`google-analytics.com/g/collect` returns 204), traffic showing in GA4 Realtime. Key events `qualify_lead` and `close_convert_lead` still need wiring in the GA4 UI — see `TODO.md`. |
-| **Light theme at launch**                         | Dark tokens defined and ready; nothing enables them yet.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Dark-first, alternating bands** (2026-09-08)    | Reverses "light theme at launch" on request, implementing the approved Claude Design mockup (`documentation/claude-design/design_0/`). Near-black ground with warm bone (`#f3f1ed`) bands; amber accent replaces the cyanotype cyan; Space Grotesk / IBM Plex Sans / IBM Plex Mono replace Chivo / Plex Sans / Martian Mono; radii replace the deliberate zero. The amber inverts per band — `#e8a33d` on dark, `#8f5d0a` on bone, because the bright value measures 2.2:1 there. `--on-accent` inverts with it. |
 | **Phone and address published**                   | Confirmed wanted. Real contact details are a legitimacy signal directory reviewers check.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **Logo sits on the page ground**                  | Reversed 2026-09-07 on request: the dark plate behind the header mark is gone. `public/logo-mark.png` is transparent and used as-is. Watch the near-white stroke interiors on light backgrounds; `public/logo-flat.svg` is still a placeholder for a real flat mark.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
@@ -233,8 +251,15 @@ curl -s http://localhost:3300/en | grep -F "some expected string"
 ```
 
 Lighthouse runs through the chrome-devtools MCP (`new_page`, then
-`lighthouse_audit`). Current scores on `/en` and a case study, mobile:
+`lighthouse_audit`). Verified 2026-09-08 on `/en`, `/en/services`,
+`/en/about`, `/en/contact` and a case study, mobile:
 **Accessibility 100, SEO 100, Agentic Browsing 100, Best Practices 96.**
+
+**Restart the server on a fresh build before auditing.** `pnpm start` fails
+with `EADDRINUSE` if the previous one is still up, and the stale process
+keeps serving — which produces phantom 500s and layout failures that are not
+in the build you just made. Kill it by PID first:
+`netstat -ano | grep ':3300.*LISTENING'`, then `taskkill //PID <pid> //F`.
 
 The one expected failure is `errors-in-console`: `/_vercel/insights/script.js`
 404s on localhost because those scripts only exist on Vercel's edge. Not a bug.
@@ -246,6 +271,19 @@ field and check the build fails naming the file — then restore it.
 
 ## Things that cost time this session
 
+- **Tailwind orders utilities by value, not by class-string position.** A
+  `px-5` passed to a component that hardcodes `px-6` loses, silently. Four
+  such overrides shipped before anyone noticed. See "Spacing and size are
+  props" above; check the built CSS with
+  `grep -o '\.px-5\|\.px-6' .next/static/chunks/*.css` if in doubt.
+- **Inherited colour does not re-resolve across a theme scope.** `color`
+  inherits as a computed value, so a nested `[data-theme]` needs `color`
+  re-declared on it or it paints the parent theme's ink. Cost a 1.12:1
+  contrast failure across every bone band.
+- **A stale `pnpm start` keeps serving after `EADDRINUSE`.** The failed
+  restart is easy to miss, and the old process serves a build whose chunks
+  no longer exist — phantom 500s and layout failures that are not real.
+  Always kill by PID and confirm the port is free.
 - **MDX has no HTML comments.** `<!-- -->` fails the build. Use `{/* */}`.
 - **Removing a route leaves stale generated types** in `.next/dev/types`,
   producing confusing `TS1128` errors. `rm -rf .next` before rebuilding.

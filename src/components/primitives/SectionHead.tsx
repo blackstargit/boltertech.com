@@ -16,6 +16,13 @@ export function SectionHead({
   note,
   id,
   level = 2,
+  /**
+   * The gap below the head. A prop rather than something a caller
+   * overrides through `className`: Tailwind orders utilities by value,
+   * so a `mb-0` passed in loses to a hardcoded `mb-10` and silently
+   * does nothing.
+   */
+  spacing = "default",
   className = "",
 }: {
   eyebrow?: string;
@@ -23,12 +30,13 @@ export function SectionHead({
   note?: ReactNode;
   id?: string;
   level?: 2 | 3;
+  spacing?: "default" | "none";
   className?: string;
 }) {
   const Heading = level === 2 ? "h2" : "h3";
   return (
     <div
-      className={`mb-10 flex flex-wrap items-end gap-x-6 gap-y-4 ${className}`}
+      className={`${spacing === "none" ? "" : "mb-10"} flex flex-wrap items-end gap-x-6 gap-y-4 ${className}`}
     >
       <div className="grid gap-3.5">
         {eyebrow ? <Label>{eyebrow}</Label> : null}

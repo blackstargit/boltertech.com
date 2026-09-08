@@ -58,7 +58,8 @@ export function SiteHeader({
         <Cta
           href={localePath(locale, "/contact")}
           arrow={false}
-          className="hidden px-5 py-2.5 md:inline-flex"
+          size="compact"
+          className="hidden md:inline-flex"
         >
           {messages.common.startProject}
         </Cta>

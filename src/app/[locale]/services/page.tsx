@@ -97,7 +97,7 @@ export default async function ServicesPage({
             <div className="grid content-start gap-6">
               <SectionHead
                 id={`${service.id}-h`}
-                className="mb-0"
+                spacing="none"
                 eyebrow={`${String(i + 1).padStart(2, "0")} · ${
                   service.lead
                     ? m.services.leadLabel
