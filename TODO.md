@@ -22,3 +22,12 @@ production switch that turns the stand-ins off.
   - Centre for Countering Terrorism and Violent Extremism Studies CCTVES
   - Institute of Regional Studies IRS
   - Sigma Engineering
+- Rewrite the case study for Eco Hunt. This time we will show that our project is focused on brands and the private information sector, like ARY News. 
+- SOAI, WAF, channel analytics to be added
+- Add a cost estimator to the startup project section and maybe add it as a sticky bottom-left component on the main page. 
+
+- Data improvement that is still left:
+1. Change the placeholder text everywhere.
+2. Change the outcome chart placeholder.
+3. Change the About page.
+4. Change
