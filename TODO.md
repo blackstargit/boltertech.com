@@ -29,3 +29,4 @@ production switch that turns the stand-ins off.
 - Data improvement that is still left:
 1. Add images for founders. 
 2. Add images for the remaining projects without one. On the weekend 
+- Increase the logo text size in the navbar. 

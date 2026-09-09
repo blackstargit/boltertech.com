@@ -109,8 +109,7 @@
     "submit": "Email me this estimate",
     "success": "Thanks - we have your estimate and will be in touch.",
     "contactPrompt": "Not sure what your budget should be? Answer a few questions for an indicative range.",
-    "launcherLabel": "Estimate your project",
-    "launcherDismiss": "Dismiss"
+    "launcherLabel": "Cost Estimator"
   },
   "categories": {
     "ai": "AI automation",
