@@ -60,7 +60,7 @@ export default async function AboutPage({
             className="mt-5 max-w-2xl"
             fields={[
               { label: m.fields.established, value: String(site.founded) },
-              { label: m.fields.team, value: `${site.teamSize} engineers` },
+              { label: m.fields.clientFocus, value: site.clientFocus },
               { label: m.fields.practice, value: lead.name },
             ]}
           />
