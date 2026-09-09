@@ -110,14 +110,13 @@ appears immediately, whether or not the switch below is on.
 
 | What                  | Missing on            | Field to set                                      | Where it shows                                                 |
 | --------------------- | --------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
-| Cover image           | **11 of 11** projects | `cover:` in frontmatter                           | Case study, under the hero                                     |
-| Outcome chart         | **11 of 11** projects | `series: [...]` — 12 numbers, 0–100, oldest first | Home hero snapshot, home outcome tabs, case study outcome band |
-| Metric proportion bar | **38 of 38** metrics  | `bar:` on a metric, 0–100                         | Anywhere a figure appears                                      |
-| Client testimonial    | **10 of 11** projects | `testimonial:` block                              | Case study, before the next-project link                       |
+| Cover image           | **14 of 14** projects | `cover:` in frontmatter                           | Case study, under the hero                                     |
+| Outcome chart         | **0 of 14** (Done)    | `series: [...]` — 12 numbers, 0–100, oldest first | Home hero snapshot, home outcome tabs, case study outcome band |
+| Metric proportion bar | **0 of 14** (Done)    | `bar:` on a metric, 0–100                         | Anywhere a figure appears                                      |
+| Client testimonial    | **13 of 14** projects | `testimonial:` block                              | Case study, before the next-project link                       |
 | Founder portrait      | **3 of 3** founders   | `photo:` in `founders.json`                       | About, founders grid                                           |
 
-Only `current-by-logmate` has a testimonial. No project has a `series`, so
-every chart on the site is currently a wireframe.
+All 14 projects now carry real `series` and `bar` metrics, so outcome charts across the site are fully populated.
 
 **Cover images** go in `public/work/<slug>/` — the folders already exist
 with `.gitkeep` files. 1600×900, screenshot or architecture diagram.

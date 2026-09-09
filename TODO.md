@@ -27,7 +27,5 @@ production switch that turns the stand-ins off.
 - Add a cost estimator to the startup project section and maybe add it as a sticky bottom-left component on the main page. 
 
 - Data improvement that is still left:
-1. Change the placeholder text everywhere.
-2. Change the outcome chart placeholder.
-3. Change the About page.
-4. Change
+1. Add images for founders. 
+2. Add images for the remaining projects without one. On the weekend 
