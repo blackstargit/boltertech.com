@@ -130,10 +130,11 @@ export default async function HomePage({
                 </Link>
               ))}
 
-              {/* A wireframe until a project carries a real series. */}
+              {/* Telemetry series chart for lead featured engagement */}
               <SeriesChart
                 series={charted?.series}
                 label={charted?.seriesLabel || undefined}
+                caption={charted?.duration || undefined}
                 height="h-[104px]"
                 placeholder={{
                   notice: m.placeholders.notice,
