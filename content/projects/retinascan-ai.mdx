@@ -23,12 +23,18 @@ order: 10
 metrics:
   - value: "5"
     label: "DR severity stages classified per scan, healthy to proliferative"
+    bar: 100
   - value: "4"
     label: "clinical findings flagged and explained per scan"
+    bar: 100
   - value: "30,657"
     label: "labelled fundus images used to train the diagnostic model"
+    bar: 95
   - value: "<15s"
     label: "from image upload to full diagnostic report"
+    bar: 90
+seriesLabel: "Time to clinical diagnostic report (minutes)"
+series: [96, 92, 88, 80, 68, 52, 38, 26, 18, 14, 10, 7]
 links: []
 cover: ""
 testimonial: null
