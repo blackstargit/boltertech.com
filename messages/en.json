@@ -9,6 +9,7 @@
   },
   "common": {
     "startProject": "Start a project",
+    "estimateBudget": "Estimate a budget",
     "seeWork": "See our work",
     "readCaseStudy": "Read case study",
     "nextProject": "Next project",
@@ -93,6 +94,23 @@
     "copyAddress": "Copy address",
     "addressCopied": "Address copied",
     "openInGoogleMaps": "Open in Google Maps"
+  },
+  "estimate": {
+    "metaTitle": "Project cost estimator - Bolter Technologies",
+    "metaDescription": "Answer a few questions and get an indicative range for your project. Not a quote - a starting point for planning.",
+    "eyebrow": "Estimator",
+    "heading": "Estimate your project",
+    "lede": "A few questions, an indicative range. It is a starting point for planning, not a quote - we confirm real pricing on a short call.",
+    "rangeLabel": "Indicative range",
+    "timelineLabel": "Rough timeline",
+    "weeksSuffix": "weeks",
+    "formHeading": "Want us to sanity-check it?",
+    "formLede": "Send the estimate to our inbox and we will come back with a firmer number.",
+    "submit": "Email me this estimate",
+    "success": "Thanks - we have your estimate and will be in touch.",
+    "contactPrompt": "Not sure what your budget should be? Answer a few questions for an indicative range.",
+    "launcherLabel": "Estimate your project",
+    "launcherDismiss": "Dismiss"
   },
   "categories": {
     "ai": "AI automation",

@@ -1,0 +1,178 @@
+{
+  "_comment": "PLACEHOLDER WEIGHTS — replace before launch. `add` is a flat amount in `currency`; `mult` multiplies the running total; `weeks` is optional and only shown if at least one option carries it. See CONTENT.md.",
+  "currency": "USD",
+  "symbol": "$",
+  "base": 3000,
+  "spread": 0.3,
+  "roundTo": 500,
+  "minimum": 2000,
+  "disclaimer": "This is an indicative range to help you plan — it is not a quote. Real pricing depends on the detail of what you need, which we confirm on a short call once we understand the specifics.",
+  "groups": [
+    {
+      "id": "kind",
+      "label": "What kind of work",
+      "type": "single",
+      "role": "projectType",
+      "options": [
+        {
+          "id": "ai",
+          "label": "AI solution or agent",
+          "add": 3000,
+          "weeks": 4
+        },
+        {
+          "id": "automation",
+          "label": "Workflow automation",
+          "add": 2000,
+          "weeks": 3
+        },
+        {
+          "id": "software",
+          "label": "Software build",
+          "add": 2500,
+          "weeks": 4
+        },
+        {
+          "id": "data",
+          "label": "Data analytics or dashboards",
+          "add": 2500,
+          "weeks": 3
+        }
+      ]
+    },
+    {
+      "id": "size",
+      "label": "How big is it",
+      "type": "single",
+      "options": [
+        {
+          "id": "task",
+          "label": "A single focused task",
+          "add": 0,
+          "weeks": 1
+        },
+        {
+          "id": "standard",
+          "label": "A standard build, a handful of features",
+          "add": 3500,
+          "weeks": 4
+        },
+        {
+          "id": "platform",
+          "label": "A multi-part platform",
+          "add": 9000,
+          "weeks": 10
+        },
+        {
+          "id": "system",
+          "label": "A large system across several teams",
+          "add": 20000,
+          "weeks": 20
+        }
+      ]
+    },
+    {
+      "id": "surfaces",
+      "label": "What does it need",
+      "hint": "Pick any that apply.",
+      "type": "multi",
+      "options": [
+        { "id": "web", "label": "Web app", "add": 2500, "weeks": 3 },
+        { "id": "mobile", "label": "Mobile app", "add": 5000, "weeks": 5 },
+        {
+          "id": "dashboard",
+          "label": "Internal dashboard or admin",
+          "add": 2000,
+          "weeks": 2
+        },
+        {
+          "id": "api",
+          "label": "Public or partner API",
+          "add": 2500,
+          "weeks": 2
+        },
+        {
+          "id": "integrations",
+          "label": "Integrations with tools you already use",
+          "add": 2000,
+          "weeks": 2
+        }
+      ]
+    },
+    {
+      "id": "dataai",
+      "label": "Data and AI",
+      "hint": "Pick any that apply.",
+      "type": "multi",
+      "options": [
+        {
+          "id": "ml",
+          "label": "Custom ML or LLM work",
+          "add": 4000,
+          "weeks": 4
+        },
+        {
+          "id": "pipeline",
+          "label": "Data pipeline or warehouse",
+          "add": 3500,
+          "weeks": 3
+        },
+        {
+          "id": "thirdparty",
+          "label": "Third-party AI APIs",
+          "add": 1500,
+          "weeks": 1
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "type": "single",
+      "options": [
+        {
+          "id": "system",
+          "label": "Use your existing components",
+          "add": 0,
+          "weeks": 0
+        },
+        {
+          "id": "custom",
+          "label": "Custom UI design",
+          "add": 3000,
+          "weeks": 2
+        },
+        {
+          "id": "brand",
+          "label": "Brand and UI from scratch",
+          "add": 6000,
+          "weeks": 4
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "label": "Timeline",
+      "type": "single",
+      "options": [
+        { "id": "flexible", "label": "Flexible", "mult": 0.95 },
+        { "id": "standard", "label": "Standard", "mult": 1 },
+        { "id": "accelerated", "label": "Accelerated", "mult": 1.3 }
+      ]
+    },
+    {
+      "id": "support",
+      "label": "After launch",
+      "type": "single",
+      "options": [
+        { "id": "none", "label": "Nothing after handover", "add": 0 },
+        { "id": "warranty", "label": "Three months of support", "add": 2000 },
+        {
+          "id": "retainer",
+          "label": "Ongoing monthly retainer",
+          "add": 4000
+        }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/routes";
 import { site, officeMapEmbedUrl, googleMapsUrl } from "@/lib/site";
 import { PageHero } from "@/components/primitives/TitleBlock";
 import { Band } from "@/components/primitives/Band";
-import { Label } from "@/components/primitives/drafting";
+import { Arrow, Label } from "@/components/primitives/drafting";
 import { StoreProvider } from "@/store/Provider";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { OfficeMap } from "@/components/contact/OfficeMap";
@@ -92,6 +93,20 @@ export default async function ContactPage({
                 googleMapsUrl={googleMapsUrl}
                 googleMapsLabel={m.contact.openInGoogleMaps}
               />
+
+              <div className="grid gap-2.5 border-t border-rule pt-6">
+                <Label>{m.estimate.eyebrow}</Label>
+                <p className="max-w-[40ch] text-small text-ink-muted">
+                  {m.estimate.contactPrompt}
+                </p>
+                <Link
+                  href={localePath(locale as Locale, "/estimate")}
+                  className="inline-flex items-center gap-2 text-small font-semibold text-ink transition-colors hover:text-accent"
+                >
+                  {m.common.estimateBudget}
+                  <Arrow />
+                </Link>
+              </div>
             </div>
           </div>
 

@@ -19,6 +19,7 @@ import { OutcomeTabs } from "@/components/sections/OutcomeTabs";
 import { WorkTable } from "@/components/sections/WorkTable";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Ticker } from "@/components/sections/Ticker";
+import { EstimateLauncher } from "@/components/estimate/EstimateLauncher";
 
 export async function generateMetadata({
   params,
@@ -254,6 +255,10 @@ export default async function HomePage({
           Dark so the alternation is unbroken, and so the amber button is
           the last and brightest thing on the page. */}
       <CtaBand locale={l} messages={m} tone="dark" />
+
+      {/* Sticky launcher, bottom-start. Server-rendered with a CSS-only
+          dismiss, so the homepage still ships no client JavaScript. */}
+      <EstimateLauncher locale={l} messages={m} />
     </>
   );
 }
