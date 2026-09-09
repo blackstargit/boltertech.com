@@ -28,8 +28,7 @@ export function SeriesChart({
   const startVal = data[0] ?? 0;
   const endVal = data[data.length - 1] ?? 0;
   const delta = endVal - startVal;
-  const pctChange =
-    startVal !== 0 ? Math.round((delta / startVal) * 100) : 0;
+  const pctChange = startVal !== 0 ? Math.round((delta / startVal) * 100) : 0;
   const deltaSign = delta > 0 ? `+${pctChange}%` : `${pctChange}%`;
 
   const heading = isPlaceholder ? placeholder!.label : label;
