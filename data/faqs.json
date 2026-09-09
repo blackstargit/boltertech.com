@@ -22,5 +22,9 @@
   {
     "q": "Can you work with our existing systems, or do we need to start from scratch?",
     "a": "We can work with what you already have. Whether you need to improve an existing application, connect different systems, automate a manual process, add AI capabilities, or build something completely new, we first assess your current setup and recommend the most practical approach. We do not rebuild something from scratch simply because it is easier for us."
+  },
+  {
+    "q": "What if our needs change during the project?",
+    "a": "We plan in phases and communicate regularly, so changes can be discussed and incorporated as we go. If something new is needed, we will clarify the impact on scope, timeline, and cost before proceeding."
   }
 ]
