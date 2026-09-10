@@ -31,9 +31,8 @@ export function LogoLock({
        *
        * With the wordmark shown, an aria-label of just "Bolter
        * Technologies" overrides visible text that also reads
-       * "Technologies · Islamabad" — so a voice-control user saying what
-       * they can see does not match the accessible name. Lighthouse flags
-       * this as label-content-name-mismatch, and it is a real failure.
+       * "Technologies" — so a voice-control user saying what
+       * they can see matches the accessible name.
        */
       aria-label={showWordmark ? undefined : site.name}
     >
@@ -50,7 +49,7 @@ export function LogoLock({
         <span className="font-display text-base font-bold tracking-[0.16em]">
           {site.shortName.toUpperCase()}
           <span className="block font-data text-[0.5625rem] font-normal tracking-[0.1em] text-ink-muted">
-            Technologies &middot; {site.address.city}
+            Technologies
           </span>
         </span>
       ) : null}

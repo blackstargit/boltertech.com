@@ -19,6 +19,7 @@ import { OutcomeTabs } from "@/components/sections/OutcomeTabs";
 import { WorkTable } from "@/components/sections/WorkTable";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Ticker } from "@/components/sections/Ticker";
+import { EstimateLauncher } from "@/components/estimate/EstimateLauncher";
 
 export async function generateMetadata({
   params,
@@ -72,8 +73,7 @@ export default async function HomePage({
               <div className="flex items-center gap-2.5">
                 <PulseDot />
                 <Label>
-                  {lead.name} &middot; {site.address.city} &middot;{" "}
-                  {m.fields.established} {site.founded}
+                  {lead.name} &middot; {m.fields.established} {site.founded}
                 </Label>
               </div>
             }
@@ -91,11 +91,6 @@ export default async function HomePage({
               className="mt-5"
               fields={[
                 { label: m.fields.established, value: String(site.founded) },
-                {
-                  label: m.fields.base,
-                  value: `${site.address.city}, ${site.address.country}`,
-                },
-                { label: m.fields.team, value: `${site.teamSize} engineers` },
                 { label: m.fields.practice, value: lead.name },
               ]}
             />
@@ -136,10 +131,11 @@ export default async function HomePage({
                 </Link>
               ))}
 
-              {/* A wireframe until a project carries a real series. */}
+              {/* Telemetry series chart for lead featured engagement */}
               <SeriesChart
                 series={charted?.series}
                 label={charted?.seriesLabel || undefined}
+                caption={charted?.duration || undefined}
                 height="h-[104px]"
                 placeholder={{
                   notice: m.placeholders.notice,
@@ -259,6 +255,10 @@ export default async function HomePage({
           Dark so the alternation is unbroken, and so the amber button is
           the last and brightest thing on the page. */}
       <CtaBand locale={l} messages={m} tone="dark" />
+
+      {/* Sticky launcher, bottom-start. Server-rendered with a CSS-only
+          dismiss, so the homepage still ships no client JavaScript. */}
+      <EstimateLauncher locale={l} messages={m} />
     </>
   );
 }

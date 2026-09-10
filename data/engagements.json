@@ -1,23 +1,23 @@
 [
   {
     "id": "discovery-sprint",
-    "kind": "PLACEHOLDER - Start here",
-    "name": "PLACEHOLDER - Discovery sprint",
-    "summary": "PLACEHOLDER. What this engagement is and who it suits. Two sentences. Say plainly what the client walks away with, and be honest about when this is the wrong shape for them - naming the case you are not right for is what makes the rest credible.",
-    "terms": "PLACEHOLDER - duration and pricing shape, e.g. '2 weeks, fixed fee'. No hourly rates: see the locked decision in CLAUDE.md."
+    "kind": "Start your Journey Here",
+    "name": "Discovery & Planning",
+    "summary": "Not sure where to start, or have an idea that needs to be shaped into a practical solution? We work with you to understand the problem, define what needs to be built, identify the right technology and approach, and create a clear plan for execution. This is ideal for larger or more complex projects where getting the direction right before development can save time and cost.",
+    "terms": "Typically 1–2 weeks, priced according to project requirements."
   },
   {
     "id": "fixed-scope-build",
-    "kind": "PLACEHOLDER - Most common",
-    "name": "PLACEHOLDER - Fixed-scope build",
-    "summary": "PLACEHOLDER. Same length and register as above. This is the engagement most visitors will be reading for, so it should be the most specific of the three.",
-    "terms": "PLACEHOLDER - minimum duration and how pricing is structured per phase."
+    "kind": "Most common",
+    "name": "Build & Deliver",
+    "summary": "From a small task that simply needs to get done to a complete software, AI automation, or data analytics solution, we build what your business needs and take it through to delivery. We work in clear phases with defined deliverables, keeping you involved throughout development while handling the technical work from start to finish. This is the right fit when you have a project that needs to be built, improved, automated, or brought to life.",
+    "terms": "Priced per project, with larger engagements structured into clear delivery phases."
   },
   {
     "id": "retained-engineering",
-    "kind": "PLACEHOLDER - After launch",
-    "name": "PLACEHOLDER - Retained engineering",
-    "summary": "PLACEHOLDER. Delete this entry entirely if you do not want to offer a retainer - the services page renders however many entries are in this array.",
-    "terms": "PLACEHOLDER - billing period and notice period."
+    "kind": "After launch",
+    "name": "Ongoing Support",
+    "summary": "Some solutions need more than a one-time delivery. We stay involved to maintain, improve, monitor, automate, and support your digital systems over time, whether that means ongoing software development, AI automation, data analytics, digital marketing, or operational support. This is ideal for businesses that need a reliable technology partner without building a full in-house team.",
+    "terms": "Monthly retainer, with scope and support level agreed based on ongoing requirements."
   }
 ]

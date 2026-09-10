@@ -74,7 +74,6 @@ export default async function WorkIndexPage({
                   label: m.fields.year,
                   value: String(Math.max(...projects.map((p) => p.year))),
                 },
-                { label: m.fields.base, value: site.address.city },
               ]}
             />
           </PageHero>

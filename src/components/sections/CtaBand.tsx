@@ -34,9 +34,14 @@ export function CtaBand({
               {messages.footer.replies.toLowerCase()} {site.responseTime}
             </p>
           )}
-          <Cta href={localePath(locale, "/contact")}>
-            {messages.common.startProject}
-          </Cta>
+          <div className="flex flex-wrap items-center gap-3">
+            <Cta href={localePath(locale, "/contact")}>
+              {messages.common.startProject}
+            </Cta>
+            <Cta href={localePath(locale, "/estimate")} variant="outline">
+              {messages.common.estimateBudget}
+            </Cta>
+          </div>
         </div>
       </div>
     </Band>

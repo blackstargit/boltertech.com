@@ -40,7 +40,7 @@ export function GET() {
 
   const body = `# ${site.legalName}
 
-> ${site.tagline} ${lead.name} led, based in ${site.address.city}, ${site.address.countryName}. Founded ${site.founded}, ${site.teamSize} engineers.
+> ${site.tagline} ${lead.name} led. Founded ${site.founded}, ${site.teamSize} engineers.
 
 ${site.description}
 

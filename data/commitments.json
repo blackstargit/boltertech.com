@@ -1,22 +1,22 @@
 [
   {
     "id": "named-lead",
-    "name": "PLACEHOLDER - One named lead",
-    "detail": "PLACEHOLDER. Two sentences on what this commitment actually means in practice, written as something you would be willing to have quoted back at you. A commitment that cannot be broken is not a commitment - each of these should name a thing you would owe the client if you failed it."
+    "name": "A dedicated point of contact",
+    "detail": "You will have a clear point of contact throughout the project who understands your requirements, decisions, and progress. You will always know who to speak to when you have a question, need an update, or want to make a decision."
   },
   {
     "id": "fixed-price",
-    "name": "PLACEHOLDER - Fixed price per phase",
-    "detail": "PLACEHOLDER. Same length and register. This one overlaps with the pricing FAQ answer, so keep the two consistent - a visitor will read both."
+    "name": "Clear pricing by phase",
+    "detail": "Before each phase begins, you will know what we are delivering, what it will cost, and what assumptions the price is based on. If a change affects the scope, timeline, or cost, we will discuss and agree it with you before carrying out the additional work."
   },
   {
     "id": "you-own-it",
-    "name": "PLACEHOLDER - You own everything",
-    "detail": "PLACEHOLDER. The IP answer already exists in data/faqs.json and is real - reuse its substance here rather than writing a second, subtly different version."
+    "name": "You own what we build",
+    "detail": "The software, designs, documentation, and project deliverables created specifically for you belong to you, subject to the terms agreed in your contract. We will provide the access and documentation you need to operate, maintain, and continue developing your solution."
   },
   {
     "id": "support-after",
-    "name": "PLACEHOLDER - Support after handover",
-    "detail": "PLACEHOLDER. Blocked on the same decision as process step 4 and the 'What happens after launch?' FAQ. Settle the real support commitment once and write it into all three."
+    "name": "Support beyond delivery",
+    "detail": "Our involvement does not have to end when the project goes live. We provide a proper handover and can continue supporting, maintaining, improving, and expanding your solution through an ongoing support arrangement when your business needs it."
   }
 ]

@@ -5,22 +5,26 @@
   },
   {
     "q": "What timezone overlap do we actually get?",
-    "a": "We are in Islamabad (UTC+5). That is a full working morning overlapping Europe and an afternoon overlapping the US East Coast. We commit to a fixed daily overlap window in writing before a project starts rather than leaving it to chance."
+    "a": "We operate in UTC+5. That is a full working morning overlapping Europe and an afternoon overlapping the US East Coast. We commit to a fixed daily overlap window in writing before a project starts rather than leaving it to chance."
   },
   {
     "q": "What happens after launch?",
-    "a": "PLACEHOLDER - state the real support terms here. Something like: thirty days of included support after handover, then an optional monthly retainer. Whatever you commit to, this is the answer that most separates you from a cheaper bid, so make it concrete."
+    "a": "Once the project is delivered, we provide the necessary documentation, access, and handover so your team can use and manage the solution confidently. If you need ongoing maintenance, improvements, automation, analytics, or technical support, we can continue through an ongoing support arrangement."
   },
   {
     "q": "How do you scope and price a project?",
-    "a": "PLACEHOLDER - describe the real process. Typically: a discovery conversation, a written scope with a fixed price per phase, and a named change process so neither side is surprised. Avoid publishing hourly rates here."
+    "a": "We start with a conversation to understand what you need, how the work is done today, and what the project needs to achieve. We then turn that into a written scope with clear deliverables, timelines, assumptions, and pricing, with larger projects broken into defined phases. If something changes along the way, we discuss the impact on scope, timeline, and cost before doing the additional work, so there are no unexpected charges."
   },
   {
     "q": "Do you use AI to write our code, and will you tell us?",
-    "a": "PLACEHOLDER - this needs a real house policy before launch. You sell AI automation, so you will be asked, and a vague answer costs you credibility. State plainly what you use AI for, what a human reviews, and what you will disclose."
+    "a": "Yes, we use AI tools where they can improve speed, research, testing, documentation, and development efficiency. AI-generated work is reviewed, tested, and validated by our engineers before it becomes part of your solution, and we remain responsible for the quality, security, and functionality of what we deliver. If AI is used in a material part of your project, we will be transparent about how it is being used and what human review is applied."
   },
   {
-    "q": "Will you sign an NDA or work under our contract?",
-    "a": "Yes to both. We sign client NDAs before discovery, and we are comfortable working under your master services agreement rather than insisting on our own paperwork."
+    "q": "Can you work with our existing systems, or do we need to start from scratch?",
+    "a": "We can work with what you already have. Whether you need to improve an existing application, connect different systems, automate a manual process, add AI capabilities, or build something completely new, we first assess your current setup and recommend the most practical approach. We do not rebuild something from scratch simply because it is easier for us."
+  },
+  {
+    "q": "What if our needs change during the project?",
+    "a": "We plan in phases and communicate regularly, so changes can be discussed and incorporated as we go. If something new is needed, we will clarify the impact on scope, timeline, and cost before proceeding."
   }
 ]

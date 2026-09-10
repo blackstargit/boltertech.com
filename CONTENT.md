@@ -16,6 +16,7 @@ Edit a file, commit, push. Vercel rebuilds and the site updates.
 | The four service descriptions and their tech lists    | `data/services.json`                                            |
 | FAQ questions and answers                             | `data/faqs.json`                                                |
 | The four "How we work" steps                          | `data/process.json`                                             |
+| Cost estimator questions and price weights            | `data/estimator.json` — see "Tuning the cost estimator" below   |
 | Case studies                                          | `content/projects/*.mdx` — see `content/projects/_AUTHORING.md` |
 | Privacy policy, terms                                 | `content/legal/en/*.mdx`                                        |
 | Button labels, headings, form labels — any UI wording | `messages/en.json`                                              |
@@ -51,6 +52,41 @@ initials on a dark plate rather than a broken image.
 
 ---
 
+## Tuning the cost estimator
+
+`/estimate` asks a few questions and shows an indicative price range. All of
+it — the questions, the answers and the numbers behind them — lives in
+`data/estimator.json`. No code change is needed to retune it.
+
+The top of the file sets the shape of every estimate:
+
+| Key        | What it does                                                     |
+| ---------- | --------------------------------------------------------------- |
+| `base`     | The floor every project starts from, before any answer is added |
+| `spread`   | How wide the range is. `0.3` means the range is ±30%            |
+| `roundTo`  | Both ends of the range are rounded to this (e.g. `500`)        |
+| `minimum`  | The low end never drops below this                              |
+| `currency` / `symbol` | Shown next to every figure (`"USD"` / `"$"`)       |
+| `disclaimer` | The "not a quote" line under the range                        |
+
+Each entry in `groups` is one question. Each option under it carries:
+
+- `add` — how much this answer adds to the total.
+- `mult` — multiplies the running total instead of adding (used for
+  "Accelerated" timeline). Leave it off for normal options.
+- `weeks` — optional. If **no** option anywhere has a `weeks` value, the
+  "Rough timeline" line disappears entirely.
+
+To change a price, edit a number. To add an answer, copy an option object.
+To add a question, copy a whole group. `type` is `"single"` (pick one) or
+`"multi"` (pick any). The build fails and names the field if a number is
+missing or negative.
+
+**These are placeholder numbers.** Replace them with real figures before
+launch — search the repo for `PLACEHOLDER`.
+
+---
+
 ## If the build fails
 
 That is usually deliberate. Content is validated on every build, so a typo
@@ -76,6 +112,8 @@ Search the repo for `PLACEHOLDER` to find everything at once.
 - [ ] **`data/faqs.json`** — three answers are placeholders: post-launch
       support terms, how you scope and price, and your AI-disclosure policy.
       The last one matters most; you sell AI automation, so you will be asked.
+- [ ] **`data/estimator.json`** — every price weight is a placeholder. Set
+      real figures, or the estimator quotes numbers you did not choose.
 - [ ] **`data/process.json`** — the "Handover and after" step needs a real
       support commitment.
 - [ ] **`content/projects/*.mdx`** — four seeded projects, all placeholder

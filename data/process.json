@@ -1,18 +1,18 @@
 [
   {
     "step": "Discovery",
-    "detail": "We map the process before writing code. Usually a couple of calls and a look at how the work actually happens today, including the parts people have stopped noticing."
+    "detail": "We start by understanding what you are trying to achieve and how the work happens today. For larger or more complex projects, we map the process, identify the real requirements, and work out the right technical approach before development begins."
   },
   {
-    "step": "Written scope",
-    "detail": "A fixed scope and price per phase, in writing, with the assumptions named. If something is uncertain we say so rather than padding the estimate quietly."
+    "step": "Plan & Scope",
+    "detail": "We turn the requirements into a clear plan with defined deliverables, timelines, and pricing. For phased projects, each phase has an agreed scope and cost, with assumptions and uncertainties made clear from the start."
   },
   {
-    "step": "Build in the open",
-    "detail": "You see working software early and often, not a status report. A fixed daily overlap window means questions get answered the same day rather than the next one."
+    "step": "Build & Deliver",
+    "detail": "We build the solution in practical stages and show you working progress along the way. You stay involved throughout the process, so feedback can be addressed early rather than waiting until everything is finished."
   },
   {
-    "step": "Handover and after",
-    "detail": "PLACEHOLDER - state the real support commitment. Documentation, access, and whatever period of included support you decide on. This is the step that makes the tagline true, so it needs a real number in it."
+    "step": "Handover & Support",
+    "detail": "Once the project is delivered, we provide the necessary documentation, access, and handover so your team can use and manage the solution confidently. If you need ongoing maintenance, improvements, automation, analytics, or technical support, we can continue through an ongoing support arrangement."
   }
 ]
