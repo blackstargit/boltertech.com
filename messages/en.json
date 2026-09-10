@@ -109,6 +109,16 @@
     "submit": "Email me this estimate",
     "success": "Thanks - we have your estimate and will be in touch.",
     "contactPrompt": "Not sure what your budget should be? Answer a few questions for an indicative range.",
+    "back": "Back",
+    "continue": "Continue",
+    "stepOf": "of",
+    "steps": [
+      "Project basics",
+      "What it needs",
+      "Shape and timeline",
+      "After launch",
+      "Your details"
+    ],
     "launcherLabel": "Cost Estimator"
   },
   "categories": {

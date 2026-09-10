@@ -1,6 +1,13 @@
 "use client";
 
-import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 
 import {
   estimator,
@@ -40,6 +47,22 @@ function initialSelections(): Selections {
   );
 }
 
+/**
+ * One screen per decision, not one long scroll. Grouped so each step reads
+ * as a single question a visitor can answer in a glance ("what kind of work,
+ * how big is it" together; "what it needs" and "data & AI" together; the
+ * two small single-picks together; the one after-launch pick alone) — then
+ * a final step for contact details, which is the only place the form
+ * appears. Coupled to the known seven groups in data/estimator.json by id,
+ * the same way `role: "projectType"` already couples estimator.ts to it.
+ */
+const STEP_GROUPS: readonly (readonly string[])[] = [
+  ["kind", "size"],
+  ["surfaces", "dataai"],
+  ["design", "timeline"],
+  ["support"],
+];
+
 export function CostEstimator({
   messages: m,
   email,
@@ -48,15 +71,31 @@ export function CostEstimator({
   email: string;
 }) {
   const [selections, setSelections] = useState<Selections>(initialSelections);
+  const [step, setStep] = useState(0);
   const [contact, setContact] = useState({ name: "", email: "", company: "" });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [website, setWebsite] = useState(""); // honeypot
   const [sendEnquiry, { isLoading, isSuccess, isError }] =
     useSendEnquiryMutation();
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
+  const groupsById = useMemo(
+    () => new Map(estimator.groups.map((g) => [g.id, g])),
+    [],
+  );
+
+  const totalSteps = STEP_GROUPS.length + 1;
+  const isContactStep = step === STEP_GROUPS.length;
   const result = useMemo(() => estimate(selections), [selections]);
 
   const fmt = (n: number) => `${estimator.symbol}${n.toLocaleString("en-US")}`;
+
+  // Move focus to the new step's heading so screen-reader and keyboard
+  // users land somewhere meaningful instead of staying on the old
+  // "Continue" button, which has just been replaced.
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, [step]);
 
   function pick(groupId: string, optionId: string) {
     setSelections((s) => ({ ...s, [groupId]: [optionId] }));
@@ -127,22 +166,12 @@ export function CostEstimator({
   }
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
-      <div className="grid gap-8">
-        {estimator.groups.map((group) => (
-          <OptionGroup
-            key={group.id}
-            group={group}
-            selected={selections[group.id] ?? []}
-            onPick={pick}
-            onToggle={toggle}
-          />
-        ))}
-      </div>
-
-      <aside className="grid gap-6 rounded-lg border border-rule bg-sheet p-6 lg:sticky lg:top-24">
-        <div className="grid gap-2">
-          <Label tone="accent">{m.estimate.rangeLabel}</Label>
+    <div className="mx-auto grid w-full max-w-2xl gap-8">
+      {/* Range — top of the page and live for every step, not tucked in a
+          sidebar only visible once you scroll past the questions. */}
+      <div className="grid gap-3 rounded-lg border border-rule bg-sheet p-6 sm:p-8">
+        <Label tone="accent">{m.estimate.rangeLabel}</Label>
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <b className="font-display text-figure leading-none font-semibold tracking-[-0.03em] text-ink tabular-nums">
             {fmt(result.low)}
             <span className="px-1 text-ink-faint">–</span>
@@ -150,123 +179,186 @@ export function CostEstimator({
           </b>
           {result.weeks ? (
             <span className="text-small text-ink-muted">
-              {m.estimate.timelineLabel}: {result.weeks.low}–{result.weeks.high}{" "}
-              {m.estimate.weeksSuffix}
+              {m.estimate.timelineLabel}: {result.weeks.low}–
+              {result.weeks.high} {m.estimate.weeksSuffix}
             </span>
           ) : null}
         </div>
-
         <p className="text-small text-pretty text-ink-muted">
           {estimator.disclaimer}
         </p>
+      </div>
 
-        <div className="border-t border-rule pt-6">
-          {isSuccess ? (
-            <div
-              role="status"
-              className="border border-accent bg-accent-soft p-4 text-small text-ink"
+      <div className="grid gap-8">
+        <div className="grid gap-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Focused on every step change (see the effect above) so
+                keyboard and screen-reader users land on the new question
+                instead of staying on the "Continue" button they just
+                activated. */}
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="font-display text-h4 font-semibold text-ink outline-none"
             >
-              {m.estimate.success}
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} noValidate className="grid gap-4">
-              <div className="grid gap-1">
-                <Label as="p" tone="ink">
-                  {m.estimate.formHeading}
-                </Label>
-                <p className="text-small text-ink-muted">
-                  {m.estimate.formLede}
-                </p>
-              </div>
-
-              <Field
-                id="est-name"
-                label={m.contact.nameLabel}
-                error={errors.name}
-                required
-              >
-                <input
-                  id="est-name"
-                  name="name"
-                  autoComplete="name"
-                  className={fieldClass}
-                  value={contact.name}
-                  onChange={(e) => set("name", e.target.value)}
-                  aria-invalid={Boolean(errors.name)}
-                />
-              </Field>
-
-              <Field
-                id="est-email"
-                label={m.contact.emailLabel}
-                error={errors.email}
-                required
-              >
-                <input
-                  id="est-email"
-                  name="email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  dir="ltr"
-                  className={fieldClass}
-                  value={contact.email}
-                  onChange={(e) => set("email", e.target.value)}
-                  aria-invalid={Boolean(errors.email)}
-                />
-              </Field>
-
-              <Field id="est-company" label={m.contact.companyLabel}>
-                <input
-                  id="est-company"
-                  name="company"
-                  autoComplete="organization"
-                  className={fieldClass}
-                  value={contact.company}
-                  onChange={(e) => set("company", e.target.value)}
-                />
-              </Field>
-
-              {/* Honeypot — hidden from people and screen readers. */}
-              <div
-                aria-hidden="true"
-                className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
-              >
-                <label htmlFor="est-website">Leave this empty</label>
-                <input
-                  id="est-website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`${ctaClasses("solid", "compact")} disabled:opacity-60`}
-              >
-                {isLoading ? `${m.contact.sending}…` : m.estimate.submit}
-              </button>
-
-              {isError ? (
-                <p role="alert" className="text-small text-critical">
-                  {m.contact.error}{" "}
-                  <a
-                    href={`mailto:${email}`}
-                    className="underline underline-offset-2"
-                  >
-                    {email}
-                  </a>
-                  .
-                </p>
-              ) : null}
-            </form>
-          )}
+              {m.estimate.steps[step]}
+            </h2>
+            <span aria-live="polite" className={`${labelClass} shrink-0`}>
+              {step + 1} {m.estimate.stepOf} {totalSteps}
+            </span>
+          </div>
+          <div className="h-1 overflow-hidden rounded-full bg-rule-faint">
+            <div
+              className="h-full rounded-full bg-accent transition-[width] duration-300"
+              style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
+            />
+          </div>
         </div>
-      </aside>
+
+        {!isContactStep ? (
+          <div className="grid gap-8">
+            {STEP_GROUPS[step].map((id) => {
+              const group = groupsById.get(id);
+              return group ? (
+                <OptionGroup
+                  key={id}
+                  group={group}
+                  selected={selections[id] ?? []}
+                  onPick={pick}
+                  onToggle={toggle}
+                />
+              ) : null;
+            })}
+          </div>
+        ) : isSuccess ? (
+          <div
+            role="status"
+            className="border border-accent bg-accent-soft p-4 text-small text-ink"
+          >
+            {m.estimate.success}
+          </div>
+        ) : (
+          <form onSubmit={onSubmit} noValidate className="grid gap-4">
+            <div className="grid gap-1">
+              <Label as="p" tone="ink">
+                {m.estimate.formHeading}
+              </Label>
+              <p className="text-small text-ink-muted">
+                {m.estimate.formLede}
+              </p>
+            </div>
+
+            <Field
+              id="est-name"
+              label={m.contact.nameLabel}
+              error={errors.name}
+              required
+            >
+              <input
+                id="est-name"
+                name="name"
+                autoComplete="name"
+                className={fieldClass}
+                value={contact.name}
+                onChange={(e) => set("name", e.target.value)}
+                aria-invalid={Boolean(errors.name)}
+              />
+            </Field>
+
+            <Field
+              id="est-email"
+              label={m.contact.emailLabel}
+              error={errors.email}
+              required
+            >
+              <input
+                id="est-email"
+                name="email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                dir="ltr"
+                className={fieldClass}
+                value={contact.email}
+                onChange={(e) => set("email", e.target.value)}
+                aria-invalid={Boolean(errors.email)}
+              />
+            </Field>
+
+            <Field id="est-company" label={m.contact.companyLabel}>
+              <input
+                id="est-company"
+                name="company"
+                autoComplete="organization"
+                className={fieldClass}
+                value={contact.company}
+                onChange={(e) => set("company", e.target.value)}
+              />
+            </Field>
+
+            {/* Honeypot — hidden from people and screen readers. */}
+            <div
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+            >
+              <label htmlFor="est-website">Leave this empty</label>
+              <input
+                id="est-website"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`${ctaClasses("solid", "compact")} disabled:opacity-60`}
+            >
+              {isLoading ? `${m.contact.sending}…` : m.estimate.submit}
+            </button>
+
+            {isError ? (
+              <p role="alert" className="text-small text-critical">
+                {m.contact.error}{" "}
+                <a
+                  href={`mailto:${email}`}
+                  className="underline underline-offset-2"
+                >
+                  {email}
+                </a>
+                .
+              </p>
+            ) : null}
+          </form>
+        )}
+
+        {!(isContactStep && isSuccess) ? (
+          <div className="flex items-center justify-between gap-4 border-t border-rule pt-6">
+            <button
+              type="button"
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
+              disabled={step === 0}
+              className={`${ctaClasses("outline", "compact")} disabled:pointer-events-none disabled:opacity-0`}
+            >
+              {m.estimate.back}
+            </button>
+            {!isContactStep ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setStep((s) => Math.min(STEP_GROUPS.length, s + 1))
+                }
+                className={ctaClasses("solid", "compact")}
+              >
+                {m.estimate.continue}
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
