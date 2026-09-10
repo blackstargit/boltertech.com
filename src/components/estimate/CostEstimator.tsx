@@ -30,6 +30,10 @@ const fieldClass =
 const labelClass =
   "font-data text-label font-medium uppercase tracking-[0.16em] text-ink-faint";
 
+// A group past this size (currently only "features", 34 options) gets a
+// "show more" disclosure instead of dumping every chip on screen at once.
+const VISIBLE_OPTION_LIMIT = 5;
+
 function chipClass(checked: boolean) {
   return `cursor-pointer rounded-sm border px-4 py-2.5 font-data text-micro font-medium transition-colors select-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
     checked
@@ -235,6 +239,7 @@ export function CostEstimator({
                   selected={selections[id] ?? []}
                   onPick={pick}
                   onToggle={toggle}
+                  messages={m}
                 />
               ) : null;
             })}
@@ -377,39 +382,70 @@ function OptionGroup({
   selected,
   onPick,
   onToggle,
+  messages: m,
 }: {
   group: EstimatorGroup;
   selected: string[];
   onPick: (groupId: string, optionId: string) => void;
   onToggle: (groupId: string, optionId: string) => void;
+  messages: Messages;
 }) {
   const single = group.type === "single";
+
+  function chip(opt: (typeof group.options)[number]) {
+    const checked = selected.includes(opt.id);
+    return (
+      <label key={opt.id} className={chipClass(checked)}>
+        <input
+          type={single ? "radio" : "checkbox"}
+          name={group.id}
+          value={opt.id}
+          checked={checked}
+          onChange={() =>
+            single ? onPick(group.id, opt.id) : onToggle(group.id, opt.id)
+          }
+          className="sr-only"
+        />
+        {opt.label}
+      </label>
+    );
+  }
+
+  const visible = group.options.slice(0, VISIBLE_OPTION_LIMIT);
+  const rest = group.options.slice(VISIBLE_OPTION_LIMIT);
+
   return (
     <fieldset className="grid gap-3 border-0 p-0">
       <legend className={`${labelClass} mb-1`}>{group.label}</legend>
       {group.hint ? (
         <p className="-mt-1 text-small text-ink-muted">{group.hint}</p>
       ) : null}
-      <div className="flex flex-wrap gap-2">
-        {group.options.map((opt) => {
-          const checked = selected.includes(opt.id);
-          return (
-            <label key={opt.id} className={chipClass(checked)}>
-              <input
-                type={single ? "radio" : "checkbox"}
-                name={group.id}
-                value={opt.id}
-                checked={checked}
-                onChange={() =>
-                  single ? onPick(group.id, opt.id) : onToggle(group.id, opt.id)
-                }
-                className="sr-only"
-              />
-              {opt.label}
-            </label>
-          );
-        })}
-      </div>
+      <div className="flex flex-wrap gap-2">{visible.map(chip)}</div>
+
+      {/* Native <details> — no state to wire up, and closing it does not
+          clear anything already checked inside. Same "+" rotating to "×"
+          as FaqList/MobileMenu, so a disclosure looks like a disclosure
+          everywhere on the site. */}
+      {rest.length > 0 ? (
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-2 border-t border-rule pt-3 font-data text-micro font-medium text-ink-muted marker:content-[''] hover:text-accent [&::-webkit-details-marker]:hidden">
+            <span className="group-open:hidden">
+              {m.estimate.showMorePrefix} {rest.length}{" "}
+              {m.estimate.showMoreSuffix}
+            </span>
+            <span className="hidden group-open:inline">
+              {m.estimate.showFewer}
+            </span>
+            <span
+              aria-hidden="true"
+              className="text-accent transition-transform group-open:rotate-45"
+            >
+              +
+            </span>
+          </summary>
+          <div className="flex flex-wrap gap-2 pt-3">{rest.map(chip)}</div>
+        </details>
+      ) : null}
     </fieldset>
   );
 }

@@ -112,6 +112,9 @@
     "back": "Back",
     "continue": "Continue",
     "stepOf": "of",
+    "showMorePrefix": "Show",
+    "showMoreSuffix": "more",
+    "showFewer": "Show fewer",
     "steps": [
       "Project basics",
       "What it needs",
