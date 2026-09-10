@@ -125,6 +125,9 @@
 
   --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
   --spacing-section: clamp(3.5rem, 7vw, 6.5rem);
+  /* Approximate sticky-header height. Used to clear in-page anchors and to
+     offset the scroll-progress bar below the header — see ScrollProgress. */
+  --header-h: 5rem;
   /* Homepage hero only — same fluid floor as --spacing-section, but the
      desktop ceiling comes down from 104px to 80px. */
   --spacing-hero: clamp(3.5rem, 7vw, 5rem);
@@ -141,7 +144,7 @@
     background-color: var(--paper);
     -webkit-text-size-adjust: 100%;
     /* The header is sticky; keep in-page anchors clear of it. */
-    scroll-padding-block-start: 5rem;
+    scroll-padding-block-start: var(--header-h);
   }
 
   body {
@@ -306,9 +309,14 @@
    engineering company shipping 46KB to fade in a heading is an
    argument about itself.
    ═══════════════════════════════════════════════════════════════════ */
+/* Animates the standalone `scale` property, not `transform` — Tailwind v4's
+   `scale-x-*` utilities set `scale`, a distinct CSS property from
+   `transform`. Animating `transform: scaleX()` here left the element's
+   `scale: 0 1` base value permanently unanimated: two different properties
+   that never interacted, so the bar was always full width. */
 @keyframes draw-x {
   to {
-    transform: scaleX(1);
+    scale: 1 1;
   }
 }
 

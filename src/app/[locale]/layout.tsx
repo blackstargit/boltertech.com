@@ -17,7 +17,6 @@ import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { SITE_URL, site } from "@/lib/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { ScrollProgress } from "@/components/layout/ScrollProgress";
 
 /**
  * Three typefaces, three jobs. Self-hosted by next/font, so there is no
@@ -91,7 +90,6 @@ export default async function LocaleLayout({
       data-theme="dark"
     >
       <body>
-        <ScrollProgress />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent"

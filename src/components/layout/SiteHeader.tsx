@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoLock } from "./LogoLock";
 import { MobileMenu } from "./MobileMenu";
+import { ScrollProgress } from "./ScrollProgress";
 import { Cta } from "@/components/primitives/Cta";
 import { localePath, type Locale, type Messages } from "@/lib/i18n";
 
@@ -107,6 +108,7 @@ export function SiteHeader({
           </nav>
         </MobileMenu>
       </div>
+      <ScrollProgress />
     </header>
   );
 }
