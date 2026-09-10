@@ -2,10 +2,10 @@
   "_comment": "PLACEHOLDER WEIGHTS — replace before launch. `add` is a flat amount in `currency`; `mult` multiplies the running total; `weeks` is optional and only shown if at least one option carries it. See CONTENT.md.",
   "currency": "USD",
   "symbol": "$",
-  "base": 3000,
+  "base": 100,
   "spread": 0.3,
-  "roundTo": 500,
-  "minimum": 2000,
+  "roundTo": 50,
+  "minimum": 200,
   "disclaimer": "This is an indicative range to help you plan — it is not a quote. Real pricing depends on the detail of what you need, which we confirm on a short call once we understand the specifics.",
   "groups": [
     {
@@ -17,26 +17,26 @@
         {
           "id": "ai",
           "label": "AI solution or agent",
-          "add": 3000,
+          "add": 440,
           "weeks": 4
         },
         {
           "id": "automation",
           "label": "Workflow automation",
-          "add": 2000,
+          "add": 330,
           "weeks": 3
         },
         {
           "id": "software",
           "label": "Software build",
-          "add": 2500,
+          "add": 440,
           "weeks": 4
         },
         {
           "id": "data",
           "label": "Data analytics or dashboards",
-          "add": 2500,
-          "weeks": 3
+          "add": 220,
+          "weeks": 2
         }
       ]
     },
@@ -49,24 +49,24 @@
           "id": "task",
           "label": "A single focused task",
           "add": 0,
-          "weeks": 1
+          "weeks": 0
         },
         {
           "id": "standard",
           "label": "A standard build, a handful of features",
-          "add": 3500,
-          "weeks": 4
+          "add": 50,
+          "weeks": 0
         },
         {
           "id": "platform",
           "label": "A multi-part platform",
-          "add": 9000,
+          "add": 1100,
           "weeks": 10
         },
         {
           "id": "system",
           "label": "A large system across several teams",
-          "add": 20000,
+          "add": 2200,
           "weeks": 20
         }
       ]
@@ -77,24 +77,43 @@
       "hint": "Pick any that apply.",
       "type": "multi",
       "options": [
-        { "id": "web", "label": "Web app", "add": 2500, "weeks": 3 },
-        { "id": "mobile", "label": "Mobile app", "add": 5000, "weeks": 5 },
+        { "id": "web", "label": "Web app", "add": 110, "weeks": 2 },
+        { "id": "mobile", "label": "Mobile app", "add": 110, "weeks": 2 },
+        { "id": "desktop", "label": "Desktop app", "add": 330, "weeks": 4 },
+        {
+          "id": "voice",
+          "label": "Voice interface or assistant",
+          "add": 220,
+          "weeks": 2
+        },
+        {
+          "id": "chatbot",
+          "label": "Chatbot or conversational agent",
+          "add": 220,
+          "weeks": 3
+        },
+        {
+          "id": "notifications",
+          "label": "Whatsapp Notifications, reports and alerts",
+          "add": 110,
+          "weeks": 2
+        },
         {
           "id": "dashboard",
           "label": "Internal dashboard or admin",
-          "add": 2000,
+          "add": 100,
           "weeks": 2
         },
         {
           "id": "api",
           "label": "Public or partner API",
-          "add": 2500,
+          "add": 110,
           "weeks": 2
         },
         {
           "id": "integrations",
           "label": "Integrations with tools you already use",
-          "add": 2000,
+          "add": 165,
           "weeks": 2
         }
       ]
@@ -108,19 +127,19 @@
         {
           "id": "ml",
           "label": "Custom ML or LLM work",
-          "add": 4000,
-          "weeks": 4
+          "add": 880,
+          "weeks": 8
         },
         {
           "id": "pipeline",
           "label": "Data pipeline or warehouse",
-          "add": 3500,
-          "weeks": 3
+          "add": 440,
+          "weeks": 4
         },
         {
           "id": "thirdparty",
           "label": "Third-party AI APIs",
-          "add": 1500,
+          "add": 55,
           "weeks": 1
         }
       ]
@@ -139,14 +158,14 @@
         {
           "id": "custom",
           "label": "Custom UI design",
-          "add": 3000,
-          "weeks": 2
+          "add": 110,
+          "weeks": 1
         },
         {
           "id": "brand",
           "label": "Brand and UI from scratch",
-          "add": 6000,
-          "weeks": 4
+          "add": 330,
+          "weeks": 3
         }
       ]
     },
@@ -165,12 +184,11 @@
       "label": "After launch",
       "type": "single",
       "options": [
-        { "id": "none", "label": "Nothing after handover", "add": 0 },
-        { "id": "warranty", "label": "Three months of support", "add": 2000 },
+        { "id": "warranty", "label": "Three months of support", "add": 0 },
         {
           "id": "retainer",
           "label": "Ongoing monthly retainer",
-          "add": 4000
+          "mult": 1.1
         }
       ]
     }
