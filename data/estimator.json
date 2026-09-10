@@ -81,6 +81,38 @@
         { "id": "mobile", "label": "Mobile app", "add": 110, "weeks": 2 },
         { "id": "desktop", "label": "Desktop app", "add": 330, "weeks": 4 },
         {
+          "id": "api",
+          "label": "Public or partner API",
+          "add": 110,
+          "weeks": 2
+        },
+        {
+          "id": "integrations",
+          "label": "Integrations with tools you already use",
+          "add": 165,
+          "weeks": 2
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "label": "Features you want",
+      "hint": "Pick any that apply.",
+      "type": "multi",
+      "options": [
+        {
+          "id": "auth",
+          "label": "Authentication and user accounts",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "payments",
+          "label": "Payments or billing",
+          "add": 220,
+          "weeks": 3
+        },
+        {
           "id": "voice",
           "label": "Voice interface or assistant",
           "add": 220,
@@ -102,18 +134,6 @@
           "id": "dashboard",
           "label": "Internal dashboard or admin",
           "add": 100,
-          "weeks": 2
-        },
-        {
-          "id": "api",
-          "label": "Public or partner API",
-          "add": 110,
-          "weeks": 2
-        },
-        {
-          "id": "integrations",
-          "label": "Integrations with tools you already use",
-          "add": 165,
           "weeks": 2
         }
       ]

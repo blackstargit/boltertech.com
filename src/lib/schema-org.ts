@@ -21,7 +21,7 @@ export function organizationSchema() {
     name: site.legalName,
     alternateName: site.name,
     url: SITE_URL,
-    logo: abs("/logo-mark.png"),
+    logo: abs("/yellow-logo.png"),
     description: site.description,
     email: site.email,
     telephone: site.phoneHref,

@@ -53,12 +53,12 @@ function initialSelections(): Selections {
  * how big is it" together; "what it needs" and "data & AI" together; the
  * two small single-picks together; the one after-launch pick alone) — then
  * a final step for contact details, which is the only place the form
- * appears. Coupled to the known seven groups in data/estimator.json by id,
- * the same way `role: "projectType"` already couples estimator.ts to it.
+ * appears. Coupled to the known groups in data/estimator.json by id, the
+ * same way `role: "projectType"` already couples estimator.ts to it.
  */
 const STEP_GROUPS: readonly (readonly string[])[] = [
   ["kind", "size"],
-  ["surfaces", "dataai"],
+  ["surfaces", "features", "dataai"],
   ["design", "timeline"],
   ["support"],
 ];
