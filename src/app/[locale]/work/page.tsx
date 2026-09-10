@@ -64,7 +64,7 @@ export default async function WorkIndexPage({
       />
 
       <Band>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,auto)] lg:items-end">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,auto)] lg:items-start">
           <PageHero title={m.work.heading} lede={m.work.metaDescription}>
             <FieldRow
               className="mt-5 max-w-xl"
@@ -83,7 +83,7 @@ export default async function WorkIndexPage({
               hundred pixels below, and printing the same four numbers
               twice is padding, not information. A prospect scanning this
               page is looking for their own world in the list. */}
-          <div className="grid max-w-md content-start gap-3 lg:justify-items-end">
+          <div className="grid max-w-2xl content-start gap-3 lg:justify-items-end">
             <Label>{m.work.sectorsLabel}</Label>
             <ChipRow items={sectors} className="lg:justify-end" />
           </div>
