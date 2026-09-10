@@ -17,7 +17,7 @@ export function EstimateLauncher({
   messages: Messages;
 }) {
   return (
-    <div className="fixed start-5 bottom-5 z-20 print:hidden">
+    <div className="estimate-launcher fixed start-10 bottom-3 z-20 print:hidden">
       <Link
         href={localePath(locale, "/estimate")}
         className="group inline-flex items-center gap-3.5 rounded-full border border-rule bg-sheet pe-7 shadow-xl shadow-black/30 transition-colors hover:border-accent"

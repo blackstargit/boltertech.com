@@ -97,6 +97,7 @@ export function ConsentBanner({ measurementId, privacyHref, messages }: Props) {
   return (
     <div
       data-theme="dark"
+      data-consent-banner
       className="fixed inset-x-0 bottom-0 z-50 flex flex-wrap items-center justify-between gap-4 border-t border-rule bg-sheet px-gutter py-4"
     >
       <p className="text-small text-ink-muted">

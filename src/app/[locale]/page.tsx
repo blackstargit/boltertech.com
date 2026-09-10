@@ -62,7 +62,7 @@ export default async function HomePage({
           facts strip answers "are these people real" before a visitor
           reads a word of marketing copy, which is what directory
           referrals and cold outbound clicks are actually checking. */}
-      <Band>
+      <Band flush className="py-hero">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <PageHero
             title={site.tagline}

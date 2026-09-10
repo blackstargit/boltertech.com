@@ -125,6 +125,9 @@
 
   --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
   --spacing-section: clamp(3.5rem, 7vw, 6.5rem);
+  /* Homepage hero only — same fluid floor as --spacing-section, but the
+     desktop ceiling comes down from 104px to 80px. */
+  --spacing-hero: clamp(3.5rem, 7vw, 5rem);
 
   --container-sheet: 1320px;
   --container-prose: 68ch;
@@ -331,6 +334,12 @@
 
 .pulse-dot {
   animation: soft-pulse 2.4s ease-in-out infinite;
+}
+
+/* Estimate launcher lifts clear of the consent banner when both are
+   present — CSS-only, no listener needed on either side. */
+body:has([data-consent-banner]) .estimate-launcher {
+  bottom: 7rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
