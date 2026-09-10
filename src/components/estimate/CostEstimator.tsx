@@ -58,9 +58,9 @@ function initialSelections(): Selections {
  */
 const STEP_GROUPS: readonly (readonly string[])[] = [
   ["kind", "size"],
-  ["surfaces", "features", "dataai"],
-  ["design", "timeline"],
-  ["support"],
+  ["surfaces", "dataai"],
+  ["features"],
+  ["design", "timeline", "support"],
 ];
 
 export function CostEstimator({

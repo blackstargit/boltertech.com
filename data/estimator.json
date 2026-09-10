@@ -95,50 +95,6 @@
       ]
     },
     {
-      "id": "features",
-      "label": "Features you want",
-      "hint": "Pick any that apply.",
-      "type": "multi",
-      "options": [
-        {
-          "id": "auth",
-          "label": "Authentication and user accounts",
-          "add": 165,
-          "weeks": 2
-        },
-        {
-          "id": "payments",
-          "label": "Payments or billing",
-          "add": 220,
-          "weeks": 3
-        },
-        {
-          "id": "voice",
-          "label": "Voice interface or assistant",
-          "add": 220,
-          "weeks": 2
-        },
-        {
-          "id": "chatbot",
-          "label": "Chatbot or conversational agent",
-          "add": 220,
-          "weeks": 3
-        },
-        {
-          "id": "notifications",
-          "label": "Whatsapp Notifications, reports and alerts",
-          "add": 110,
-          "weeks": 2
-        },
-        {
-          "id": "dashboard",
-          "label": "Internal dashboard or admin",
-          "add": 100,
-          "weeks": 2
-        }
-      ]
-    },
-    {
       "id": "dataai",
       "label": "Data and AI",
       "hint": "Pick any that apply.",
@@ -161,6 +117,213 @@
           "label": "Third-party AI APIs",
           "add": 55,
           "weeks": 1
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "label": "Features you want",
+      "hint": "Pick any that apply. General, web, mobile, desktop and API features — whatever the project needs.",
+      "type": "multi",
+      "options": [
+        {
+          "id": "auth",
+          "label": "Authentication and user accounts",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "sso",
+          "label": "Single sign-on or enterprise login",
+          "add": 220,
+          "weeks": 2
+        },
+        {
+          "id": "rbac",
+          "label": "Roles and permissions",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "payments",
+          "label": "Payments or billing",
+          "add": 220,
+          "weeks": 3
+        },
+        { "id": "search", "label": "Search", "add": 110, "weeks": 1 },
+        {
+          "id": "fileUploads",
+          "label": "File uploads and document handling",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "reporting",
+          "label": "Usage analytics and reporting",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "exports",
+          "label": "Data export (CSV, PDF)",
+          "add": 55,
+          "weeks": 1
+        },
+        {
+          "id": "auditLogs",
+          "label": "Audit logs and activity history",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "localization",
+          "label": "Multi-language support",
+          "add": 110,
+          "weeks": 2
+        },
+        {
+          "id": "multiTenant",
+          "label": "Multi-tenant or multi-organization support",
+          "add": 330,
+          "weeks": 3
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time updates or live collaboration",
+          "add": 220,
+          "weeks": 2
+        },
+        {
+          "id": "emailSms",
+          "label": "Email and SMS notifications",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "notifications",
+          "label": "Whatsapp notifications, reports and alerts",
+          "add": 110,
+          "weeks": 2
+        },
+        {
+          "id": "voice",
+          "label": "Voice interface or assistant",
+          "add": 220,
+          "weeks": 2
+        },
+        {
+          "id": "chatbot",
+          "label": "Chatbot or conversational agent",
+          "add": 220,
+          "weeks": 3
+        },
+        {
+          "id": "dashboard",
+          "label": "Internal dashboard or admin",
+          "add": 100,
+          "weeks": 2
+        },
+        {
+          "id": "accessibility",
+          "label": "Accessibility compliance (WCAG)",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "security",
+          "label": "Security hardening or compliance review",
+          "add": 330,
+          "weeks": 3
+        },
+        {
+          "id": "seo",
+          "label": "SEO and web performance optimization",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "pwa",
+          "label": "Progressive web app or offline support",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "push",
+          "label": "Push notifications (mobile)",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "biometric",
+          "label": "Biometric login (Face ID, fingerprint)",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "deviceIntegrations",
+          "label": "Native device features (camera, GPS, sensors)",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "inAppPurchases",
+          "label": "In-app purchases or subscriptions",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "appStore",
+          "label": "App store setup and submission",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "autoUpdate",
+          "label": "Auto-update mechanism (desktop)",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "crossPlatform",
+          "label": "Cross-platform packaging (Windows, Mac, Linux)",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "offlineDesktop",
+          "label": "Offline-first desktop support",
+          "add": 165,
+          "weeks": 2
+        },
+        {
+          "id": "systemTray",
+          "label": "Background service or system tray app",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "apiDocs",
+          "label": "API documentation (OpenAPI, Swagger)",
+          "add": 55,
+          "weeks": 1
+        },
+        {
+          "id": "webhooks",
+          "label": "Webhooks",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "rateLimiting",
+          "label": "Rate limiting and API keys",
+          "add": 110,
+          "weeks": 1
+        },
+        {
+          "id": "sdks",
+          "label": "SDKs or client libraries",
+          "add": 220,
+          "weeks": 2
         }
       ]
     },
