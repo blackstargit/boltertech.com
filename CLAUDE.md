@@ -241,6 +241,11 @@ before doing it.
 
 ## Verifying work
 
+**Don't reach for the browser (Chrome DevTools MCP, screenshots, resizing
+viewports) to verify small or low-risk changes** — a spacing tweak, a class
+change, a copy edit — unless the user explicitly asks for that verification.
+Reserve it for larger UI/feature work where visual regression is a real risk.
+
 Type-checking and linting are not enough — several real defects this session
 passed both. Build, serve, and probe:
 

@@ -166,7 +166,16 @@ export function CostEstimator({
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-2xl gap-8">
+    <div className="mx-auto grid w-full max-w-2xl gap-6">
+      {/* No full-height PageHero here on purpose — this page's whole job
+          is to put the estimator itself above the fold, not a headline. */}
+      <div className="grid gap-1">
+        <Label>{m.estimate.eyebrow}</Label>
+        <h1 className="font-display text-h3 font-semibold tracking-[-0.02em] text-ink">
+          {m.estimate.heading}
+        </h1>
+      </div>
+
       {/* Range — top of the page and live for every step, not tucked in a
           sidebar only visible once you scroll past the questions. */}
       <div className="grid gap-3 rounded-lg border border-rule bg-sheet p-6 sm:p-8">
