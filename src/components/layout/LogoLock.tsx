@@ -37,7 +37,7 @@ export function LogoLock({
       aria-label={showWordmark ? undefined : site.name}
     >
       <Image
-        src="/logo-mark.png"
+        src="/yellow-logo.png"
         alt=""
         width={size}
         height={size}
