@@ -193,5 +193,36 @@
       "Azure",
       "Google Cloud"
     ]
+  },
+  {
+    "id": "security",
+    "name": "Cyber security",
+    "lead": false,
+    "summary": "We help you find and close the gaps before someone else does, from applications and infrastructure to the processes around them. That means real testing against real systems, monitoring that catches what matters, and platforms built for teams whose job is defence and compliance rather than product features.",
+    "includes": [
+      "Penetration testing and vulnerability assessment for applications and infrastructure",
+      "Threat intelligence, adversary tracking, and vulnerability data platforms",
+      "SIEM, log correlation, and user and entity behaviour analytics",
+      "OSINT, domain and asset intelligence for attack-surface visibility",
+      "Cyber regulatory, compliance, and complaint governance platforms",
+      "Secure-by-design application development and code review",
+      "Incident response tooling, audit trails, and reporting"
+    ],
+    "stack": [
+      "Python",
+      "FastAPI",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "Elasticsearch",
+      "MITRE ATT&CK",
+      "STIX/TAXII",
+      "NIST NVD",
+      "CISA KEV",
+      "Docker",
+      "AWS",
+      "Azure",
+      "Google Cloud"
+    ]
   }
 ]

@@ -13,7 +13,7 @@ export const contactSchema = z.object({
   email: z.string().trim().email("Enter a valid email address").max(200),
   company: z.string().trim().max(160).optional().default(""),
   projectType: z
-    .enum(["ai", "automation", "software", "data", "not-sure"])
+    .enum(["ai", "automation", "software", "data", "security", "not-sure"])
     .default("not-sure"),
   message: z.string().trim().max(5000).optional().default(""),
   /**

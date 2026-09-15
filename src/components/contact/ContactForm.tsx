@@ -76,6 +76,7 @@ export function ContactForm({
     { value: "automation", label: m.categories.automation },
     { value: "software", label: m.categories.software },
     { value: "data", label: m.categories.data },
+    { value: "security", label: m.categories.security },
     { value: "not-sure", label: "Not sure yet" },
   ] as const;
 

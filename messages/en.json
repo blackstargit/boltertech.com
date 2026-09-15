@@ -37,7 +37,7 @@
     "metaTitle": "Bolter Technologies - Software development and AI automation",
     "metaDescription": "We find the process that is quietly costing your team hours a week, automate it end to end, and stay on the hook for it. Software and AI automation engineering.",
     "heroSub": "We start with the process that is costing you time, not the technology. Then we automate it, ship it, and stay on the hook for it.",
-    "offerHeading": "One practice, four depths",
+    "offerHeading": "One practice, five depths",
     "workHeading": "Selected work",
     "outcomesHeading": "Outcomes",
     "processHeading": "How we work",
@@ -47,7 +47,7 @@
   },
   "services": {
     "metaTitle": "Services - Bolter Technologies",
-    "metaDescription": "Software development, AI automation, and data analytics - one practice, delivered by one team.",
+    "metaDescription": "Software development, AI automation, data analytics, and cyber security - one practice, delivered by one team.",
     "heading": "What we do",
     "includesLabel": "What it includes",
     "stackLabel": "Typically built with",
@@ -58,7 +58,7 @@
   },
   "work": {
     "metaTitle": "Work - Bolter Technologies",
-    "metaDescription": "Case studies from our AI, automation, software, and data engagements—showcasing how we turn complex technical challenges into practical, scalable solutions. Explore the systems we’ve built, the problems we’ve solved, and the measurable impact our work has delivered across different industries and use cases.",
+    "metaDescription": "Case studies from our AI, automation, software, data, and cyber security engagements—showcasing how we turn complex technical challenges into practical, scalable solutions. Explore the systems we’ve built, the problems we’ve solved, and the measurable impact our work has delivered across different industries and use cases.",
     "heading": "Work",
     "filterAll": "All",
     "empty": "No projects in this category yet.",
@@ -128,7 +128,8 @@
     "ai": "AI",
     "automation": "Automation",
     "software": "Software",
-    "data": "Data analytics"
+    "data": "Data analytics",
+    "security": "Cyber security"
   },
   "footer": {
     "rights": "All rights reserved.",
