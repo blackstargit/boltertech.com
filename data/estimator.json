@@ -16,7 +16,7 @@
       "options": [
         {
           "id": "ai",
-          "label": "AI solution or agent",
+          "label": "AI solution",
           "add": 440,
           "weeks": 4
         },
@@ -34,7 +34,7 @@
         },
         {
           "id": "data",
-          "label": "Data analytics or dashboards",
+          "label": "Data analytics",
           "add": 220,
           "weeks": 2
         }
