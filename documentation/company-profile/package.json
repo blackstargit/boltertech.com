@@ -1,0 +1,12 @@
+{
+  "name": "bolter-company-profile",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node generate.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "pptxgenjs": "^4.0.1"
+  }
+}

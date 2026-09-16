@@ -1,18 +1,13 @@
-// Bolter Technologies — Company Profile generator.
+// Bolter Technologies — Company Profile deck generator.
 // One-off generator for a single repo: paths are hardcoded on purpose.
-// To run again: `npm i docx gray-matter` in this folder, then `node generate.mjs`.
+// To run again: `npm i` in this folder, then `node generate.mjs`.
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import {
-  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-  ImageRun, Header, Footer, PageNumber, AlignmentType, BorderStyle,
-  WidthType, HeightRule, VerticalAlign, ShadingType, PageBreak,
-  ExternalHyperlink, convertMillimetersToTwip,
-} from "docx";
+import PptxGenJS from "pptxgenjs";
 
 const ROOT = "X:\\code\\personal\\boltertech.com";
-const OUT = path.join(ROOT, "documentation", "company-profile", "Bolter-Technologies-Company-Profile.docx");
+const OUT = path.join(ROOT, "documentation", "company-profile", "Bolter-Technologies-Company-Profile.pptx");
 
 const readJSON = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), "utf8"));
 const company = readJSON("data/company.json");
@@ -22,504 +17,501 @@ const process_ = readJSON("data/process.json");
 const commitments = readJSON("data/commitments.json");
 const engagements = readJSON("data/engagements.json");
 const faqs = readJSON("data/faqs.json");
+const msg = readJSON("messages/en.json");
 
 const projectsDir = path.join(ROOT, "content", "projects");
 const projects = fs.readdirSync(projectsDir)
   .filter((f) => f.endsWith(".mdx") && !f.startsWith("_"))
-  .map((f) => {
-    const { data } = matter(fs.readFileSync(path.join(projectsDir, f), "utf8"));
-    return data;
-  })
+  .map((f) => matter(fs.readFileSync(path.join(projectsDir, f), "utf8")).data)
   .filter((p) => p.draft !== true)
   .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 
 const featured = projects.filter((p) => p.featured);
+const testimonials = projects.filter((p) => p.testimonial);
 const sectors = [...new Set(projects.map((p) => p.clientSector).filter(Boolean))];
-
-// ---------------------------------------------------------------- palette
-
-const C = {
-  ink: "14161A", inkMuted: "5B6066", inkFaint: "6F6A5F",
-  rule: "DCD8D0", ruleFaint: "E9E5DE",
-  darkBg: "0A0B0C", darkInk: "FFFFFF", darkMuted: "B6B7B8", darkFaint: "8B8D8F",
-  accent: "8F5D0A", accentDark: "E8A33D", onAccent: "FFFFFF",
-  bone: "F3F1ED",
+const shortTitle = (p) => p.title.split(" — ")[0].trim();
+const subTitle = (p) => {
+  const t = p.title.split(" — ")[1]?.trim() ?? "";
+  return t.charAt(0).toUpperCase() + t.slice(1);
 };
-const FONT = { display: "Space Grotesk", body: "IBM Plex Sans", mono: "IBM Plex Mono" };
+const catLabel = (id) => msg.categories[id] ?? id;
+const inHouse = (p) => /in-house/i.test(p.client ?? "");
+const coverPath = (p) => (p.cover ? path.join(ROOT, "public", p.cover) : null);
+const pad = (n) => String(n).padStart(2, "0");
 
-// ---------------------------------------------------------------- page geometry
+// The FAQ that repeats the last process step word for word adds nothing to a deck.
+const processText = new Set(process_.map((p) => p.detail));
+const deckFaqs = faqs.filter((f) => !processText.has(f.a));
 
-const PAGE_W = convertMillimetersToTwip(210);
-const PAGE_H = convertMillimetersToTwip(297);
-const MARGIN_TB = convertMillimetersToTwip(15);
-const MARGIN_LR = convertMillimetersToTwip(14);
-const CONTENT_H = PAGE_H - MARGIN_TB * 2;
+// ---------------------------------------------------------------- tokens (src/app/globals.css)
 
-const noBorders = {
-  top: { style: BorderStyle.NONE, size: 0, color: "auto" },
-  bottom: { style: BorderStyle.NONE, size: 0, color: "auto" },
-  left: { style: BorderStyle.NONE, size: 0, color: "auto" },
-  right: { style: BorderStyle.NONE, size: 0, color: "auto" },
+const DARK = {
+  bg: "0A0B0C", sheet: "0E1011", ink: "FFFFFF", muted: "B6B7B8", faint: "8B8D8F",
+  rule: "2E3033", ruleFaint: "191B1C", accent: "E8A33D", accentSoft: "2A1F0D", bar: "3A3C3F",
 };
-const hairline = (color = C.rule) => ({
-  top: { style: BorderStyle.SINGLE, size: 4, color },
-  bottom: { style: BorderStyle.SINGLE, size: 4, color },
-  left: { style: BorderStyle.SINGLE, size: 4, color },
-  right: { style: BorderStyle.SINGLE, size: 4, color },
-});
+const BONE = {
+  bg: "F3F1ED", sheet: "FFFFFF", ink: "14161A", muted: "5B6066", faint: "6F6A5F",
+  rule: "DCD8D0", ruleFaint: "E9E5DE", accent: "8F5D0A", accentSoft: "F0E2C8", bar: "D3CEC4",
+};
+const F = { display: "Space Grotesk", body: "IBM Plex Sans", mono: "IBM Plex Mono" };
 
-// ---------------------------------------------------------------- text helpers
+const W = 13.333, MX = 0.7, CW = W - 2 * MX, BOTTOM = 6.9;
 
-const run = (text, opts = {}) => new TextRun({ text, font: FONT.body, size: 21, color: C.ink, ...opts });
-const mono = (text, opts = {}) => new TextRun({ text, font: FONT.mono, size: 15, color: C.inkFaint, ...opts });
-const ph = (text) => new TextRun({
-  text: `[PLACEHOLDER: ${text}]`, font: FONT.mono, size: 15, bold: true, color: C.accent,
-});
+const pptx = new PptxGenJS();
+pptx.layout = "LAYOUT_WIDE";
+pptx.company = company.legalName;
+pptx.author = company.legalName;
+pptx.title = `${company.name} — Company Profile`;
+pptx.theme = { headFontFace: F.display, bodyFontFace: F.body };
 
-const para = (children, opts = {}) => new Paragraph({ spacing: { after: 160 }, ...opts, children });
-const body = (text, opts = {}) => para([run(text, opts.runOpts)], opts);
+// ---------------------------------------------------------------- primitives
 
-const eyebrow = (text, color = C.accentDark) => new TextRun({
-  text: text.toUpperCase(), font: FONT.mono, size: 15, bold: true, color, characterSpacing: 30,
-});
+const text = (s, t, o) => s.addText(t, { margin: 0, valign: "top", fontFace: F.body, ...o });
+const line = (s, x, y, w, h, color, width = 0.75) =>
+  s.addShape(pptx.ShapeType.line, { x, y, w, h, line: { color, width } });
+const rect = (s, x, y, w, h, o) => s.addShape(pptx.ShapeType.rect, { x, y, w, h, line: { type: "none" }, ...o });
+const label = (s, c, t, x, y, w, o = {}) =>
+  text(s, t.toUpperCase(), { x, y, w, h: 0.2, fontFace: F.mono, fontSize: 8, color: c.faint, charSpacing: 1.5, ...o });
 
-const h2 = (text, color = C.ink) => new Paragraph({
-  spacing: { after: 220 },
-  children: [new TextRun({ text, font: FONT.display, bold: true, size: 34, color })],
-});
-const h3 = (text, color = C.accent) => new Paragraph({
-  spacing: { before: 60, after: 100 },
-  children: [new TextRun({ text, font: FONT.display, bold: true, size: 26, color })],
-});
-const h4 = (text, color = C.ink) => new Paragraph({
-  spacing: { after: 40 },
-  children: [new TextRun({ text, font: FONT.display, bold: true, size: 22, color })],
-});
+function eyebrow(s, c, t, x = MX, y = 0.55) {
+  rect(s, x, y + 0.075, 0.24, 0.035, { fill: { color: c.accent } });
+  text(s, t.toUpperCase(), { x: x + 0.36, y, w: 9, h: 0.2, fontFace: F.mono, fontSize: 9, bold: true, color: c.accent, charSpacing: 2 });
+}
 
-const bullet = (text) => new Paragraph({
-  spacing: { after: 90 },
-  indent: { left: 260, hanging: 200 },
-  children: [new TextRun({ text: "—  ", font: FONT.mono, size: 19, color: C.accent }), run(text, { size: 19, color: C.inkMuted })],
-});
+function title(s, c, t, o = {}) {
+  text(s, t, { x: MX, y: 0.85, w: CW, h: 0.75, fontFace: F.display, fontSize: 34, bold: true, color: c.ink, ...o });
+}
 
-const rule = (color = C.rule) => new Paragraph({
-  spacing: { before: 120, after: 220 },
-  border: { bottom: { style: BorderStyle.SINGLE, size: 4, color } },
-  children: [new TextRun({ text: "" })],
-});
+function chips(s, c, items, x, y, w, maxRows = 3) {
+  const size = 8.5, charW = (size * 0.6) / 72, h = 0.27, gap = 0.08;
+  let cx = x, cy = y, rows = 1;
+  for (const item of items) {
+    const cw = item.length * charW + 0.24;
+    if (cx + cw > x + w) {
+      if (++rows > maxRows) break;
+      cx = x; cy += h + gap;
+    }
+    s.addText(item, {
+      shape: pptx.ShapeType.roundRect, rectRadius: 0.04, x: cx, y: cy, w: cw, h,
+      fill: { color: c.sheet }, line: { color: c.rule, width: 0.75 }, margin: 0,
+      align: "center", valign: "middle", fontFace: F.mono, fontSize: size, color: c.muted,
+    });
+    cx += cw + gap;
+  }
+  return cy + h;
+}
 
-const pageBreak = () => new Paragraph({ children: [new PageBreak()] });
-
-const link = (label_, url) => new Paragraph({
-  spacing: { after: 160 },
-  children: [new ExternalHyperlink({
-    link: url,
-    children: [new TextRun({ text: `${label_} → ${url}`, font: FONT.mono, size: 17, color: C.accent, underline: {} })],
-  })],
-});
-
-// A single-row, single-cell table used as a coloured content band (page bleed).
-function band({ eyebrowText, heading, note, dark = true, minHeightMm = 40, align = AlignmentType.LEFT }) {
-  const fg = dark ? C.darkInk : C.ink;
-  const children = [];
-  if (eyebrowText) children.push(new Paragraph({ alignment: align, spacing: { after: 80 }, children: [eyebrow(eyebrowText, dark ? C.accentDark : C.accent)] }));
-  children.push(new Paragraph({
-    alignment: align,
-    children: [new TextRun({ text: heading, font: FONT.display, bold: true, size: 40, color: fg })],
-  }));
-  if (note) children.push(new Paragraph({ alignment: align, spacing: { before: 100 }, children: [new TextRun({ text: note, font: FONT.body, size: 19, color: dark ? C.darkMuted : C.inkMuted })] }));
-  return new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    borders: noBorders,
-    rows: [new TableRow({
-      height: { value: convertMillimetersToTwip(minHeightMm), rule: HeightRule.ATLEAST },
-      children: [new TableCell({
-        shading: dark ? { fill: C.darkBg, type: ShadingType.CLEAR, color: "auto" } : undefined,
-        verticalAlign: VerticalAlign.CENTER,
-        margins: { top: 260, bottom: 260, left: 260, right: 260 },
-        borders: noBorders,
-        children,
-      })],
-    })],
+function seriesChart(s, c, p, x, y, w, h) {
+  const data = p.series;
+  const turn = Math.floor(data.length * 0.6);
+  const first = data[0], last = data[data.length - 1];
+  const pct = Math.round(((last - first) / first) * 100);
+  label(s, c, p.seriesLabel, x, y, w - 2.1, { h: 0.4, fontSize: 7.5, charSpacing: 1 });
+  text(s, `${first} → ${last}`, { x: x + w - 1.95, y: y - 0.02, w: 1.1, h: 0.24, fontFace: F.mono, fontSize: 9, color: c.muted, align: "right", valign: "middle" });
+  s.addText(`${pct > 0 ? "+" : ""}${pct}%`, {
+    shape: pptx.ShapeType.roundRect, rectRadius: 0.04, x: x + w - 0.75, y: y - 0.02, w: 0.75, h: 0.24,
+    fill: { color: c.accentSoft }, line: { color: c.accent, width: 0.5 }, margin: 0,
+    align: "center", valign: "middle", fontFace: F.mono, fontSize: 9, bold: true, color: c.accent,
+  });
+  const labels = data.map((_, i) => (i === 0 ? "Baseline" : i === turn ? "Automated" : i === data.length - 1 ? "Steady-state" : ""));
+  s.addChart(pptx.ChartType.bar, [
+    { name: "Before", labels, values: data.map((v, i) => (i < turn ? v : 0)) },
+    { name: "After", labels, values: data.map((v, i) => (i >= turn ? v : 0)) },
+  ], {
+    x: x - 0.08, y: y + 0.42, w: w + 0.16, h: h - 0.42,
+    barDir: "col", barGrouping: "stacked", barGapWidthPct: 45,
+    chartColors: [c.bar, c.accent], showLegend: false, showValue: false,
+    valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 100,
+    valGridLine: { color: c.rule, style: "dash", size: 0.5 },
+    catAxisLabelColor: c.faint, catAxisLabelFontFace: F.mono, catAxisLabelFontSize: 8,
+    catAxisLineShow: true, catAxisLineColor: c.rule, catGridLine: { style: "none" },
+    plotArea: { fill: { color: c.bg } }, fill: c.bg,
   });
 }
 
-// A hairline field grid: label above value, N columns.
-function fieldRow(fields) {
-  const n = fields.length;
-  const w = Math.floor(10000 / n);
-  return new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    borders: hairline(),
-    rows: [new TableRow({
-      children: fields.map(({ label: l, value }) => new TableCell({
-        width: { size: w, type: WidthType.PCT },
-        margins: { top: 140, bottom: 160, left: 180, right: 180 },
-        borders: hairline(),
-        children: [
-          new Paragraph({ spacing: { after: 60 }, children: [mono(l.toUpperCase(), { characterSpacing: 20 })] }),
-          new Paragraph({ children: Array.isArray(value) ? value : [value] }),
-        ],
-      })),
-    })],
-  });
-}
+// ---------------------------------------------------------------- slides
 
-// A metric strip: figure, caption, and a small proportion bar.
-function metricRow(metrics) {
-  const n = metrics.length;
-  const w = Math.floor(10000 / n);
-  return new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    borders: noBorders,
-    rows: [new TableRow({
-      children: metrics.map((m) => new TableCell({
-        width: { size: w, type: WidthType.PCT },
-        margins: { top: 60, bottom: 60, left: 0, right: 260 },
-        borders: noBorders,
-        children: [
-          new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: m.value, font: FONT.display, bold: true, size: 44, color: C.accent })] }),
-          new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: m.label, font: FONT.body, size: 17, color: C.inkMuted })] }),
-          new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            borders: noBorders,
-            rows: [new TableRow({
-              height: { value: 40, rule: HeightRule.EXACT },
-              children: [
-                new TableCell({ width: { size: m.bar ?? 50, type: WidthType.PCT }, shading: { fill: C.accent }, borders: noBorders, children: [new Paragraph({ children: [] })] }),
-                new TableCell({ width: { size: 100 - (m.bar ?? 50), type: WidthType.PCT }, shading: { fill: C.ruleFaint }, borders: noBorders, children: [new Paragraph({ children: [] })] }),
-              ],
-            })],
-          }),
-        ],
-      })),
-    })],
-  });
-}
-
-function quote(text, attribution) {
-  return new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    borders: {
-      ...noBorders,
-      left: { style: BorderStyle.SINGLE, size: 24, color: C.accent },
-    },
-    rows: [new TableRow({
-      children: [new TableCell({
-        shading: { fill: C.bone },
-        margins: { top: 260, bottom: 260, left: 320, right: 320 },
-        borders: {
-          ...noBorders,
-          left: { style: BorderStyle.SINGLE, size: 24, color: C.accent },
-        },
-        children: [
-          new Paragraph({ spacing: { after: attribution ? 140 : 0 }, children: [new TextRun({ text: `“${text}”`, font: FONT.display, italics: true, size: 24, color: C.ink })] }),
-          ...(attribution ? [new Paragraph({ children: [mono(attribution.toUpperCase(), { characterSpacing: 20 })] })] : []),
-        ],
-      })],
-    })],
-  });
-}
-
-// ---------------------------------------------------------------- section helper
-
-const sections = [];
-function section(eyebrowText, heading, blocks, { first = false } = {}) {
-  if (!first) sections.push(pageBreak());
-  sections.push(band({ eyebrowText, heading, dark: true, minHeightMm: 26 }));
-  sections.push(new Paragraph({ spacing: { after: 260 }, children: [] }));
-  sections.push(...blocks);
-}
+const slides = [];
+const add = (tone, build) => slides.push({ tone, build });
 
 // ================================================================== COVER
 
-const logo = fs.readFileSync(path.join(ROOT, "public", "yellow-logo.png"));
-sections.push(new Table({
-  width: { size: 100, type: WidthType.PERCENTAGE },
-  borders: noBorders,
-  rows: [new TableRow({
-    height: { value: CONTENT_H, rule: HeightRule.EXACT },
-    children: [new TableCell({
-      shading: { fill: C.darkBg },
-      verticalAlign: VerticalAlign.CENTER,
-      borders: noBorders,
-      children: [
-        new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 500 }, children: [new ImageRun({ type: "png", data: logo, transformation: { width: 130, height: 140 } })] }),
-        new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: [new TextRun({ text: "BOLTER TECHNOLOGIES", font: FONT.mono, size: 19, bold: true, color: C.darkInk, characterSpacing: 40 })] }),
-        new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 700 }, children: [new TextRun({ text: "Company Profile", font: FONT.display, bold: true, size: 64, color: C.accentDark })] }),
-        new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 900 }, children: [new TextRun({ text: company.tagline, font: FONT.body, italics: true, size: 24, color: C.darkMuted })] }),
-        new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: `${company.address.city}, ${company.address.countryName}  ·  boltertech.com  ·  ${company.email}`, font: FONT.mono, size: 15, color: C.darkFaint, characterSpacing: 10 })] }),
-      ],
-    })],
-  })],
-}));
-sections.push(pageBreak());
-
-// ================================================================== CONTENTS
-
-sections.push(h2("Contents"));
-[
-  "At a glance", "Who we are", "What we do", "How we work", "Selected work",
-  "Portfolio at a glance", "Proof", "Leadership", "Traction & outlook",
-  "Working with us", "Contact", "Information to complete",
-].forEach((t, i) => sections.push(body(`${String(i + 1).padStart(2, "0")}   ${t}`, { runOpts: { size: 23, font: FONT.display } })));
-sections.push(pageBreak());
-
-// ================================================================== 1. AT A GLANCE
-
-section("Bolter Technologies", "At a glance", [
-  fieldRow([
-    { label: "Legal name", value: run(company.legalName, { size: 19 }) },
-    { label: "Founded", value: run(String(company.founded), { size: 19 }) },
-    { label: "Team size", value: run(company.teamSize, { size: 19 }) },
-    { label: "Company type", value: run(company.companyType, { size: 19 }) },
-  ]),
-  fieldRow([
-    { label: "Industry", value: run(company.industry, { size: 19 }) },
-    { label: "Client focus", value: run(company.clientFocus, { size: 19 }) },
-    { label: "Response time", value: run(company.responseTime, { size: 19 }) },
-    { label: "Headquarters", value: run(`${company.address.city}, ${company.address.countryName}`, { size: 19 }) },
-  ]),
-  new Paragraph({ spacing: { before: 260, after: 60 }, children: [mono("REGISTERED ADDRESS", { characterSpacing: 20 })] }),
-  para([run(`${company.address.line1}, ${company.address.line2}, ${company.address.city}, ${company.address.region}`, { size: 20 })]),
-  para([run(`${company.address.countryName}  ·  postal code `, { size: 20 }), ph("postal / ZIP code")]),
-  new Paragraph({ spacing: { before: 220, after: 60 }, children: [mono("REGISTRATION", { characterSpacing: 20 })] }),
-  para([run("SECP registration no.  ", { size: 20 }), ph("SECP registration number")]),
-  para([run("NTN  ", { size: 20 }), ph("tax / NTN number")]),
-  para([run("Incorporation date  ", { size: 20 }), ph("exact incorporation date, within 2024")]),
-], { first: true });
-
-// ================================================================== 2. WHO WE ARE
-
-section("Company", "Who we are", [
-  para([run(company.description, { size: 21, color: C.ink })], { spacing: { after: 320 } }),
-  h3("What we commit to in writing"),
-  ...commitments.flatMap((c) => [
-    h4(c.name, C.ink),
-    body(c.detail, { runOpts: { size: 19, color: C.inkMuted } }),
-  ]),
-]);
-
-// ================================================================== 3. WHAT WE DO
-
-section("Practice", "What we do", services.flatMap((s, i) => [
-  h3(`${s.name}${s.lead ? "  —  lead practice" : ""}`),
-  body(s.summary, { runOpts: { size: 20, color: C.inkMuted } }),
-  ...s.includes.map(bullet),
-  new Paragraph({ spacing: { before: 60, after: i < services.length - 1 ? 300 : 0 }, children: [mono(s.stack.join("  ·  "), { size: 15, color: C.inkFaint })] }),
-  ...(i < services.length - 1 ? [rule(C.ruleFaint)] : []),
-]));
-
-// ================================================================== 4. HOW WE WORK
-
-section("Method", "How we work", [
-  ...process_.flatMap((p, i) => [
-    h4(`${i + 1}. ${p.step}`),
-    body(p.detail, { runOpts: { size: 19, color: C.inkMuted } }),
-  ]),
-  rule(C.ruleFaint),
-  h3("Engagement models"),
-  ...engagements.flatMap((e) => [
-    new Paragraph({ spacing: { after: 40 }, children: [mono(e.kind.toUpperCase(), { characterSpacing: 20, color: C.accent })] }),
-    h4(e.name),
-    body(e.summary, { runOpts: { size: 19, color: C.inkMuted } }),
-    para([new TextRun({ text: e.terms, font: FONT.mono, size: 16, italics: true, color: C.inkFaint })], { spacing: { after: 260 } }),
-  ]),
-]);
-
-// ================================================================== 5. SELECTED WORK
-
-// One case study per section() page was leaving mostly-empty pages for the
-// shorter ones (title + meta + metrics + one paragraph, nothing else). Flow
-// them continuously instead — Word paginates on actual overflow, so short
-// ones share a page and only the longer ones (quote, link) run past one.
-const caseStudyBlocks = (p, isLast) => [
-  h3(p.title, C.ink),
-  para([mono([
-    p.client ? p.client : `${p.clientSector} — name withheld`,
-    p.category,
-    String(p.year),
-    p.duration,
-    p.status,
-  ].filter(Boolean).join("   ·   "), { size: 16, color: C.inkFaint })], { spacing: { after: 220 } }),
-  ...(p.metrics?.length ? [metricRow(p.metrics), new Paragraph({ spacing: { after: 220 }, children: [] })] : []),
-  body(p.summary, { runOpts: { size: 21, color: C.ink } }),
-  ...(p.testimonial ? [quote(p.testimonial.quote, `${p.testimonial.author}${p.testimonial.role ? `, ${p.testimonial.role}` : ""}`)] : []),
-  ...(p.links?.length ? p.links.map((l) => link(l.label, l.url)) : []),
-  ...(p.stack?.length ? [new Paragraph({ spacing: { before: 140, after: 0 }, children: [mono(`TECHNOLOGY   ${p.stack.join("  ·  ")}`, { size: 15, color: C.inkFaint })] })] : []),
-  ...(isLast ? [] : [rule(C.ruleFaint)]),
-];
-
-section("Case studies", "Selected work", [
-  body(`Six representative engagements, drawn from a delivered portfolio of ${projects.length}. The complete list follows in the next section.`, { runOpts: { size: 19, color: C.inkMuted } }),
-  ...featured.flatMap((p, i) => caseStudyBlocks(p, i === featured.length - 1)),
-]);
-
-// ================================================================== 6. PORTFOLIO TABLE
-
-function portfolioTable() {
-  const headerRow = ["Project", "Sector", "Category", "Year", "Duration", "Status"];
-  const widths = [3200, 3000, 1400, 800, 1200, 1400];
-  const headCell = (text, w) => new TableCell({
-    width: { size: w, type: WidthType.PCT },
-    shading: { fill: C.darkBg },
-    margins: { top: 100, bottom: 100, left: 120, right: 120 },
-    borders: hairline(C.darkBg),
-    children: [new Paragraph({ children: [mono(text.toUpperCase(), { color: C.accentDark, characterSpacing: 10 })] })],
+add(DARK, (s, c) => {
+  s.addImage({ path: path.join(ROOT, "public", "yellow-logo.png"), x: 8.45, y: 1.2, w: 4.1, h: 4.1 * (1303 / 1207) });
+  eyebrow(s, c, `Company profile  ·  ${new Date().getFullYear()}`, MX, 1.7);
+  text(s, company.name.replace(" ", "\n"), { x: MX, y: 2.05, w: 7.4, h: 2.3, fontFace: F.display, fontSize: 66, bold: true, color: c.ink, lineSpacingMultiple: 0.88 });
+  text(s, company.tagline, { x: MX, y: 4.45, w: 7.4, h: 0.9, fontSize: 20, color: c.muted, lineSpacingMultiple: 1.15 });
+  line(s, MX, 6.05, CW, 0, c.rule);
+  const fields = [
+    ["Established", String(company.founded)],
+    ["Headquarters", `${company.address.city}, ${company.address.countryName}`],
+    ["Website", "boltertech.com"],
+    ["Contact", company.email],
+  ];
+  const fw = CW / fields.length;
+  fields.forEach(([l, v], i) => {
+    label(s, c, l, MX + i * fw, 6.25, fw);
+    text(s, v, { x: MX + i * fw, y: 6.5, w: fw, h: 0.3, fontSize: 13, color: c.ink });
   });
-  const cell = (text, w) => new TableCell({
-    width: { size: w, type: WidthType.PCT },
-    margins: { top: 90, bottom: 90, left: 120, right: 120 },
-    borders: hairline(),
-    children: [new Paragraph({ children: [run(text, { size: 16, color: C.inkMuted })] })],
+});
+
+// ================================================================== AT A GLANCE
+
+add(BONE, (s, c) => {
+  eyebrow(s, c, "01  At a glance");
+  title(s, c, company.name);
+  text(s, msg.home.heroSub, { x: MX, y: 1.8, w: 7.2, h: 1.35, fontFace: F.display, fontSize: 23, color: c.ink, lineSpacingMultiple: 1.1 });
+  text(s, company.description, { x: MX, y: 3.3, w: 7.2, h: 1.5, fontSize: 13, color: c.muted, lineSpacingMultiple: 1.3 });
+
+  const fields = [
+    ["Legal name", company.legalName],
+    ["Company type", company.companyType],
+    ["Industry", company.industry],
+    ["Client focus", company.clientFocus],
+    ["Headquarters", `${company.address.city}, ${company.address.countryName}`],
+  ];
+  const fx = 8.75, fwid = W - MX - fx;
+  fields.forEach(([l, v], i) => {
+    const y = 1.8 + i * 0.6;
+    line(s, fx, y, fwid, 0, c.rule);
+    label(s, c, l, fx, y + 0.1, fwid);
+    text(s, v, { x: fx, y: y + 0.3, w: fwid, h: 0.26, fontSize: 12, color: c.ink });
   });
-  return new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    borders: hairline(),
-    rows: [
-      new TableRow({ children: headerRow.map((h, i) => headCell(h, widths[i])) }),
-      ...projects.map((p) => new TableRow({
-        children: [
-          cell(p.title.split("—")[0].trim(), widths[0]),
-          cell(p.client ? p.client : `${p.clientSector} (name withheld)`, widths[1]),
-          cell(p.category, widths[2]),
-          cell(String(p.year), widths[3]),
-          cell(p.duration, widths[4]),
-          cell(p.status, widths[5]),
-        ],
-      })),
-    ],
+
+  const stats = [
+    [String(company.founded), `Founded in ${company.address.city}`],
+    [company.teamSize.replace("-", "–"), "People on the team"],
+    [String(projects.length), "Projects in the portfolio"],
+    [String(services.length), "Practice lines, one team"],
+  ];
+  const sy = 5.1, sw = CW / stats.length;
+  line(s, MX, sy, CW, 0, c.rule);
+  stats.forEach(([v, l], i) => {
+    const x = MX + i * sw;
+    if (i) line(s, x, sy, 0, BOTTOM - sy, c.rule);
+    const ix = x + (i ? 0.3 : 0);
+    text(s, v, { x: ix, y: sy + 0.25, w: sw - 0.3, h: 0.85, fontFace: F.display, fontSize: 50, bold: true, color: c.accent });
+    text(s, l, { x: ix, y: sy + 1.2, w: sw - 0.3, h: 0.3, fontSize: 12, color: c.muted });
   });
-}
+});
 
-section("Full portfolio", "Portfolio at a glance", [portfolioTable()]);
+// ================================================================== COMMITMENTS
 
-// ================================================================== 7. PROOF
+add(DARK, (s, c) => {
+  eyebrow(s, c, "02  How we operate");
+  title(s, c, msg.about.commitmentsHeading);
+  const gap = 0.4, cw = (CW - gap * (commitments.length - 1)) / commitments.length, y = 2.25;
+  commitments.forEach((m, i) => {
+    const x = MX + i * (cw + gap);
+    line(s, x, y, cw, 0, c.rule);
+    line(s, x, y, 0.6, 0, c.accent, 2.25);
+    text(s, pad(i + 1), { x, y: y + 0.3, w: cw, h: 0.3, fontFace: F.mono, fontSize: 11, color: c.accent });
+    text(s, m.name, { x, y: y + 0.75, w: cw, h: 0.8, fontFace: F.display, fontSize: 20, bold: true, color: c.ink, lineSpacingMultiple: 1.0 });
+    text(s, m.detail, { x, y: y + 1.7, w: cw, h: 2.9, fontSize: 12, color: c.muted, lineSpacingMultiple: 1.3 });
+  });
+});
 
-const testimonialProject = projects.find((p) => p.testimonial);
-section("Track record", "Proof", [
-  ...(testimonialProject ? [quote(testimonialProject.testimonial.quote, `${testimonialProject.testimonial.author}, ${testimonialProject.testimonial.role || ""} — ${testimonialProject.client}`), new Paragraph({ spacing: { after: 300 }, children: [] })] : []),
-  h3("Sectors delivered into"),
-  para([mono(sectors.join("   ·   "), { size: 17, color: C.inkMuted })]),
-]);
+// ================================================================== PRACTICE OVERVIEW
 
-// ================================================================== 8. LEADERSHIP
+add(BONE, (s, c) => {
+  eyebrow(s, c, "03  Practice");
+  title(s, c, msg.home.offerHeading, { w: 5.2, h: 1.4 });
+  text(s, msg.services.metaDescription.replace(" - ", " — "), { x: MX, y: 2.4, w: 4.8, h: 1.5, fontSize: 15, color: c.muted, lineSpacingMultiple: 1.3 });
 
-section("People", "Leadership", founders.flatMap((f) => [
-  h4(`${f.name}  —  ${f.role}`),
-  body(f.bio, { runOpts: { size: 19, color: C.inkMuted } }),
-  fieldRow([
-    { label: "Focus", value: run(f.focus, { size: 17 }) },
-    { label: "Email", value: run(f.email, { size: 17 }) },
-    { label: "LinkedIn", value: f.linkedin ? run(f.linkedin, { size: 17 }) : ph("LinkedIn URL") },
-    { label: "Headshot", value: ph("photo") },
-  ]),
-  new Paragraph({ spacing: { after: 300 }, children: [] }),
-]));
+  const counts = services.map((sv) => projects.filter((p) => p.category === sv.id).length);
+  const max = Math.max(...counts);
+  const x = 5.9, w = W - MX - x, rowH = 0.96, y0 = 1.3;
+  services.forEach((sv, i) => {
+    const y = y0 + i * rowH;
+    line(s, x, y, w, 0, c.rule);
+    text(s, pad(i + 1), { x, y: y + 0.3, w: 0.5, h: 0.3, fontFace: F.mono, fontSize: 10, color: c.accent });
+    text(s, sv.name, { x: x + 0.6, y: y + 0.24, w: 4.0, h: 0.4, fontFace: F.display, fontSize: 21, bold: true, color: c.ink });
+    text(s, sv.lead ? msg.services.leadLabel.toUpperCase() : `${sv.includes.length} capabilities`.toUpperCase(), {
+      x: x + 0.6, y: y + 0.62, w: 4.0, h: 0.2, fontFace: F.mono, fontSize: 7.5, charSpacing: 1.5, color: sv.lead ? c.accent : c.faint, bold: sv.lead,
+    });
+    const bx = x + 4.7, bw = w - 4.7 - 1.0;
+    rect(s, bx, y + 0.45, bw, 0.07, { fill: { color: c.ruleFaint } });
+    rect(s, bx, y + 0.45, Math.max(0.05, bw * (counts[i] / max)), 0.07, { fill: { color: c.accent } });
+    text(s, pad(counts[i]), { x: x + w - 0.75, y: y + 0.18, w: 0.75, h: 0.45, fontFace: F.display, fontSize: 24, bold: true, color: c.ink, align: "right" });
+    text(s, "PROJECTS", { x: x + w - 1.0, y: y + 0.62, w: 1.0, h: 0.2, fontFace: F.mono, fontSize: 7, charSpacing: 1.5, color: c.faint, align: "right" });
+  });
+  line(s, x, y0 + services.length * rowH, w, 0, c.rule);
+});
 
-// ================================================================== 9. TRACTION
+// ================================================================== PRACTICE DETAIL
 
-section("Investor & hiring", "Traction & outlook", [
-  body("The figures below are not yet published and are marked for completion.", { runOpts: { size: 19, color: C.inkMuted } }),
-  ...[
-    "revenue or growth figures for the past 12 months",
-    "headcount plan for the next 12 months",
-    "notable clients beyond those named in this document",
-    "product roadmap or platform investments",
-    "certifications or compliance posture",
-  ].map((t) => new Paragraph({
-    spacing: { after: 90 }, indent: { left: 260, hanging: 200 },
-    children: [new TextRun({ text: "—  ", font: FONT.mono, size: 19, color: C.accent }), ph(t)],
-  })),
-]);
+services.forEach((sv, i) => {
+  add(i % 2 ? BONE : DARK, (s, c) => {
+    eyebrow(s, c, `03  Practice  ·  ${pad(i + 1)} / ${pad(services.length)}${sv.lead ? "  ·  Lead practice" : ""}`);
+    title(s, c, sv.name, { w: 5.8 });
+    text(s, sv.summary, { x: MX, y: 1.8, w: 5.5, h: 1.8, fontSize: 13.5, color: c.ink, lineSpacingMultiple: 1.3 });
 
-// ================================================================== 10. FAQ
+    const work = projects.filter((p) => p.category === sv.id);
+    if (work.length) {
+      label(s, c, "Selected work", MX, 3.75, 5.5);
+      text(s, work.map((p) => ({ text: shortTitle(p), options: { breakLine: true } })), {
+        x: MX, y: 4.0, w: 5.5, h: 0.3 * work.length, fontFace: F.display, fontSize: 12.5, bold: true, color: c.accent, lineSpacingMultiple: 1.25,
+      });
+    }
+    label(s, c, msg.services.stackLabel, MX, 5.35, 5.5);
+    text(s, sv.stack.join("  ·  "), { x: MX, y: 5.6, w: 5.5, h: 1.3, fontFace: F.mono, fontSize: 8.5, color: c.muted, lineSpacingMultiple: 1.35 });
 
-section("Working together", "Working with us", faqs.flatMap((f) => [
-  h4(f.q, C.ink),
-  body(f.a, { runOpts: { size: 19, color: C.inkMuted } }),
-]));
+    const x = 6.85, w = W - MX - x, y0 = 1.8, rowH = Math.min(0.62, (BOTTOM - y0 - 0.3) / sv.includes.length);
+    label(s, c, msg.services.includesLabel, x, y0 - 0.02, w);
+    sv.includes.forEach((inc, k) => {
+      const y = y0 + 0.3 + k * rowH;
+      line(s, x, y, w, 0, c.rule);
+      text(s, pad(k + 1), { x, y, w: 0.45, h: rowH, fontFace: F.mono, fontSize: 9, color: c.accent, valign: "middle" });
+      text(s, inc, { x: x + 0.5, y, w: w - 0.5, h: rowH, fontSize: 12, color: c.ink, valign: "middle" });
+    });
+    line(s, x, y0 + 0.3 + sv.includes.length * rowH, w, 0, c.rule);
+  });
+});
 
-// ================================================================== 11. CONTACT
+// ================================================================== PROCESS
 
-section("Get in touch", "Contact", [
-  fieldRow([
-    { label: "Email", value: run(company.email, { size: 19 }) },
-    { label: "Phone", value: run(company.phone, { size: 19 }) },
-  ]),
-  fieldRow([
-    { label: "Website", value: run("boltertech.com", { size: 19 }) },
-    { label: "Response time", value: run(company.responseTime, { size: 19 }) },
-  ]),
-  new Paragraph({ spacing: { before: 260, after: 60 }, children: [mono("OFFICE HOURS", { characterSpacing: 20 })] }),
-  para([ph("office hours, local time")]),
-  new Paragraph({ spacing: { before: 260, after: 60 }, children: [mono("ADDRESS", { characterSpacing: 20 })] }),
-  body(`${company.address.line1}, ${company.address.line2}, ${company.address.city}, ${company.address.countryName}`, { runOpts: { size: 20 } }),
-  new Paragraph({ spacing: { before: 220, after: 60 }, children: [mono("ELSEWHERE ONLINE", { characterSpacing: 20 })] }),
-  para([run("LinkedIn  ", { size: 19 }), ph("LinkedIn company page")]),
-  para([run("GitHub  ", { size: 19 }), ph("GitHub organisation")]),
-  para([run("Clutch  ", { size: 19 }), ph("Clutch profile")]),
-  para([run("GoodFirms  ", { size: 19 }), ph("GoodFirms profile")]),
-]);
+add(BONE, (s, c) => {
+  eyebrow(s, c, "04  Method");
+  title(s, c, msg.about.processHeading);
+  const gap = 0.4, cw = (CW - gap * (process_.length - 1)) / process_.length, y = 2.0;
+  line(s, MX, y, CW, 0, c.rule);
+  process_.forEach((p, i) => {
+    const x = MX + i * (cw + gap);
+    s.addShape(pptx.ShapeType.ellipse, { x: x - 0.001, y: y - 0.08, w: 0.16, h: 0.16, fill: { color: c.accent }, line: { color: c.bg, width: 3 } });
+    text(s, pad(i + 1), { x, y: y + 0.35, w: cw, h: 0.8, fontFace: F.display, fontSize: 48, bold: true, color: c.accent });
+    text(s, p.step, { x, y: y + 1.25, w: cw, h: 0.8, fontFace: F.display, fontSize: 20, bold: true, color: c.ink });
+    text(s, p.detail, { x, y: y + 2.1, w: cw, h: 2.6, fontSize: 12, color: c.muted, lineSpacingMultiple: 1.3 });
+  });
+});
 
-// ================================================================== 12. CHECKLIST
+// ================================================================== ENGAGEMENTS
 
-section("Before you send this", "Information to complete", [
-  body("Every item below has a matching [PLACEHOLDER] marker earlier in this document — search for \u201cPLACEHOLDER\u201d to find and replace each one.", { runOpts: { size: 19, color: C.inkMuted } }),
-  ...[
-    "Postal / ZIP code for the registered address",
-    "SECP registration number and exact incorporation date",
-    "NTN / tax registration number",
-    "LinkedIn, GitHub, Clutch and GoodFirms profile URLs",
-    "Tariq Mehmood's LinkedIn profile",
-    "Founder headshots — all three",
-    "Revenue, growth and traction figures",
-    "Headcount plan and product roadmap",
-    "Certifications or compliance posture",
-    "Named clients and logos beyond Logmate",
-    "Office hours",
-    "Governing jurisdiction for contracts (still open in the site's Terms of Service)",
-  ].map((t) => new Paragraph({
-    spacing: { after: 100 }, indent: { left: 260, hanging: 200 },
-    children: [new TextRun({ text: "☐  ", font: FONT.mono, size: 20, color: C.accent }), run(t, { size: 19, color: C.inkMuted })],
-  })),
-]);
+add(DARK, (s, c) => {
+  eyebrow(s, c, "04  Engagement models");
+  title(s, c, msg.services.engagementHeading);
+  const gap = 0.3, cw = (CW - gap * (engagements.length - 1)) / engagements.length, y = 1.85, h = 5.05, padX = 0.32;
+  engagements.forEach((e, i) => {
+    const x = MX + i * (cw + gap);
+    const hero = i === 1;
+    s.addShape(pptx.ShapeType.roundRect, {
+      x, y, w: cw, h, rectRadius: 0.06,
+      fill: { color: hero ? c.sheet : c.bg }, line: { color: hero ? c.accent : c.rule, width: hero ? 1.25 : 0.75 },
+    });
+    text(s, e.kind.toUpperCase(), { x: x + padX, y: y + 0.32, w: cw - 2 * padX, h: 0.2, fontFace: F.mono, fontSize: 8.5, bold: true, charSpacing: 1.5, color: c.accent });
+    const twoLine = e.name.length > 16;
+    text(s, e.name, { x: x + padX, y: y + 0.6, w: cw - 2 * padX, h: twoLine ? 0.9 : 0.5, fontFace: F.display, fontSize: 24, bold: true, color: c.ink });
+    text(s, e.summary, { x: x + padX, y: y + (twoLine ? 1.55 : 1.25), w: cw - 2 * padX, h: 2.8, fontSize: 11, color: c.muted, lineSpacingMultiple: 1.25 });
+    line(s, x + padX, y + 4.1, cw - 2 * padX, 0, c.rule);
+    label(s, c, msg.services.termsLabel, x + padX, y + 4.22, cw - 2 * padX);
+    text(s, e.terms, { x: x + padX, y: y + 4.45, w: cw - 2 * padX, h: 0.5, fontSize: 11, color: c.ink });
+  });
+});
+
+// ================================================================== WORK DIVIDER
+
+add(BONE, (s, c) => {
+  eyebrow(s, c, "05  Selected work");
+  title(s, c, msg.home.workHeading);
+  text(s, String(projects.length), { x: MX - 0.05, y: 1.7, w: 4.5, h: 2.1, fontFace: F.display, fontSize: 150, bold: true, color: c.accent });
+  text(s, "Projects in the portfolio", { x: MX, y: 3.85, w: 4.4, h: 0.4, fontSize: 16, color: c.ink });
+  text(s, `The ${featured.length} featured engagements follow. The complete portfolio closes the section.`, {
+    x: MX, y: 4.4, w: 4.2, h: 0.7, fontSize: 12, color: c.muted, lineSpacingMultiple: 1.25,
+  });
+
+  const x = 5.75, w = W - MX - x, colGap = 0.4, colW = (w - colGap) / 2, rows = Math.ceil(sectors.length / 2), rowH = (BOTTOM - 1.95) / rows;
+  label(s, c, msg.work.sectorsLabel, x, 1.7, w);
+  sectors.forEach((sec, i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    const sx = x + col * (colW + colGap), sy = 1.95 + row * rowH;
+    line(s, sx, sy, colW, 0, c.rule);
+    text(s, sec, { x: sx, y: sy, w: colW, h: rowH, fontSize: 12, color: c.ink, valign: "middle" });
+  });
+});
+
+// ================================================================== CASE STUDIES
+
+featured.forEach((p, i) => {
+  add(i % 2 ? BONE : DARK, (s, c) => {
+    eyebrow(s, c, `05  Selected work  ·  ${pad(i + 1)} / ${pad(featured.length)}  ·  ${catLabel(p.category)}`);
+    const main = shortTitle(p), sub = subTitle(p), long = main.length > 28;
+    const lw = 5.6;
+    text(s, main, { x: MX, y: 0.85, w: lw, h: long ? 0.95 : 0.6, fontFace: F.display, fontSize: long ? 23 : 32, bold: true, color: c.ink, lineSpacingMultiple: 0.95 });
+    if (sub) text(s, sub, { x: MX, y: 1.5, w: lw, h: 0.35, fontSize: 15, color: c.muted });
+
+    const client = inHouse(p) ? "In-house product" : p.client ? p.client : `${p.clientSector} — ${msg.common.clientWithheld}`;
+    const meta = [
+      [msg.fields.client, client],
+      [msg.fields.year, String(p.year)],
+      [msg.fields.duration, p.duration],
+      [msg.fields.status, p.status],
+    ];
+    const my = 2.05;
+    line(s, MX, my, lw, 0, c.rule);
+    label(s, c, meta[0][0], MX, my + 0.12, lw);
+    text(s, meta[0][1], { x: MX, y: my + 0.34, w: lw, h: 0.26, fontSize: 11.5, color: c.ink });
+    line(s, MX, my + 0.7, lw, 0, c.rule);
+    const mw = lw / 3;
+    meta.slice(1).forEach(([l, v], k) => {
+      label(s, c, l, MX + k * mw, my + 0.82, mw);
+      text(s, v, { x: MX + k * mw, y: my + 1.04, w: mw, h: 0.26, fontSize: 11.5, color: c.ink });
+    });
+    line(s, MX, my + 1.4, lw, 0, c.rule);
+
+    text(s, p.summary, { x: MX, y: 3.65, w: lw, h: 1.25, fontSize: 12.5, color: c.ink, lineSpacingMultiple: 1.25 });
+
+    const metrics = (p.metrics ?? []).slice(0, 4);
+    const gy = 5.0, gw = lw / 2, gh = (BOTTOM - gy) / 2;
+    metrics.forEach((m, k) => {
+      const gx = MX + (k % 2) * gw, y = gy + Math.floor(k / 2) * gh;
+      line(s, gx, y, gw - 0.2, 0, c.rule);
+      text(s, m.value, { x: gx, y: y + 0.1, w: gw - 0.2, h: 0.42, fontFace: F.display, fontSize: 22, bold: true, color: c.accent });
+      text(s, m.label, { x: gx, y: y + 0.52, w: gw - 0.25, h: 0.42, fontSize: 9, color: c.muted, lineSpacingMultiple: 1.1 });
+    });
+
+    const x = 6.85, w = W - MX - x;
+    const cover = coverPath(p);
+    let lowerY;
+    if (cover && fs.existsSync(cover)) {
+      const ih = w * 9 / 16;
+      s.addImage({ path: cover, x, y: 0.55, w, h: ih });
+      rect(s, x, 0.55, w, ih, { fill: { type: "none" }, line: { color: c.rule, width: 0.75 } });
+      lowerY = 0.55 + ih + 0.4;
+    } else {
+      seriesChart(s, c, p, x, 0.6, w, 4.1);
+      lowerY = 5.15;
+    }
+    const lowerH = BOTTOM - lowerY;
+    // Quotes live on the client slide only, so none appears twice.
+    if (cover) seriesChart(s, c, p, x, lowerY, w, lowerH);
+    else {
+      label(s, c, msg.fields.stack, x, lowerY, w);
+      chips(s, c, p.stack, x, lowerY + 0.3, w, 5);
+    }
+  });
+});
+
+// ================================================================== PORTFOLIO
+
+add(DARK, (s, c) => {
+  eyebrow(s, c, "05  Full portfolio");
+  title(s, c, "Portfolio at a glance");
+  const rows = projects.slice().sort((a, b) => b.year - a.year || shortTitle(a).localeCompare(shortTitle(b)));
+  const border = (color) => [{ type: "none" }, { type: "none" }, { pt: 0.75, color }, { type: "none" }];
+  const head = ["Project", "Sector", "Practice", "Year", "Duration", "Status"].map((h) => ({
+    text: h.toUpperCase(),
+    options: { fontFace: F.mono, fontSize: 7.5, color: c.faint, charSpacing: 1.5, border: border(c.faint), valign: "bottom" },
+  }));
+  const body = rows.map((p) => [
+    { text: shortTitle(p), options: { fontFace: F.display, bold: true, fontSize: 10.5, color: c.ink } },
+    { text: p.clientSector, options: { color: c.muted } },
+    { text: catLabel(p.category), options: { color: c.muted } },
+    { text: String(p.year), options: { fontFace: F.mono, color: c.muted } },
+    { text: p.duration, options: { color: c.muted } },
+    { text: p.status, options: { color: p.status === "Delivered" ? c.muted : c.accent, bold: p.status !== "Delivered" } },
+  ].map((cell) => ({ ...cell, options: { fontFace: F.body, fontSize: 9.5, border: border(c.rule), valign: "middle", ...cell.options } })));
+  s.addTable([head, ...body], {
+    x: MX, y: 1.7, w: CW, colW: [4.1, 3.9, 1.25, 0.6, 1.0, 1.083], rowH: 0.33, margin: [0, 0.1, 0, 0], fill: { color: c.bg },
+  });
+});
+
+// ================================================================== CLIENT VOICES
+
+add(BONE, (s, c) => {
+  eyebrow(s, c, "06  Clients");
+  title(s, c, "In our clients’ words");
+  const cols = Math.min(2, testimonials.length), rows = Math.ceil(testimonials.length / cols);
+  const gap = 0.3, cw = (CW - gap * (cols - 1)) / cols, y0 = 1.8, ch = (BOTTOM - y0 - gap * (rows - 1)) / rows;
+  testimonials.forEach((p, i) => {
+    const x = MX + (i % cols) * (cw + gap), y = y0 + Math.floor(i / cols) * (ch + gap);
+    const t = p.testimonial, px = x + 0.4, pw = cw - 0.8;
+    s.addShape(pptx.ShapeType.roundRect, { x, y, w: cw, h: ch, rectRadius: 0.05, fill: { color: c.sheet }, line: { type: "none" } });
+    rect(s, x, y + 0.3, 0.05, ch - 0.6, { fill: { color: c.accent } });
+    text(s, shortTitle(p).toUpperCase(), { x: px, y: y + 0.28, w: pw, h: 0.2, fontFace: F.mono, fontSize: 7.5, bold: true, charSpacing: 1.2, color: c.accent });
+    const len = t.quote.length;
+    text(s, `“${t.quote}”`, { x: px, y: y + 0.56, w: pw, h: ch - 1.2, fontFace: F.display, fontSize: len > 250 ? 11.5 : len > 150 ? 12 : 17, color: c.ink, lineSpacingMultiple: 1.12 });
+    text(s, t.author, { x: px, y: y + ch - 0.62, w: pw, h: 0.24, fontSize: 11, bold: true, color: c.ink });
+    label(s, c, t.role, px, y + ch - 0.36, pw, { fontSize: 7.5, charSpacing: 1 });
+  });
+});
+
+// ================================================================== LEADERSHIP
+
+add(DARK, (s, c) => {
+  eyebrow(s, c, "07  People");
+  title(s, c, msg.about.teamHeading);
+  const gap = 0.45, cw = (CW - gap * (founders.length - 1)) / founders.length, y = 2.0;
+  founders.forEach((f, i) => {
+    const x = MX + i * (cw + gap);
+    const parts = f.name.split(" ");
+    const initials = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    s.addText(initials, {
+      shape: pptx.ShapeType.roundRect, rectRadius: 0.08, x, y, w: 1.1, h: 1.1, margin: 0,
+      fill: { color: c.sheet }, line: { color: c.rule, width: 0.75 },
+      align: "center", valign: "middle", fontFace: F.display, fontSize: 30, bold: true, color: c.accent,
+    });
+    text(s, f.name, { x, y: y + 1.4, w: cw, h: 0.45, fontFace: F.display, fontSize: 20, bold: true, color: c.ink });
+    text(s, `${f.role}  ·  ${f.focus}`.toUpperCase(), { x, y: y + 1.88, w: cw, h: 0.22, fontFace: F.mono, fontSize: 9, bold: true, charSpacing: 1.5, color: c.accent });
+    text(s, f.bio, { x, y: y + 2.3, w: cw, h: 1.8, fontSize: 13, color: c.muted, lineSpacingMultiple: 1.3 });
+    line(s, x, y + 4.15, cw, 0, c.rule);
+    text(s, [
+      { text: f.email, options: { hyperlink: { url: `mailto:${f.email}` }, color: c.ink, breakLine: true } },
+      ...(f.linkedin ? [{ text: f.linkedin.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""), options: { hyperlink: { url: f.linkedin }, color: c.muted } }] : []),
+    ], { x, y: y + 4.3, w: cw, h: 0.55, fontFace: F.mono, fontSize: 10, lineSpacingMultiple: 1.4 });
+  });
+});
+
+// ================================================================== FAQ
+
+add(BONE, (s, c) => {
+  eyebrow(s, c, "08  Working together");
+  title(s, c, msg.home.faqHeading);
+  const cols = 2, rows = Math.ceil(deckFaqs.length / cols), gap = 0.5;
+  const cw = (CW - gap) / cols, y0 = 1.65, rh = (BOTTOM - y0) / rows;
+  deckFaqs.forEach((f, i) => {
+    const x = MX + (i % cols) * (cw + gap), y = y0 + Math.floor(i / cols) * rh;
+    line(s, x, y, cw, 0, c.rule);
+    const qh = f.q.length > 58 ? 0.48 : 0.26;
+    text(s, f.q, { x, y: y + 0.14, w: cw, h: qh, fontFace: F.display, fontSize: 13, bold: true, color: c.ink });
+    text(s, f.a, { x, y: y + 0.22 + qh, w: cw, h: rh - 0.3 - qh, fontSize: 10, color: c.muted, lineSpacingMultiple: 1.2 });
+  });
+});
+
+// ================================================================== CONTACT
+
+add(DARK, (s, c) => {
+  s.addImage({ path: path.join(ROOT, "public", "yellow-logo.png"), x: 9.35, y: 1.25, w: 3.2, h: 3.2 * (1303 / 1207) });
+  eyebrow(s, c, "09  Contact", MX, 1.3);
+  text(s, msg.contact.heading, { x: MX, y: 1.65, w: 8.2, h: 1.1, fontFace: F.display, fontSize: 64, bold: true, color: c.ink });
+  text(s, msg.contact.metaDescription, { x: MX, y: 2.95, w: 7.2, h: 0.9, fontSize: 20, color: c.muted, lineSpacingMultiple: 1.2 });
+
+  const a = company.address;
+  const fields = [
+    [msg.contact.emailLabel, [{ text: company.email, options: { hyperlink: { url: `mailto:${company.email}` } } }]],
+    ["Phone", [{ text: company.phone, options: { hyperlink: { url: `tel:${company.phoneHref}` } } }]],
+    ["Website", [{ text: "boltertech.com", options: { hyperlink: { url: "https://boltertech.com" } } }]],
+    ["Office", [{ text: `${a.line1}, ${a.line2}, ${a.city}, ${a.countryName}`, options: { hyperlink: { url: a.googleMapsUrl } } }]],
+  ];
+  const fw = 4.0, fh = 1.05, y0 = 4.5;
+  fields.forEach(([l, v], i) => {
+    const x = MX + (i % 2) * (fw + 0.4), y = y0 + Math.floor(i / 2) * fh;
+    line(s, x, y, fw, 0, c.rule);
+    label(s, c, l, x, y + 0.14, fw);
+    text(s, v, { x, y: y + 0.4, w: fw, h: 0.6, fontSize: i === 3 ? 11 : 15, color: c.ink, lineSpacingMultiple: 1.15 });
+  });
+});
 
 // ================================================================== BUILD
 
-const doc = new Document({
-  styles: { default: { document: { run: { font: FONT.body, size: 21, color: C.ink } } } },
-  sections: [{
-    properties: {
-      page: {
-        size: { width: PAGE_W, height: PAGE_H },
-        margin: { top: MARGIN_TB, bottom: MARGIN_TB, left: MARGIN_LR, right: MARGIN_LR },
-      },
-      titlePage: true,
-    },
-    headers: { first: new Header({ children: [new Paragraph({ children: [] })] }) },
-    footers: {
-      first: new Footer({ children: [new Paragraph({ children: [] })] }),
-      default: new Footer({
-        children: [new Paragraph({
-          border: { top: { style: BorderStyle.SINGLE, size: 3, color: C.ruleFaint } },
-          spacing: { before: 120 },
-          tabStops: [{ type: "right", position: convertMillimetersToTwip(210 - 14 - 14) }],
-          children: [
-            new TextRun({ text: "BOLTER TECHNOLOGIES PRIVATE LIMITED  ·  BOLTERTECH.COM", font: FONT.mono, size: 13, color: C.inkFaint, characterSpacing: 10 }),
-            new TextRun({ text: "\t", font: FONT.mono, size: 13, color: C.inkFaint }),
-            new TextRun({ children: [PageNumber.CURRENT], font: FONT.mono, size: 13, color: C.inkFaint }),
-          ],
-        })],
-      }),
-    },
-    children: sections,
-  }],
+slides.forEach(({ tone: c, build }, i) => {
+  const s = pptx.addSlide();
+  s.background = { color: c.bg };
+  build(s, c);
+  if (i > 0) {
+    text(s, `${company.legalName}  ·  Company profile`.toUpperCase(), { x: MX, y: 7.08, w: 7, h: 0.18, fontFace: F.mono, fontSize: 7, charSpacing: 1.5, color: c.faint });
+    text(s, `${pad(i + 1)} / ${pad(slides.length)}`, { x: W - MX - 2, y: 7.08, w: 2, h: 0.18, fontFace: F.mono, fontSize: 7, charSpacing: 1.5, color: c.faint, align: "right" });
+  }
 });
 
-fs.mkdirSync(path.dirname(OUT), { recursive: true });
-const buf = await Packer.toBuffer(doc);
-fs.writeFileSync(OUT, buf);
-console.log("Wrote", OUT, buf.length, "bytes");
-console.log("Projects found:", projects.length, "featured:", featured.length);
-console.log("Sectors:", sectors);
+await pptx.writeFile({ fileName: OUT });
+console.log("Wrote", OUT);
+console.log("Slides:", slides.length, "projects:", projects.length, "featured:", featured.length, "testimonials:", testimonials.length);
