@@ -35,5 +35,12 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "browserslist": [
+    "chrome >= 105",
+    "edge >= 105",
+    "firefox >= 104",
+    "safari >= 15.4",
+    "ios >= 15.4"
+  ]
 }
