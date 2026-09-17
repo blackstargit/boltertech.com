@@ -18,7 +18,6 @@ import { Prose, proseHeadings } from "@/components/primitives/Prose";
 import { Cta } from "@/components/primitives/Cta";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Label, Arrow } from "@/components/primitives/drafting";
-import { Placeholder } from "@/components/primitives/Placeholder";
 import { SHOW_PLACEHOLDERS } from "@/lib/placeholders";
 
 /** Every project, in every locale, prerendered. */
@@ -183,9 +182,9 @@ export default async function CaseStudyPage({
         {/* Cover screenshot, when there is one. Cropped to a fixed ratio so
             any source image drops in without distorting the page rhythm.
             Files live in public/work/<slug>/ — see that folder's README. */}
-        {project.cover ? (
+        {project.cover && project.cover.trim() !== "" ? (
           <Image
-            src={project.cover}
+            src={project.cover.trim()}
             alt={project.title}
             width={1600}
             height={900}
@@ -193,14 +192,7 @@ export default async function CaseStudyPage({
             sizes="(min-width: 1024px) 1200px, 100vw"
             className="mt-10 aspect-[16/9] w-full rounded-md border border-rule object-cover"
           />
-        ) : (
-          <Placeholder
-            className="mt-10 aspect-[16/9] content-center"
-            notice={m.placeholders.notice}
-            label={m.placeholders.cover}
-            hint={m.placeholders.coverHint}
-          />
-        )}
+        ) : null}
       </Band>
 
       {project.metrics.length > 0 ? (
