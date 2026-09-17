@@ -35,16 +35,9 @@ postinstall scripts by default, and that package needs one. If a new dependency
 warns about a blocked build script, add it there rather than disabling the
 protection globally.
 
-**The `rtk` hook filters command output and hides build errors.** When a build
-fails with a bare error count and no detail, re-run it unfiltered:
-
-```bash
-rtk proxy pnpm build > /tmp/b.log 2>&1; grep -iA8 error /tmp/b.log
-```
-
-The same hook breaks `grep` in some shells (`Failed to resolve 'rg' via PATH`),
-which silently reports **zero matches for patterns that do exist**. Do not
-trust a negative grep result from Bash — use the Grep tool to confirm.
+**The `rtk` CLI proxy is removed (2026-09-16)** — it filtered command output,
+hid build errors, and silently reported zero grep matches for patterns that did
+exist. Run `pnpm build` and `grep` plainly. Do not re-introduce it.
 
 ## Formatting
 
