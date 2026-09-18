@@ -42,3 +42,5 @@ next-env.d.ts
 
 .claude/settings.json
 .playwright-mcp
+
+documentation/testing
