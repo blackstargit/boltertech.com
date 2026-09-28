@@ -1,0 +1,85 @@
+---
+title: "Secure End-to-End Encrypted Company Chatbot"
+client: "Logmate, DevTrove and Sigma"
+clientSector: "Professional services"
+category: "security"
+summary: "An encrypted internal assistant that answers staff questions from 400,000+ company files — documents, images, recordings and scanned PDFs — and checks what each person is cleared to see before it answers."
+stack:
+  [
+    "Python",
+    "FastAPI",
+    "TypeScript",
+    "React 19",
+    "Vite",
+    "Tailwind CSS",
+    "RAG",
+    "LangChain",
+    "Sentence-Transformers",
+    "llama.cpp",
+    "PostgreSQL",
+    "pgvector",
+    "Redis",
+    "Celery",
+    "Whisper",
+    "PaddleOCR-VL",
+    "Docker",
+  ]
+duration: "3 months"
+year: 2026
+status: "Delivered"
+featured: false
+order: 12
+metrics:
+  - value: "400K+"
+    label: "documents, images, videos and PDFs indexed and searchable"
+    bar: 100
+  - value: "5"
+    label: "access tiers checked on every question before an answer is drawn"
+    bar: 100
+  - value: "E2E"
+    label: "encryption from the employee's device to the knowledge store"
+    bar: 100
+seriesLabel: "Time to find an internal answer (minutes)"
+series: [42, 44, 41, 45, 43, 40, 42, 12, 6, 3, 2, 2]
+links: []
+cover: ""
+testimonial: null
+draft: false
+---
+
+## The problem
+
+Company knowledge was spread across shared drives, email threads, wikis, chat
+history and file servers, in every format from scanned PDFs to recorded
+training videos. Staff lost hours searching or asking colleagues, and new hires
+took months to learn where things lived.
+
+Public AI assistants were ruled out. Sending confidential files to an outside
+model broke data policy, and none of them could respect who is allowed to see
+what: an assistant that answers a junior analyst with content from a board
+paper is worse than no assistant at all.
+
+## Approach
+
+We built one encrypted knowledge store that every file goes into, whatever
+shape it arrives in. Scanned paperwork is read with OCR, recordings are
+transcribed, and images are captioned, so a question can be answered from a
+photographed form or a training video as easily as from a wiki page.
+
+Access is checked before anything is retrieved, not after an answer is written.
+Each employee sits in an access tier, and a question only ever reaches the files
+that tier is cleared for, so an analyst and a director asking the same question
+get different answers drawn from different sources. Conversations are encrypted
+end to end between the employee's device and the store, every answer cites the
+files it came from, and every query is written to an audit log.
+
+## Outcome
+
+Staff ask the company's own knowledge a question in plain language instead of
+hunting through drives or interrupting a colleague, and they get an answer with
+its sources attached. New joiners stop depending on whoever has been there
+longest to find out where things live.
+
+Because the checks sit in front of retrieval and every query is logged, the
+platform gives the same answer quality to a director and to an analyst without
+either of them seeing something they should not.
