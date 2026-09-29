@@ -26,9 +26,10 @@
     "googleMapsUrl": "https://maps.app.goo.gl/Hn2xWVfHc56vTKj88"
   },
   "social": {
-    "linkedin": "",
-    "github": "",
-    "clutch": "",
-    "goodfirms": ""
+    "linkedin": "https://www.linkedin.com/company/boltertech",
+    "github": "https://github.com/boltertech",
+    "clutch": "https://clutch.co/profile/bolter-technologies",
+    "goodfirms": "https://www.goodfirms.co/company/bolter-technologies",
+    "facebook": "https://www.facebook.com/boltertech"
   }
 }
