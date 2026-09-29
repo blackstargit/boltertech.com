@@ -192,8 +192,8 @@ export function CostEstimator({
           </b>
           {result.weeks ? (
             <span className="text-small text-ink-muted">
-              {m.estimate.timelineLabel}: {result.weeks.low}–
-              {result.weeks.high} {m.estimate.weeksSuffix}
+              {m.estimate.timelineLabel}: {result.weeks.low}–{result.weeks.high}{" "}
+              {m.estimate.weeksSuffix}
             </span>
           ) : null}
         </div>
@@ -257,9 +257,7 @@ export function CostEstimator({
               <Label as="p" tone="ink">
                 {m.estimate.formHeading}
               </Label>
-              <p className="text-small text-ink-muted">
-                {m.estimate.formLede}
-              </p>
+              <p className="text-small text-ink-muted">{m.estimate.formLede}</p>
             </div>
 
             <Field
