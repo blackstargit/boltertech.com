@@ -37,7 +37,9 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: project.title,
+    // Absolute: the site-name suffix would push most case-study titles past
+    // the ~60 characters search results show. og:site_name still carries it.
+    title: { absolute: project.title },
     description: project.summary,
     alternates: {
       canonical: localePath(locale as Locale, `/work/${slug}`),

@@ -24,7 +24,9 @@ export function proxy(request: NextRequest) {
 
   const url = request.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.redirect(url);
+  // 308, not the default 307: the move is permanent, so search engines
+  // should index and credit the /en URL rather than the unprefixed one.
+  return NextResponse.redirect(url, 308);
 }
 
 export const config = {

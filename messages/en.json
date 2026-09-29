@@ -46,7 +46,7 @@
     "capabilitiesLabel": "Capabilities"
   },
   "services": {
-    "metaTitle": "Services - Bolter Technologies",
+    "metaTitle": "Services",
     "metaDescription": "Software development, AI automation, data analytics, and cyber security - one practice, delivered by one team.",
     "heading": "What we do",
     "includesLabel": "What it includes",
@@ -57,7 +57,7 @@
     "termsLabel": "Terms"
   },
   "work": {
-    "metaTitle": "Work - Bolter Technologies",
+    "metaTitle": "Work",
     "metaDescription": "Case studies from our AI, automation, software, data, and cyber security engagements—showcasing how we turn complex technical challenges into practical, scalable solutions. Explore the systems we’ve built, the problems we’ve solved, and the measurable impact our work has delivered across different industries and use cases.",
     "heading": "Work",
     "filterAll": "All",
@@ -70,7 +70,7 @@
     "sectorsLabel": "Sectors delivered into"
   },
   "about": {
-    "metaTitle": "About - Bolter Technologies",
+    "metaTitle": "About",
     "metaDescription": "Who we are, how we work, and why we started Bolter Technologies.",
     "heading": "About",
     "teamHeading": "Founders",
@@ -78,7 +78,7 @@
     "commitmentsHeading": "What we commit to in writing"
   },
   "contact": {
-    "metaTitle": "Contact - Bolter Technologies",
+    "metaTitle": "Contact",
     "metaDescription": "Tell us what is slowing your team down. We reply within one business day.",
     "heading": "Start a project",
     "nameLabel": "Your name",
@@ -96,7 +96,7 @@
     "openInGoogleMaps": "Open in Google Maps"
   },
   "estimate": {
-    "metaTitle": "Project cost estimator - Bolter Technologies",
+    "metaTitle": "Project cost estimator",
     "metaDescription": "Answer a few questions and get an indicative range for your project. Not a quote - a starting point for planning.",
     "eyebrow": "Estimator",
     "heading": "Estimate your project",

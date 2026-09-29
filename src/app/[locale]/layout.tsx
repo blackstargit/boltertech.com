@@ -65,6 +65,14 @@ export function generateStaticParams() {
   return localeCodes.map((locale) => ({ locale }));
 }
 
+/**
+ * Only the listed locales exist. Without this, a path the proxy skips
+ * (anything with a dot, like /favicon.ico) arrives here as locale
+ * "favicon.ico", the page loads messages for it before the layout's
+ * notFound() runs, and the request 500s instead of 404ing.
+ */
+export const dynamicParams = false;
+
 export default async function LocaleLayout({
   children,
   params,
