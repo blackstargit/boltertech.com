@@ -20,6 +20,12 @@ production switch that turns the stand-ins off.
   - Sigma Engineering
 - Rewrite the case study for Eco Hunt. This time we will show that our project is focused on brands and the private information sector, like ARY News.
 - SOAI, WAF, channel analytics to be added
+- Places autocomplete address form (Google Places SDK / Places API). Needs a
+  Google Cloud project with billing enabled (card on file); usage within the
+  monthly free cap per SKU costs nothing. Use autocomplete sessions ending in a
+  Place Details call, request only the address fields needed, restrict the API
+  key to the app, and set a budget alert plus daily quota cap. Confirm current
+  free caps on the Maps Platform pricing page before building.
 
 1. Add images for founders.
 2. Add images for the remaining projects without one. On the weekend

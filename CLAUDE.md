@@ -13,6 +13,11 @@ arriving from a directory listing or a cold outbound message.
 `CONTENT.md` is the guide for non-developers editing copy. This file is for
 whoever is writing code.
 
+**Open work lives in `TODO.md`**, imported below so every session and agent
+sees it. Add new todos there, not here.
+
+@TODO.md
+
 ---
 
 ## Commands
